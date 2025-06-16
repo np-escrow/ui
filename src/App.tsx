@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import useExpand from './hooks/useExpand'
 
 function App() {
   const [count, setCount] = useState(0)
+  const {handleExpand, isExpanded} = useExpand();
+
+  useEffect(() => {
+    if (!isExpanded) handleExpand();
+  }, [handleExpand, isExpanded]);
 
   return (
     <>
