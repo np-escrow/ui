@@ -1,21 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import useExpand from './hooks/useExpand'
+import { useTranslation } from 'react-i18next'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const {handleExpand, isExpanded} = useExpand();
+  const { t, i18n } = useTranslation();
+  const { handleExpand, isExpanded } = useExpand();
 
   useEffect(() => {
+    if (!isExpanded) handleExpand();
     if (Telegram.WebApp) {
       const version = Telegram.WebApp.version;
-      Telegram.WebApp.ready();
-      if (!isExpanded) handleExpand();
-      if (Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') (Telegram.WebApp as any).requestFullscreen();
+      const platform = Telegram.WebApp.platform;
+
+      const isMobile = platform === 'ios' || platform === 'android';
+      
+      if (isMobile && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
+        (Telegram.WebApp as any).requestFullscreen();
+      }
+
+      const lang = Telegram.WebApp.initDataUnsafe?.user?.language_code;
+      if (lang) {
+        const targetLang = lang === 'uk' || lang === 'ru' ? lang : 'en';
+        i18n.changeLanguage(targetLang);
+      }
     }
-  }, [handleExpand, isExpanded]);
+  }, [handleExpand, isExpanded, i18n]);
 
   return (
     <>
@@ -27,17 +39,12 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>{t('welcome')}</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <p>{t('description')}</p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        {Telegram.WebApp.initDataUnsafe?.user?.language_code}
       </p>
     </>
   )
