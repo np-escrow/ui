@@ -9,7 +9,12 @@ function App() {
   const {handleExpand, isExpanded} = useExpand();
 
   useEffect(() => {
-    if (!isExpanded) handleExpand();
+    if (Telegram.WebApp) {
+      const version = Telegram.WebApp.version;
+      Telegram.WebApp.ready();
+      if (!isExpanded) handleExpand();
+      if (Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') (Telegram.WebApp as any).requestFullscreen();
+    }
   }, [handleExpand, isExpanded]);
 
   return (
