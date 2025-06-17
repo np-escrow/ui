@@ -6,7 +6,7 @@ import { cryptoMock, type Crypto, type Network } from "./mock";
 // import { EUserType } from "../../types";
 
 import { t } from "i18next";
-import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
+// import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
 import Icon from "../../components/Icon/Icon";
 
 const Withdraw = () => {
@@ -14,8 +14,8 @@ const Withdraw = () => {
   const [selectedCrypto, setSelectedCrypto] = useState<string>(cryptoList[0]?.id || '');
   const [selectedNetwork, setSelectedNetwork] = useState<Network | null>(null);
 
-  const step = useWithdrawStore((state) => state.step);
-  const setStep = useWithdrawStore((state) => state.setStep);
+  // const step = useWithdrawStore((state) => state.step);
+  // const setStep = useWithdrawStore((state) => state.setStep);
 
   useEffect(() => {
     if (!cryptoList.length) {
