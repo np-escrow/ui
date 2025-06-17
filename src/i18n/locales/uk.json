@@ -63,5 +63,21 @@
         "buttonText": "Перейти до оплати"
       }
     }
+  },
+  "deliveries": {
+    "item": {
+      "status": "Статус",
+      "sub-to": "до {{recipient}}",
+      "sub-from": "від {{seller}}",
+      "sub-seller": "Продавець",
+      "sub-recepient": "Отримувач",
+      "statuspending-recepient": "Очікується оплата",
+      "statuspending-seller": "Очікується оплата від отримувача",
+      "status-paid": "Оплачено",
+      "status-completed-archive": "Завершено",
+      "status-completed": "Посилка отримана, угода завершена",
+      "info-sent": "Відправлено",
+      "info-receiving": "Отримання"
+    }
   }
 }

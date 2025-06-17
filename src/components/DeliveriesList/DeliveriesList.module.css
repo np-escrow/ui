@@ -1,0 +1,14 @@
+.scroll__container {
+  margin-top: 10px;
+  padding: 20px 1rem 0 1rem; /* сверху 30px, по бокам 1rem, снизу 0 */
+  height: calc(100% - 350px); /* Adjust height to fit within the page */
+  overflow-y: auto; /* Enable vertical scrolling */
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scroll__container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

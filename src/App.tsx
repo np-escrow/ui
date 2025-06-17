@@ -1,15 +1,14 @@
-import { useEffect, Suspense, lazy, useState } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import cn from 'classnames'
+import { EPlatform, EUserLanguage, EUserType } from "./types";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Suspense, lazy, useEffect, useState } from "react";
 
-import { useTranslation } from 'react-i18next'
+import classNames from "classnames";
+import useExpand from "./hooks/useExpand";
+import { useTranslation } from "react-i18next";
+import { useUserStore } from "./store/userStore";
 
-import useExpand from './hooks/useExpand'
-import { useUserStore } from './store/userStore'
-import { EUserType, EUserLanguage, EPlatform } from './types'
-
-const Home = lazy(() => import('./pages/Home/Home'));
-const Withdraw = lazy(() => import('./pages/Withdraw/Withdraw'));
+const Home = lazy(() => import("./pages/Home/Home"));
+const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -30,10 +29,15 @@ function App() {
       // Platform
       if (platform) setPlatform(platform);
 
-      const isMobileDevice = platform === EPlatform.IOS || platform === EPlatform.ANDROID;
+      const isMobileDevice =
+        platform === EPlatform.IOS || platform === EPlatform.ANDROID;
       setIsMobile(isMobileDevice);
-      
-      if (isMobileDevice && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
+
+      if (
+        isMobileDevice &&
+        Number(version) >= 8 &&
+        typeof (Telegram.WebApp as any).requestFullscreen === "function"
+      ) {
         (Telegram.WebApp as any).requestFullscreen();
       }
 
@@ -43,29 +47,40 @@ function App() {
 
       // User type
       const params = new URLSearchParams(location.search);
-      const userType = params.has('recepient') ? EUserType.RECIPIENT : EUserType.SELLER;
+      const userType = params.has("recepient")
+        ? EUserType.RECIPIENT
+        : EUserType.SELLER;
       setUserType(userType);
 
       // Language
       const lang = Telegram.WebApp.initDataUnsafe?.user?.language_code;
       let targetLang: EUserLanguage = EUserLanguage.EN;
-      if (lang === 'uk') targetLang = EUserLanguage.UK;
-      else if (lang === 'ru') targetLang = EUserLanguage.RU;
+      if (lang === "uk") targetLang = EUserLanguage.UK;
+      else if (lang === "ru") targetLang = EUserLanguage.RU;
       setLanguage(targetLang);
       i18n.changeLanguage(targetLang.toLowerCase());
     }
-  }, [handleExpand, isExpanded, i18n, location.search, setUserType, setLanguage, setPlatform, setUsername]);
+  }, [
+    handleExpand,
+    isExpanded,
+    i18n,
+    location.search,
+    setUserType,
+    setLanguage,
+    setPlatform,
+    setUsername
+  ]);
 
   return (
-      <Suspense>
-        <div className={cn("h-screen", {"mobile-padding": isMobile})}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/withdraw" element={<Withdraw />} />
-          </Routes>
-        </div>
-      </Suspense>
-  )
+    <Suspense>
+      <div className={classNames("h-screen", { "mobile-padding": isMobile })}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/withdraw" element={<Withdraw />} />
+        </Routes>
+      </div>
+    </Suspense>
+  );
 }
 
-export default App
+export default App;

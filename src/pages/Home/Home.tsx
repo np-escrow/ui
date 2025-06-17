@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+
+import { BalanceBlock } from "../../components/BalanceBlock";
+import Button from "../../components/Button/Button";
+import DeliveriesList from "../../components/DeliveriesList/DeliveriesList";
+import { EUserType } from "../../types";
+import { Header } from "../../components/Header";
+import { Onboarding } from "../../components/Onboarding";
 import { t } from "i18next";
 
-import { Onboarding } from "../../components/Onboarding";
-
-import { EUserType } from "../../types";
-import Button from "../../components/Button/Button";
-import { DeliveriesListEmptyState } from "../../components/DeliveriesListEmptyState";
-import { BalanceBlock } from "../../components/BalanceBlock";
-import { Header } from "../../components/Header";
+// import { useUIStore } from "../../store/uiStore";
 
 const Home = () => {
   const [isShown, setIsShown] = useState<boolean>(true);
@@ -28,33 +29,37 @@ const Home = () => {
     setIsShown(true);
   };
 
-  return <main className="page-with-button flex flex-col justify-center">
-    <div className="custom-container flex-1">
-      {isShown ? <div className="flex flex-col h-full">
+  return (
+    <main className="page-with-button flex flex-col justify-start overflow-y-hidden">
+      <div className="custom-container flex-1">
+        {isShown ? (
+          <div
+            className="flex h-full w-full flex-col"
+            style={{ outline: "1px solid tomato" }}
+          >
+            {/* Balance block */}
+            <div className="my-5 px-[1rem]">
+              <Header />
+            </div>
+            <div className="px-[1rem]">
+              <BalanceBlock />
+            </div>
 
-        <div className="my-5">
-          <Header />
-        </div>
+            {/* Deliveries list */}
+            <div className="">
+              <DeliveriesList />
+            </div>
 
-        {/* Balance block */}
-        <BalanceBlock />
-
-
-        {/* Deliveries list */}
-        <div className="">
-          <span className="text-[15px] font-semibold">{t('home.deliveries')}</span>
-          <div className="mt-[30px]">
-            <DeliveriesListEmptyState />
+            <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
+              <Button>{t("home.sendPackage")}</Button>
+            </div>
           </div>
-        </div>
-
-        <div className="custom-container fixed bottom-7 left-1/2 -translate-x-1/2 z-[11]">
-          <Button>{t('home.sendPackage')}</Button>
-        </div>
+        ) : (
+          <Onboarding userType={userType} close={handleClose} />
+        )}
       </div>
-        : <Onboarding userType={userType} close={handleClose} />}
-    </div>
-  </main>;
+    </main>
+  );
 };
 
 export default Home;

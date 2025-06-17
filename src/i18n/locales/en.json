@@ -59,5 +59,21 @@
         "buttonText": "Go to payment"
       }
     }
+  },
+  "deliveries": {
+    "item": {
+      "status": "Status",
+      "sub-to": "to {{recipient}}",
+      "sub-from": "from {{seller}}",
+      "sub-seller": "Seller",
+      "sub-recepient": "Recipient",
+      "statuspending-recepient": "Pending payment",
+      "statuspending-seller": "Pending payment by the recipient",
+      "status-paid": "Paid",
+      "status-completed-archive": "Completed",
+      "status-completed": "Package received, transaction completed",
+      "info-sent": "Sent",
+      "info-receiving": "Receiving"
+    }
   }
 }
