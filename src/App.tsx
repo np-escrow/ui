@@ -1,13 +1,18 @@
-import { useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import useExpand from './hooks/useExpand'
+import { useEffect, Suspense, lazy, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import cn from 'classnames'
+
 import { useTranslation } from 'react-i18next'
 
+import useExpand from './hooks/useExpand'
+
+const Home = lazy(() => import('./pages/Home/Home'));
+const About = lazy(() => import('./pages/About/About'));
+
 function App() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { handleExpand, isExpanded } = useExpand();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!isExpanded) handleExpand();
@@ -15,9 +20,10 @@ function App() {
       const version = Telegram.WebApp.version;
       const platform = Telegram.WebApp.platform;
 
-      const isMobile = platform === 'ios' || platform === 'android';
+      const isMobileDevice = platform === 'ios' || platform === 'android';
+      setIsMobile(isMobileDevice);
       
-      if (isMobile && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
+      if (isMobileDevice && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
         (Telegram.WebApp as any).requestFullscreen();
       }
 
@@ -30,23 +36,14 @@ function App() {
   }, [handleExpand, isExpanded, i18n]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>{t('welcome')}</h1>
-      <div className="card">
-        <p>{t('description')}</p>
-      </div>
-      <p className="read-the-docs">
-        {Telegram.WebApp.initDataUnsafe?.user?.language_code}
-      </p>
-    </>
+      <Suspense>
+        <div className={cn("h-screen", {"mobile-padding": isMobile})}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </div>
+      </Suspense>
   )
 }
 
