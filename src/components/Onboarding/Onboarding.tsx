@@ -3,7 +3,7 @@ import "swiper/swiper-bundle.css"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation, Pagination } from 'swiper/modules'
-import { PrimaryButton } from "../Buttons/PrimaryButton"
+import Button from "../Button/Button"
 import { Icon } from "../Icon"
 import { t } from "i18next"
 import type { EUserType } from "../../types"
@@ -95,7 +95,7 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
         </Swiper>
 
         <div className="custom-container fixed bottom-7 left-1/2 -translate-x-1/2 z-[11]">
-            <PrimaryButton actionHandler={getActionHandler}>{t(`onboarding.slide${activeSlideIndex + 1}.${userType}.buttonText`)}</PrimaryButton>
+            <Button actionHandler={getActionHandler}>{t(`onboarding.slide${activeSlideIndex + 1}.${userType}.buttonText`)}</Button>
         </div>
     </div>
 };
