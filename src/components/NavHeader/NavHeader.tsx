@@ -1,10 +1,9 @@
 import { t } from 'i18next';
 
 import { Icon } from '../Icon';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavHeader = () => {
-    const navigate = useNavigate();
 
     const getHeaderTitle = () => {
         switch (location.pathname) {
@@ -21,35 +20,29 @@ const NavHeader = () => {
         }
     }
 
-    const handleBack = () => {
+    const getBackLink = () => {
         // используем switch вместо navigate('/') для того чтобы не было перерисовки при возврате
 
         switch (location.pathname) {
             case '/withdraw':
-                navigate('/');
-                break;
+                return '/';
             // case '/deposit':
-            //     navigate('/');
-            //     break;
+            //     return '/';
             // case '/shipment-info':
-            //     navigate('/');
-            //     break;
+            //     return '/';
             // case '/send-package':
-            //     navigate('/');
-            //     break;
+            //     return '/';
             // case '/package-payment':
-            //     navigate('/');
-            //     break;
+            //     return '/';
         }
     }
 
     return <header className='flex items-center gap-x-[10px] h-11 relative'>
-        <button
-            type='button'
-            className='flex items-center justify-center size-9 rounded-full bg-gray-200'
-            onClick={handleBack}>
+        <Link
+            to={getBackLink() || '/'}
+            className='flex items-center justify-center size-9 rounded-full bg-gray-200'>
             <Icon name="arrow" width={22} height={22} />
-        </button>
+        </Link>
 
         <h1 className='text-[20px] font-semibold absolute left-1/2 -translate-x-1/2'>
             {getHeaderTitle()}
