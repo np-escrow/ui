@@ -16,6 +16,10 @@
     "sendPackage": "Відправити посилку",
     "deliveriesListEmptyStateText": "Відправлень поки немає"
   },
+  "withdraw": {
+    "selectCrypto": "Вибір криптовалюти",
+    "selectNetwork": "Вибір мережі"
+  },
   "onboarding": {
     "slide1": {
       "seller": {
