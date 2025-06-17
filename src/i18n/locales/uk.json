@@ -1,4 +1,16 @@
 {
+  "header": {
+    "greeting": "Привіт :)",
+    "greetingWithName": "Привіт, {{name}}"
+  },
+  "home": {
+    "availableBalance": "Доступний баланс",
+    "withdraw": "Вивести",
+    "deposit": "Поповнити",
+    "deliveries": "Доставки",
+    "sendPackage": "Відправити посилку",
+    "deliveriesListEmptyStateText": "Відправлень поки немає"
+  },
   "onboarding": {
     "slide1": {
       "seller": {

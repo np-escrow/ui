@@ -1,10 +1,12 @@
 import { type FC } from "react";
 // import { Icon } from "../../Icon";
 import cn from "classnames";
+import { buttonStyles } from "./Button.styles";
 
 type Props = {
     children: React.ReactNode;
     type?: "button" | "submit" | "reset";
+    variant?: 'primary' | "secondary";
     isLink?: boolean;
     linkto?: string;
     disabled?: boolean;
@@ -12,9 +14,10 @@ type Props = {
     className?: string;
 }
 
-const PrimaryButton: FC<Props> = ({
+const Button: FC<Props> = ({
     children,
     type = "button",
+    variant = "primary",
     isLink = false,
     linkto = "/",
     disabled = false,
@@ -29,12 +32,14 @@ const PrimaryButton: FC<Props> = ({
                     type={type}
                     onClick={actionHandler}
                     disabled={disabled}
-                    className={cn("cursor-pointer font-sf-pro-text font-medium text-[17px] flex justify-center items-center w-full h-[46px] rounded-lg hover:opacity-85 transition-all duration-200 bg-red-100 active:opacity-60 text-white-100", className)}
+                    className={buttonStyles(variant, className)}
                 >
                     {children}
                 </button>
             ) : (
-                <a href={linkto} className={cn("cursor-pointer font-sf-pro-text font-medium text-[17px] flex justify-center items-center w-full h-[46px] rounded-lg hover:opacity-85 transition-all duration-200 bg-red-100 active:opacity-60 text-white-100", className)}>
+                <a
+                    href={linkto}
+                    className={buttonStyles(variant, className)}>
                     {children}
                 </a>
             )}
@@ -42,4 +47,4 @@ const PrimaryButton: FC<Props> = ({
     );
 };
 
-export default PrimaryButton;
+export default Button;
