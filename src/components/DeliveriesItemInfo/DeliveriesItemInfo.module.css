@@ -1,0 +1,21 @@
+.info__title {
+  color: #626c77;
+
+  font-family: "SF Pro Display";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 14.4px */
+  text-transform: capitalize;
+}
+
+.info__subtitle {
+  color: #1d2023;
+
+  font-family: "SF Pro Display";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 15.6px */
+  text-transform: capitalize;
+}
