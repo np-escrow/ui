@@ -1,4 +1,21 @@
 {
+  "header": {
+    "greeting": "Привет :)",
+    "greetingWithName": "Привет, {{name}}",
+    "withdraw": "Вывести",
+    "deposit": "Пополнить кошелек",
+    "shipmentInfo": "Информация о доставке",
+    "sendPackage": "Отправить посылку",
+    "packagePayment": "Оплата посылки"
+  },
+  "home": {
+    "availableBalance": "Доступный баланс",
+    "withdraw": "Вывести",
+    "deposit": "Пополнить",
+    "deliveries": "Доставки",
+    "sendPackage": "Отправить посылку",
+    "deliveriesListEmptyStateText": "Доставок пока нет"
+  },
   "onboarding": {
     "slide1": {
       "seller": {

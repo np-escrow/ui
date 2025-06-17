@@ -1,4 +1,21 @@
 {
+  "header": {
+    "greeting": "Hello :)",
+    "greetingWithName": "Hello, {{name}}",
+    "withdraw": "Withdraw",
+    "deposit": "Top Up Wallet",
+    "shipmentInfo": "Shipment Information",
+    "sendPackage": "Send Package",
+    "packagePayment": "Package Payment"
+  },
+  "home": {
+    "availableBalance": "Available Balance",
+    "withdraw": "Withdraw",
+    "deposit": "Top Up",
+    "deliveries": "Deliveries",
+    "sendPackage": "Send Package",
+    "deliveriesListEmptyStateText": "No Deliveries Yet"
+  },
   "onboarding": {
     "slide1": {
       "seller": {

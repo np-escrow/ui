@@ -6,12 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 import useExpand from './hooks/useExpand'
 import { useUserStore } from './store/userStore'
-import { useUIStore } from './store/uiStore'
 import { EUserType, EUserLanguage, EPlatform } from './types'
-import { Header } from './components/Header'
 
 const Home = lazy(() => import('./pages/Home/Home'));
-const About = lazy(() => import('./pages/About/About'));
+const Withdraw = lazy(() => import('./pages/Withdraw/Withdraw'));
 
 function App() {
   const { i18n } = useTranslation();
@@ -22,7 +20,6 @@ function App() {
   const setLanguage = useUserStore((state) => state.setLanguage);
   const setPlatform = useUserStore((state) => state.setPlatform);
   const setUsername = useUserStore((state) => state.setUsername);
-  const showHeader = useUIStore((state) => state.showHeader);
 
   useEffect(() => {
     if (!isExpanded) handleExpand();
@@ -62,10 +59,9 @@ function App() {
   return (
       <Suspense>
         <div className={cn("h-screen", {"mobile-padding": isMobile})}>
-          {showHeader && <Header />}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/withdraw" element={<Withdraw />} />
           </Routes>
         </div>
       </Suspense>
