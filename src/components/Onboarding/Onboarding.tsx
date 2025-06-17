@@ -94,7 +94,7 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
             </div>
         </Swiper>
 
-        <div className="custom-container fixed bottom-7 left-1/2 -translate-x-1/2">
+        <div className="custom-container fixed bottom-7 left-1/2 -translate-x-1/2 z-[11]">
             <PrimaryButton actionHandler={getActionHandler}>{t(`onboarding.slide${activeSlideIndex + 1}.${userType}.buttonText`)}</PrimaryButton>
         </div>
     </div>
