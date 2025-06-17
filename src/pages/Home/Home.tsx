@@ -7,13 +7,12 @@ import { EUserType } from "../../types";
 import Button from "../../components/Button/Button";
 import { DeliveriesListEmptyState } from "../../components/DeliveriesListEmptyState";
 import { BalanceBlock } from "../../components/BalanceBlock";
-import { useUIStore } from "../../store/uiStore";
+import { Header } from "../../components/Header";
 
 const Home = () => {
   const [isShown, setIsShown] = useState<boolean>(true);
   // todo: get user type from backend
   const [userType] = useState<EUserType>(EUserType.RECIPIENT);
-  const setShowHeader = useUIStore((state) => state.setShowHeader);
 
   const shownOnboarding = true;
   // todo
@@ -27,16 +26,19 @@ const Home = () => {
   const handleClose = () => {
     console.log("todo send request to change user metadata");
     setIsShown(true);
-    setShowHeader(true);
   };
 
   return <main className="page-with-button flex flex-col justify-center">
     <div className="custom-container flex-1">
       {isShown ? <div className="flex flex-col h-full">
-        {/* Balance block */}
-        <div className="mt-5">
-          <BalanceBlock />
+
+        <div className="my-5">
+          <Header />
         </div>
+
+        {/* Balance block */}
+        <BalanceBlock />
+
 
         {/* Deliveries list */}
         <div className="">

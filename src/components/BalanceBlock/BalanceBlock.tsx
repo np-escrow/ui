@@ -12,10 +12,10 @@ const BalanceBlock = () => {
         </div>
 
         <div className="flex items-center justify-center gap-x-3">
-            <Button variant="secondary">
+            <Button isLink linkto="/deposit" variant="secondary">
                 {t('home.deposit')}
             </Button>
-            <Button variant="secondary">
+            <Button isLink linkto="/withdraw" variant="secondary">
                 {t('home.withdraw')}
             </Button>
         </div>

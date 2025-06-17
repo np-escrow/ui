@@ -1,7 +1,12 @@
 {
   "header": {
     "greeting": "Привіт :)",
-    "greetingWithName": "Привіт, {{name}}"
+    "greetingWithName": "Привіт, {{name}}",
+    "withdraw": "Вивести",
+    "deposit": "Поповнити гаманець",
+    "shipmentInfo": "Інформація про доставку",
+    "sendPackage": "Відправити посилку",
+    "packagePayment": "Оплата посилки"
   },
   "home": {
     "availableBalance": "Доступний баланс",
