@@ -1,0 +1,29 @@
+.details__subtitle {
+  color: #626c77;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 19.2px */
+  text-transform: capitalize;
+}
+
+.details__value {
+  color: #1d2023;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 19.2px */
+  text-transform: capitalize;
+}
+
+.details__total {
+  color: #1d2023;
+
+  text-align: right;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 21.6px */
+}

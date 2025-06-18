@@ -79,5 +79,23 @@
       "info-sent": "Відправлено",
       "info-receiving": "Отримання"
     }
+  },
+  "shipment": {
+    "dealTitle": "Угода {{ttn}}",
+    "dealPending": "Очікується оплата",
+    "dealDone": "Оплачено",
+    "detailsTitle": "Деталі посилки",
+    "detailsTtn": "ТТН",
+    "detailsFrom": "Звідки",
+    "detailsTo": "Куди",
+    "detailsWeight": "Вага",
+    "paymentTitle": "Деталі оплати",
+    "paymentPrice": "Вартість посилки:",
+    "paymentFee": "Комісія сервісу (5%):",
+    "totalSeller": "Ви отримаєте",
+    "total": "Разом",
+    "role": "Ваша роль",
+    "roleSeller": "Продавець",
+    "roleRecepient": "Одержувач"
   }
 }

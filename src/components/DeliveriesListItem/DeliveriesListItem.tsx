@@ -5,12 +5,15 @@ import styles from "./DeliveriesListItem.module.css";
 import { t } from "i18next";
 
 import DeliveriesItemInfo from "../DeliveriesItemInfo/DeliveriesItemInfo";
+import { useNavigate } from "react-router-dom";
 
 interface DeliveriesListItemProps {
   item: IDeliveries;
 }
 
 const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
+  const navigate = useNavigate();
+
   const subtitle = useMemo(() => {
     if (item.status === EDeliveryStatus.PENDING) {
       return item.userType === EUserType.SELLER
@@ -51,6 +54,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
         [styles.completed]:
           item.status === EDeliveryStatus.COMPLETED && item.archive
       })}
+      onClick={() => navigate(`/shipment-info/${item.id}`)}
     >
       <div className="w-full">
         <div className="flex items-center justify-between">
