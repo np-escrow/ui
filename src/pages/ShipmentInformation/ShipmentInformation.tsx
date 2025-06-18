@@ -42,7 +42,7 @@ const ShipmentInformation = () => {
       <div className="custom-container flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div className="mb-[30px] mt-5 px-[1rem]">
-            <NavHeader />
+            <NavHeader isLink={true} link="/" />
           </div>
 
           <div className={styles.shipment__container}>
