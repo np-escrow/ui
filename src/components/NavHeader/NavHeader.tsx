@@ -1,53 +1,59 @@
-import { t } from 'i18next';
+import { t } from "i18next";
 
-import { Icon } from '../Icon';
-import { Link } from 'react-router-dom';
+import { Icon } from "../Icon";
+import { Link } from "react-router-dom";
+import type { FC } from "react";
+import cn from "classnames";
 
-const NavHeader = () => {
+type Props = {
+  isLink: boolean;
+  link?: string;
+  action?: () => void;
+  className?: string;
+};
 
-    const getHeaderTitle = () => {
-        switch (location.pathname) {
-            case '/withdraw':
-                return t('header.withdraw');
-            case '/deposit':
-                return t('header.deposit');
-            case '/shipment-info':
-                return t('header.shipmentInfo');
-            case '/send-package':
-                return t('header.sendPackage');
-            case '/package-payment':
-                return t('header.packagePayment');
-        }
+const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
+  const getHeaderTitle = () => {
+    switch (location.pathname) {
+      case "/withdraw":
+        return t("header.withdraw");
+      case "/scan":
+        return t("header.withdraw");
+      case "/deposit":
+        return t("header.deposit");
+      case "/shipment-info":
+        return t("header.shipmentInfo");
+      case "/send-package":
+        return t("header.sendPackage");
+      case "/package-payment":
+        return t("header.packagePayment");
     }
+  };
 
-    const getBackLink = () => {
-        // используем switch вместо navigate('/') для того чтобы не было перерисовки при возврате
-
-        switch (location.pathname) {
-            case '/withdraw':
-                return '/';
-            // case '/deposit':
-            //     return '/';
-            // case '/shipment-info':
-            //     return '/';
-            // case '/send-package':
-            //     return '/';
-            // case '/package-payment':
-            //     return '/';
-        }
-    }
-
-    return <header className='flex items-center gap-x-[10px] h-11 relative'>
+  return (
+    <header className={cn("relative flex h-11 items-center gap-x-[10px]", className)}>
+      {isLink ? (
         <Link
-            to={getBackLink() || '/'}
-            className='flex items-center justify-center size-9 rounded-full bg-gray-200'>
-            <Icon name="arrow" width={22} height={22} />
+          to={link || "/"}
+          className="flex size-9 items-center justify-center rounded-full bg-gray-200"
+        >
+          <Icon name="arrow" width={22} height={22} />
         </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={action}
+          className="flex size-9 items-center justify-center rounded-full bg-gray-200"
+        >
+          <Icon name="arrow" width={22} height={22} />
+        </button>
+      )}
 
-        <h1 className='text-[20px] font-semibold absolute left-1/2 -translate-x-1/2'>
-            {getHeaderTitle()}
-        </h1>
-    </header>;
+      <h1 className="absolute left-1/2 -translate-x-1/2 text-[20px] font-semibold">
+        {getHeaderTitle()}
+      </h1>
+    </header>
+  );
 };
 
 export default NavHeader;

@@ -1,14 +1,4 @@
-export type Crypto = {
-    id: string;
-    token: string;
-    networks: Network[];
-}
-
-export type Network = {
-    id: string;
-    name: string;
-    address: string;
-}
+import type { Crypto } from "../../types";
 
 export const cryptoMock: Crypto[] = [
     {
@@ -33,6 +23,16 @@ export const cryptoMock: Crypto[] = [
             {
                 id: '4',
                 name: 'Ethereum',
+                address: '0x0000000000000000000000000000000000000000',
+            },
+            {
+                id: '5',
+                name: 'Polygon',
+                address: '0x0000000000000000000000000000000000000000',
+            },
+            {
+                id: '6',
+                name: 'Solana',
                 address: '0x0000000000000000000000000000000000000000',
             },
         ],

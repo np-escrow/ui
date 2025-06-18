@@ -35,7 +35,7 @@ const Home = () => {
         {isShown ? (
           <div
             className="flex h-full w-full flex-col"
-            style={{ outline: "1px solid tomato" }}
+            // style={{ outline: "1px solid tomato" }}
           >
             {/* Balance block */}
             <div className="my-5 px-[1rem]">

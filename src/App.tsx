@@ -9,6 +9,7 @@ import { useUserStore } from "./store/userStore";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
+const Scan = lazy(() => import("./pages/Scan/Scan"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -32,12 +33,10 @@ function App() {
       const isMobileDevice =
         platform === EPlatform.IOS || platform === EPlatform.ANDROID;
       setIsMobile(isMobileDevice);
-
-      if (
-        isMobileDevice &&
-        Number(version) >= 8 &&
-        typeof (Telegram.WebApp as any).requestFullscreen === "function"
-      ) {
+      
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (isMobileDevice && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (Telegram.WebApp as any).requestFullscreen();
       }
 
@@ -77,6 +76,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/scan" element={<Scan />} />
         </Routes>
       </div>
     </Suspense>

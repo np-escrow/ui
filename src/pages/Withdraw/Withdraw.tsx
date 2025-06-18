@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
-import { NavHeader } from "../../components/NavHeader";
-import { cryptoMock, type Crypto, type Network } from "./mock";
-
-// import Button from "../../components/Button/Button";
-// import { EUserType } from "../../types";
-
 import { t } from "i18next";
-// import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
-import Icon from "../../components/Icon/Icon";
+
+import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
+
+import { Button } from "../../components/Button";
+import { NavHeader } from "../../components/NavHeader";
+import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
+import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
+
+import type { Crypto } from "../../types";
+import { cryptoMock } from "./mock";
 
 const Withdraw = () => {
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
-  const [selectedCrypto, setSelectedCrypto] = useState<string>(cryptoList[0]?.id || '');
-  const [selectedNetwork, setSelectedNetwork] = useState<Network | null>(null);
 
-  // const step = useWithdrawStore((state) => state.step);
-  // const setStep = useWithdrawStore((state) => state.setStep);
+  const selectedAssetId = useWithdrawStore((state) => state.selectedAssetId);
+  const setSelectedAssetId = useWithdrawStore((state) => state.setSelectedAssetId);
+  const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
+  const setSelectedNetwork = useWithdrawStore((state) => state.setSelectedNetwork);
+  const step = useWithdrawStore((state) => state.step);
+  const setStep = useWithdrawStore((state) => state.setStep);
 
   useEffect(() => {
     if (!cryptoList.length) {
@@ -23,64 +27,110 @@ const Withdraw = () => {
       setCryptoList(cryptoMock);
     }
 
-    if (!selectedCrypto && cryptoList.length) {
-      setSelectedCrypto(cryptoList[0]?.id || '');
+    if (!selectedAssetId && cryptoList.length) {
+      setSelectedAssetId(cryptoList[0]?.id);
       setSelectedNetwork(cryptoList[0]?.networks[0]);
     }
+  }, [cryptoList, selectedAssetId, setSelectedAssetId, setSelectedNetwork]);
 
-  }, [cryptoList, selectedCrypto]);
+  const handleBack = () => {
+    switch (step) {
+      case EWithdrawStep.ENTER_ADDRESS:
+        return {
+          isLink: false,
+          link: undefined,
+          action: () => setStep(EWithdrawStep.SELECT_ASSET)
+        };
 
-  const handleSelectCrypto = (id: string) => {
-    setSelectedCrypto(id);
-    setSelectedNetwork(cryptoList.find((crypto) => crypto.id === id)?.networks[0] || null);
-  }
+      case EWithdrawStep.ENTER_AMOUNT:
+        return {
+          isLink: false,
+          link: undefined,
+          action: () => setStep(EWithdrawStep.ENTER_ADDRESS)
+        };
 
-  return <main className="page-with-button flex flex-col justify-center">
-    <div className="custom-container flex-1">
-      <div className="flex flex-col h-full">
-        <div className="mt-5 mb-[30px]">
-          <NavHeader />
+      case EWithdrawStep.CONFIRM:
+        return {
+          isLink: false,
+          link: undefined,
+          action: () => setStep(EWithdrawStep.ENTER_AMOUNT)
+        };
+
+      default:
+        return {
+          isLink: true,
+          link: "/",
+          action: undefined
+        };
+    }
+  };
+
+  const handleButtonAction = () => {
+    switch (step) {
+      case EWithdrawStep.SELECT_ASSET:
+        return () => {
+          setStep(EWithdrawStep.ENTER_ADDRESS);
+        };
+
+      case EWithdrawStep.ENTER_ADDRESS:
+        return () => {
+          setStep(EWithdrawStep.ENTER_AMOUNT);
+        };
+
+      case EWithdrawStep.ENTER_AMOUNT:
+        return () => {
+          setStep(EWithdrawStep.CONFIRM);
+        };
+
+      default:
+        return () => {
+          setStep(EWithdrawStep.SELECT_ASSET);
+        };
+    }
+  };
+
+  const getButtonDisabled = () => {
+    switch (step) {
+      case EWithdrawStep.SELECT_ASSET:
+        return !selectedAssetId || !selectedNetwork;
+    }
+  };
+
+  return (
+    <main className="page-with-button flex flex-col justify-center">
+      <div className="custom-container flex-1">
+        <div className="flex h-full flex-col">
+          <div className="mb-[30px] mt-5">
+            <NavHeader {...handleBack()} />
+          </div>
+
+          {step === EWithdrawStep.SELECT_ASSET && (
+            <WithdrawStepSelectAsset
+              cryptoList={cryptoList}
+            />
+          )}
+
+          {step === EWithdrawStep.ENTER_ADDRESS && (
+            <WithdrawStepEnterAddress
+              selectedCryptoName={
+                cryptoList.find((crypto) => crypto.id === selectedAssetId)
+                  ?.token || ""
+              }
+            />
+          )}
         </div>
 
-        {/* Select crypto */}
-        <div className="flex flex-col mb-[26px]">
-          <div className="mb-[14px] text-sm font-semibold">
-            {t('withdraw.selectCrypto')}
-          </div>
-
-          <div className="flex flex-col gap-y-3">
-            {cryptoList.map((crypto) => (
-              <label key={crypto.id} className="flex items-center gap-x-3 cursor-pointer relative">
-                <input
-                  type="radio"
-                  name="crypto"
-                  value={crypto.id}
-                  checked={selectedCrypto === crypto.id}
-                  onChange={() => handleSelectCrypto(crypto.id)}
-                  className="peer absolute opacity-0 w-0 h-0"
-                />
-                <span className="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-4 peer-checked:border-red-100 transition-colors"></span>
-                <span className="text-[17px]">{crypto.token}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Select network */}
-        <div className="flex flex-col">
-          <div className="mb-[14px] text-sm font-semibold">
-            {t('withdraw.selectNetwork')}
-          </div>
-
-          <button type="button" className="flex items-center justify-between w-full h-[46px] border border-gray-300/50 bg-gray-200 rounded-lg pl-3 pr-[10px]">
-            <span className="text-[17px] text-text-secondary">{selectedNetwork?.name}</span>
-            <Icon name="chevron" width={24} height={24} />
-          </button>
-
+        <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
+          <Button
+            actionHandler={handleButtonAction()}
+            disabled={getButtonDisabled()}
+          >
+            {t("withdraw.continue")}
+          </Button>
         </div>
       </div>
-    </div>
-  </main>;
+    </main>
+  );
 };
 
 export default Withdraw;

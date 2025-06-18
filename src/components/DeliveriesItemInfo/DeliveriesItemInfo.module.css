@@ -1,7 +1,7 @@
 .info__title {
   color: #626c77;
 
-  font-family: "SF Pro Display";
+  font-family: "SFProDisplay", system-ui, sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -12,7 +12,7 @@
 .info__subtitle {
   color: #1d2023;
 
-  font-family: "SF Pro Display";
+  font-family: "SFProDisplay", system-ui, sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;

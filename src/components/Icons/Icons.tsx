@@ -1195,8 +1195,8 @@ const Icons = () => {
             <path
               d="M11 68L11 8"
               stroke="#E30611"
-              stroke-width="3"
-              stroke-linecap="round"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
             <g filter="url(#filter0_d_105_13520)">
               <circle
@@ -1212,7 +1212,7 @@ const Icons = () => {
                 r="5.425"
                 transform="rotate(163.22 11.0064 63.9934)"
                 stroke="white"
-                stroke-width="2"
+                strokeWidth="2"
               />
             </g>
             <circle
@@ -1222,7 +1222,7 @@ const Icons = () => {
               transform="rotate(163.22 11.0064 8.00614)"
               fill="#E30611"
               stroke="white"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <defs>
               <filter
@@ -1232,9 +1232,9 @@ const Icons = () => {
                 width="20.8535"
                 height="20.8535"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix
                   in="SourceAlpha"
                   type="matrix"
@@ -1271,8 +1271,8 @@ const Icons = () => {
             <path
               d="M11 7L11 67"
               stroke="url(#paint0_linear_88_6286)"
-              stroke-width="3"
-              stroke-linecap="round"
+              strokeWidth="3"
+              strokeLinecap="round"
             />
             <g filter="url(#filter0_d_88_6286)">
               <circle
@@ -1288,7 +1288,7 @@ const Icons = () => {
                 r="5.425"
                 transform="matrix(-0.957422 -0.288692 -0.288692 0.957422 19.0127 6.70996)"
                 stroke="white"
-                stroke-width="2"
+                strokeWidth="2"
               />
             </g>
             <circle
@@ -1298,7 +1298,7 @@ const Icons = () => {
               transform="matrix(-0.957422 -0.288692 -0.288692 0.957422 19.0127 62.6973)"
               fill="#E2E5EB"
               stroke="white"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <defs>
               <filter
@@ -1308,9 +1308,9 @@ const Icons = () => {
                 width="20.8535"
                 height="20.8535"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix
                   in="SourceAlpha"
                   type="matrix"
@@ -1344,8 +1344,8 @@ const Icons = () => {
                 y2="67"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#E30611" />
-                <stop offset="1" stop-color="#E2E5EB" />
+                <stop stopColor="#E30611" />
+                <stop offset="1" stopColor="#E2E5EB" />
               </linearGradient>
             </defs>
           </symbol>
@@ -1380,6 +1380,62 @@ const Icons = () => {
             <path
               d="M12 14.1983L6.64021 9.7318C6.21593 9.37824 5.58537 9.43556 5.2318 9.85984C4.87824 10.2841 4.93556 10.9147 5.35984 11.2682L11.3598 16.2682C11.7307 16.5773 12.2694 16.5773 12.6402 16.2682L18.6402 11.2682C19.0645 10.9147 19.1218 10.2841 18.7682 9.85984C18.4147 9.43556 17.7841 9.37824 17.3598 9.7318L12 14.1983Z"
               fill="#969FA8"
+            />
+          </symbol>
+
+          <symbol
+            id="scan"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H7"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M17 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M21 17V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H17"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M7 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V17"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M7 12H17"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </symbol>
+
+          <symbol
+            id="qrFrame"
+            viewBox="0 0 264 264"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M34 2H14C7.37258 2 2 7.37258 2 14V34M34 262H14C7.37258 262 2 256.627 2 250V230M262 230V250C262 256.627 256.627 262 250 262H230M230 2H250C256.627 2 262 7.37258 262 14V34"
+              stroke="#FFFFFF"
+              strokeWidth="3"
             />
           </symbol>
         </defs>
