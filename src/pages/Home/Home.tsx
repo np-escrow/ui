@@ -7,10 +7,12 @@ import { EUserType } from "../../types";
 import { Header } from "../../components/Header";
 import { Onboarding } from "../../components/Onboarding";
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
 // import { useUIStore } from "../../store/uiStore";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isShown, setIsShown] = useState<boolean>(true);
   // todo: get user type from backend
   const [userType] = useState<EUserType>(EUserType.RECIPIENT);
@@ -51,7 +53,9 @@ const Home = () => {
             </div>
 
             <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
-              <Button>{t("home.sendPackage")}</Button>
+              <Button actionHandler={() => navigate("/send-package")}>
+                {t("home.sendPackage")}
+              </Button>
             </div>
           </div>
         ) : (
