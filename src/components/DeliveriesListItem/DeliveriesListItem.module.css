@@ -23,7 +23,7 @@
 
 .deliveries__header {
   color: #1d2023;
-  font-family: "SF Pro Display";
+  font-family: "SFProDisplay", system-ui, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -35,7 +35,7 @@
   margin-top: 4px;
   color: #626c77;
 
-  font-family: "SF Pro Display";
+  font-family: "SFProDisplay", system-ui, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -45,7 +45,7 @@
 
 .deliveries__status {
   color: #1d2023;
-  font-family: "SF Pro Display";
+  font-family: "SFProDisplay", system-ui, sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;

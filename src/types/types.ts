@@ -42,6 +42,18 @@ export interface IDeliveries {
   archive: boolean;
 }
 
+export type Crypto = {
+  id: string;
+  token: string;
+  networks: Network[];
+}
+
+export type Network = {
+  id: string;
+  name: string;
+  address: string;
+}
+
 export interface IShipmentInfo {
   id: string;
   ttn: string;

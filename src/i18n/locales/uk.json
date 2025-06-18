@@ -1,4 +1,7 @@
 {
+  "common": {
+    "paste": "Вставити"
+  },
   "header": {
     "greeting": "Привіт :)",
     "greetingWithName": "Привіт, {{name}}",
@@ -18,7 +21,10 @@
   },
   "withdraw": {
     "selectCrypto": "Вибір криптовалюти",
-    "selectNetwork": "Вибір мережі"
+    "selectNetwork": "Вибір мережі",
+    "sendToAddress": "Вивести на адресу",
+    "address": "Адреса",
+    "continue": "Продовжити"
   },
   "onboarding": {
     "slide1": {
