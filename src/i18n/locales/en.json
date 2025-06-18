@@ -75,5 +75,23 @@
       "info-sent": "Sent",
       "info-receiving": "Receiving"
     }
+  },
+  "shipment": {
+    "dealTitle": "Deal {{ttn}}",
+    "dealPending": "Pending payment",
+    "dealDone": "Paid",
+    "detailsTitle": "Package Details",
+    "detailsTtn": "TTN",
+    "detailsFrom": "From",
+    "detailsTo": "To",
+    "detailsWeight": "Weight",
+    "paymentTitle": "Payment Details",
+    "paymentPrice": "Package Price:",
+    "paymentFee": "Service Fee (5%):",
+    "totalSeller": "You will get",
+    "total": "Total",
+    "role": "Your role",
+    "roleSeller": "Seller",
+    "roleRecepient": "Recipient"
   }
 }

@@ -75,5 +75,23 @@
       "info-sent": "Отправлено",
       "info-receiving": "Получение"
     }
+  },
+  "shipment": {
+    "dealTitle": "Сделка {{ttn}}",
+    "dealPending": "Ожидание оплаты",
+    "dealDone": "Оплачено",
+    "detailsTitle": "Детали посылки",
+    "detailsTtn": "Номер ТТН",
+    "detailsFrom": "Откуда",
+    "detailsTo": "Куда",
+    "detailsWeight": "Вес",
+    "paymentTitle": "Детали оплаты",
+    "paymentPrice": "Стоимость посылки:",
+    "paymentFee": "Комиссия сервиса (5%):",
+    "totalSeller": "Вы получите",
+    "total": "Итого",
+    "role": "Ваша роль",
+    "roleSeller": "Продавец",
+    "roleRecepient": "Получатель"
   }
 }

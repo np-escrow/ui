@@ -14,15 +14,18 @@ type Props = {
 
 const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
   const getHeaderTitle = () => {
-    switch (location.pathname) {
+    const path = location.pathname;
+      if (path.startsWith("/shipment-info/")) {
+      return t("header.shipmentInfo");
+    }
+    
+    switch (location.pathname) {        
       case "/withdraw":
         return t("header.withdraw");
       case "/scan":
         return t("header.withdraw");
       case "/deposit":
         return t("header.deposit");
-      case "/shipment-info":
-        return t("header.shipmentInfo");
       case "/send-package":
         return t("header.sendPackage");
       case "/package-payment":

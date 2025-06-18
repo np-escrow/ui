@@ -53,3 +53,26 @@ export type Network = {
   name: string;
   address: string;
 }
+
+export interface IShipmentInfo {
+  id: string;
+  ttn: string;
+  status: EDeliveryStatus;
+  userType: EUserType;
+
+  paimentData: Array<{
+    id: string;
+    name: string;
+    date: string;
+  }>;
+  packageDetails: {
+    from: string;
+    to: string;
+    weight: string;
+  };
+  paymentDetails: {
+    price: number;
+    currency: string;
+    fee: number;
+  };
+}
