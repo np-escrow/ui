@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <main className="page-with-button flex flex-col justify-start overflow-y-hidden">
-      <div className="custom-container flex-1">
+      <div className="custom-container flex-1 !px-0">
         {isShown ? (
           <div
             className="flex h-full w-full flex-col"

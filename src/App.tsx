@@ -9,6 +9,9 @@ import { useUserStore } from "./store/userStore";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
+const ShipmentInformation = lazy(
+  () => import("./pages/ShipmentInformation/ShipmentInformation")
+);
 
 function App() {
   const { i18n } = useTranslation();
@@ -77,6 +80,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/shipment-info/:id" element={<ShipmentInformation />} />
         </Routes>
       </div>
     </Suspense>

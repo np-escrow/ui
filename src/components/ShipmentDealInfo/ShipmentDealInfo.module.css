@@ -1,0 +1,49 @@
+.deal_info__title {
+  color: #1d2023;
+
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%; /* 18px */
+  text-transform: capitalize;
+}
+
+.deal_info__subtitle {
+  color: #626c77;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 16.8px */
+  text-transform: capitalize;
+}
+
+.deal_info__box {
+  display: flex;
+  padding: 0px 8px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+
+  border-radius: 100px;
+  border: 1px solid var(--border);
+
+  background-color: var(--bg-color);
+  color: var(--color);
+
+  text-align: center;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+}
+
+.deal_info__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
