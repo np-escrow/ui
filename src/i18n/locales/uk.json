@@ -1,0 +1,154 @@
+{
+  "common": {
+    "paste": "Вставити"
+  },
+  "header": {
+    "greeting": "Привіт :)",
+    "greetingWithName": "Привіт, {{name}}",
+    "withdraw": "Вивести",
+    "deposit": "Поповнити гаманець",
+    "shipmentInfo": "Інформація про доставку",
+    "sendPackage": "Відправити посилку",
+    "packagePayment": "Оплата посилки"
+  },
+  "home": {
+    "availableBalance": "Доступний баланс",
+    "withdraw": "Вивести",
+    "deposit": "Поповнити",
+    "deliveries": "Доставки",
+    "sendPackage": "Відправити посилку",
+    "deliveriesListEmptyStateText": "Відправлень поки немає"
+  },
+  "withdraw": {
+    "selectCrypto": "Вибір криптовалюти",
+    "selectNetwork": "Вибір мережі",
+    "sendToAddress": "Вивести на адресу",
+    "address": "Адреса",
+    "continue": "Продовжити",
+    "available": "Доступно",
+    "max": "МАКС",
+    "switchBetweenUSDAndAsset": "Переключити між USD та токеном",
+    "recipientAddress": "Адреса отримувача",
+    "fee": "Комісія",
+    "amount": "Сума списання",
+    "network": "Мережа",
+    "bottomAlertDescription": "Ваші кошти можуть бути втрачені, якщо ви надішлете їх в іншу мережу",
+    "youSend": "Ви надсилаєте"
+  },
+  "payment": {
+    "payment": "Оплата посилки",
+    "continue": "Продовжити",
+    "selectCrypto": "Вибір криптовалюти",
+    "selectNetwork": "Вибір мережі",
+    "paymentDescription": "Сума заморожується і буде передана відправнику лише після вашого підтвердження отримання.",
+    "pay": "Оплачуйте",
+    "only": "тільки",
+    "kg": "кг",
+    "paymentDone": "Я оплатив",
+    "total": "Разом до оплати"
+  },
+  "onboarding": {
+    "slide1": {
+      "seller": {
+        "title": "Відправте посилку з гарантією",
+        "description1": "Ви створюєте доставку і відправляєте посилання отримувачу.",
+        "description2": "Він оплачує - і посилка відправляється.",
+        "buttonText": "Далі"
+      },
+      "recipient": {
+        "title": "Вас очікує посилка",
+        "description1": "Ви отримали посилання на доставку.",
+        "description2": "Залишилось лише оплатити - і посилка поїде до вас.",
+        "buttonText": "Далі"
+      }
+    },
+    "slide2": {
+      "seller": {
+        "title": "Ми - гарантія між вами та отримувачем",
+        "description1": "Сервіс захищає угоду.",
+        "description2": "Ви отримаєте гроші лише після підтвердження отримання.",
+        "buttonText": "Зрозуміло"
+      },
+      "recipient": {
+        "title": "Ми - гарантія між вами та відправником",
+        "description1": "Сервіс гарантує безпеку угоди.",
+        "description2": "Якщо щось піде не так - повернемо гроші.",
+        "buttonText": "Зрозуміло"
+      }
+    },
+    "slide3": {
+      "seller": {
+        "title": "Як це працює?",
+        "description1": "Ви оформлюєте доставку - отримувач оплачує.",
+        "description2": "Ми тримаємо суму до отримання посилки. Гроші зараховуються вам лише після підтвердження.",
+        "buttonText": "Перейти до відправлення"
+      },
+      "recipient": {
+        "title": "Як це працює?",
+        "description1": "Ви оплачуєте - ми тримаємо суму до отримання посилки.",
+        "description2": "Відправник отримує гроші лише після вашого підтвердження.",
+        "buttonText": "Перейти до оплати"
+      }
+    }
+  },
+  "deliveries": {
+    "item": {
+      "status": "Статус",
+      "sub-to": "до {{recipient}}",
+      "sub-from": "від {{seller}}",
+      "sub-seller": "Продавець",
+      "sub-recepient": "Отримувач",
+      "statuspending-recepient": "Очікується оплата",
+      "statuspending-seller": "Очікується оплата від отримувача",
+      "status-paid": "Оплачено",
+      "status-completed-archive": "Завершено",
+      "status-completed": "Посилка отримана, угода завершена",
+      "info-sent": "Відправлено",
+      "info-receiving": "Отримання"
+    }
+  },
+  "shipment": {
+    "dealTitle": "Угода {{ttn}}",
+    "dealPending": "Очікується оплата",
+    "dealDone": "Оплачено",
+    "detailsTitle": "Деталі посилки",
+    "detailsTtn": "ТТН",
+    "detailsFrom": "Звідки",
+    "detailsTo": "Куди",
+    "detailsWeight": "Вага",
+    "paymentTitle": "Деталі оплати",
+    "paymentPrice": "Вартість посилки:",
+    "paymentFee": "Комісія сервісу (5%):",
+    "totalSeller": "Ви отримаєте",
+    "total": "Разом",
+    "role": "Ваша роль",
+    "roleSeller": "Продавець",
+    "roleRecepient": "Одержувач"
+  },
+  "sendPackage": {
+    "validateTitle": "Нова Пошта ТТН",
+    "detailsTitle": "Перевірка даних посилки",
+    "createTitle": "Ціна (USD)",
+    "validateExample": "Приклад: 59000391234567",
+    "validateButton": "Перевірити ТТН",
+    "validatePlaceholder": "Введіть 14-значний номер відстеження",
+    "detailsTTN": "ТТН",
+    "detailsFrom": "Звідки",
+    "detailsTo": "Куди",
+    "detailsWeight": "Вага",
+    "detailsDimensions": "Габарити",
+    "detailsButton": "Продовжити",
+    "createEmptyDescription": "Вкажіть суму, яку має оплатити одержувач. Комісію буде утримано при отриманні — ви отримаєте суму за вирахуванням комісії після підтвердження доставки.",
+    "createFullfiledDescription": "Одержувач сплатить цю суму. Після вирахування комісії ви отримаєте приблизно {amount− ${{fee}}}.",
+    "createButton": "Створити угоду",
+    "sendDescription": "Поділіться цим посиланням з покупцем",
+    "sendSubtitle": "Оплата посилки",
+    "sendTTN": "ТТН:",
+    "sendRoute": "Маршрут:",
+    "sendWeight": "Вага:",
+    "sendPrice": "Ціна посилки:",
+    "sendFee": "Комісія",
+    "sendTotal": "Ви отримаєте",
+    "sendButton": "Поділитися"
+  }
+}

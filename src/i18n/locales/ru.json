@@ -1,0 +1,154 @@
+{
+  "common": {
+    "paste": "Вставить"
+  },
+  "header": {
+    "greeting": "Привет :)",
+    "greetingWithName": "Привет, {{name}}",
+    "withdraw": "Вывести",
+    "deposit": "Пополнить кошелек",
+    "shipmentInfo": "Информация о доставке",
+    "sendPackage": "Отправить посылку",
+    "packagePayment": "Оплата посылки"
+  },
+  "home": {
+    "availableBalance": "Доступный баланс",
+    "withdraw": "Вывести",
+    "deposit": "Пополнить",
+    "deliveries": "Доставки",
+    "sendPackage": "Отправить посылку",
+    "deliveriesListEmptyStateText": "Доставок пока нет"
+  },
+  "onboarding": {
+    "slide1": {
+      "seller": {
+        "title": "Отправьте посылку с гарантией",
+        "description1": "Вы создаёте доставку и отправляете ссылку получателю.",
+        "description2": "Он оплачивает — и посылка отправляется.",
+        "buttonText": "Далее"
+      },
+      "recipient": {
+        "title": "Вас ждёт посылка",
+        "description1": "Вы получили ссылку на доставку.",
+        "description2": "Осталось только оплатить — и посылка поедет к вам.",
+        "buttonText": "Далее"
+      }
+    },
+    "slide2": {
+      "seller": {
+        "title": "Мы — гарантия между вами и получателем",
+        "description1": "Сервис защищает сделку.",
+        "description2": "Вы получите деньги только после подтверждения получения.",
+        "buttonText": "Понятно"
+      },
+      "recipient": {
+        "title": "Мы — гарантия между вами и отправителем",
+        "description1": "Сервис гарантирует безопасность сделки.",
+        "description2": "Если что-то не так — вернём деньги.",
+        "buttonText": "Понятно"
+      }
+    },
+    "slide3": {
+      "seller": {
+        "title": "Как это работает?",
+        "description1": "Вы оформляете доставку — получатель оплачивает.",
+        "description2": "Мы держим сумму до получения посылки. Деньги поступают вам только после подтверждения.",
+        "buttonText": "Перейти к отправлению"
+      },
+      "recipient": {
+        "title": "Как это работает?",
+        "description1": "Вы оплачиваете — мы держим сумму до получения посылки.",
+        "description2": "Отправитель получает деньги только после вашего подтверждения.",
+        "buttonText": "Перейти к оплате"
+      }
+    }
+  },
+  "deliveries": {
+    "item": {
+      "status": "Статус",
+      "sub-to": "кому: {{recipient}}",
+      "sub-from": "от: {{seller}}",
+      "sub-seller": "Продавец",
+      "sub-recepient": "Получатель",
+      "statuspending-recepient": "Ожидает оплату",
+      "statuspending-seller": "Ожидает оплату от получателя",
+      "status-paid": "Оплачено",
+      "status-completed-archive": "Завершено",
+      "status-completed": "Посылка получена, сделка завершена",
+      "info-sent": "Отправлено",
+      "info-receiving": "Получение"
+    }
+  },
+  "shipment": {
+    "dealTitle": "Сделка {{ttn}}",
+    "dealPending": "Ожидание оплаты",
+    "dealDone": "Оплачено",
+    "detailsTitle": "Детали посылки",
+    "detailsTtn": "Номер ТТН",
+    "detailsFrom": "Откуда",
+    "detailsTo": "Куда",
+    "detailsWeight": "Вес",
+    "paymentTitle": "Детали оплаты",
+    "paymentPrice": "Стоимость посылки:",
+    "paymentFee": "Комиссия сервиса (5%):",
+    "totalSeller": "Вы получите",
+    "total": "Итого",
+    "role": "Ваша роль",
+    "roleSeller": "Продавец",
+    "roleRecepient": "Получатель"
+  },
+  "withdraw": {
+    "selectCrypto": "Выбор криптовалюты",
+    "selectNetwork": "Выбор сети",
+    "sendToAddress": "Отправить на адрес",
+    "address": "Адрес",
+    "continue": "Продолжить",
+    "available": "Доступно",
+    "max": "МАКС",
+    "switchBetweenUSDAndAsset": "Переключить между USD и токеном",
+    "recipientAddress": "Адрес получателя",
+    "fee": "Комиссия",
+    "amount": "Сумма списания",
+    "network": "Сеть",
+    "bottomAlertDescription": "Ваши средства могут быть утрачены, если вы отправите их в другую сеть",
+    "youSend": "Вы отправляете"
+  },
+  "payment": {
+    "payment": "Оплата посылки",
+    "continue": "Продолжить",
+    "selectCrypto": "Выбор криптовалюты",
+    "selectNetwork": "Выбор сети",
+    "paymentDescription": "Сумма замораживается и будет передана отправителю только после вашего подтверждения получения.",
+    "pay": "Оплачивайте",
+    "only": "только",
+    "kg": "кг",
+    "paymentDone": "Я оплатил",
+    "total": "Итого к оплате"
+  },
+  "sendPackage": {
+    "validateTitle": "Новая Почта ТТН",
+    "detailsTitle": "Проверьте данные посылки",
+    "createTitle": "Цена (USD)",
+    "validateExample": "Пример: 59000391234567",
+    "validateButton": "Проверить ТТН",
+    "validatePlaceholder": "Введите 14-значный номер отслеживания",
+    "detailsTTN": "ТТН",
+    "detailsFrom": "Откуда",
+    "detailsTo": "Куда",
+    "detailsWeight": "Вес",
+    "detailsDimensions": "Габариты",
+    "detailsButton": "Продолжить",
+    "createEmptyDescription": "Укажите сумму, которую должен оплатить получатель. Комиссия будет вычтена при получении — вы получите сумму за вычетом комиссии после подтверждения доставки.",
+    "createFullfiledDescription": "Получатель оплатит эту сумму. После вычета комиссии вы получите примерно {amount− ${{fee}}}.",
+    "createButton": "Создать сделку",
+    "sendDescription": "Поделитесь этой ссылкой с покупателем",
+    "sendSubtitle": "Оплата посылки",
+    "sendTTN": "ТТН:",
+    "sendRoute": "Маршрут:",
+    "sendWeight": "Вес:",
+    "sendPrice": "Цена посылки:",
+    "sendFee": "Комиссия",
+    "sendTotal": "Вы получите",
+    "sendButton": "Поделиться"
+  }
+}

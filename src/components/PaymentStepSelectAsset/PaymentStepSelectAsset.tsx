@@ -1,0 +1,167 @@
+import { useEffect, useRef, useState, type FC } from "react";
+
+import { t } from "i18next";
+import cn from "classnames";
+
+import { Icon } from "../Icon";
+
+import type { Crypto, IDeliveries } from "../../types";
+import { usePaymentStore } from "../../store/paymentStore";
+import parcelImage from "../../assets/images/parcel.png";
+import { Link } from "react-router-dom";
+
+type Props = {
+  cryptoList: Crypto[];
+  delivery: IDeliveries;
+};
+
+const PaymentStepSelectAsset: FC<Props> = ({ cryptoList, delivery }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
+  const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
+  const setSelectedNetwork = usePaymentStore(
+    (state) => state.setSelectedNetwork
+  );
+
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
+  const handleSelectCrypto = (id: string) => {
+    setSelectedAsset(cryptoList.find((crypto) => crypto.id === id) || null);
+    setSelectedNetwork(
+      cryptoList.find((crypto) => crypto.id === id)?.networks[0] || null
+    );
+  };
+
+  const handleSelectNetwork = (id: string) => {
+    setSelectedNetwork(
+      selectedAsset?.networks.find((network) => network.id === id) || null
+    );
+
+    setIsDropdownOpen(false);
+  };
+  return (
+    <>
+      {/* Description */}
+      <p className="text-text-secondary mb-5 text-sm">
+        {t("payment.paymentDescription")}
+      </p>
+
+      {/* Parcel info */}
+      <Link
+        to={`/shipment-info/${delivery.id}`}
+        className="shadow-200 mb-5 flex items-center rounded-sm p-[10px]"
+      >
+        <div className="flex w-full items-center gap-x-3">
+          <div className="flex size-11 items-center justify-center rounded-[6px] bg-gray-200">
+            <img src={parcelImage} width={40} height={40} alt="Parcel image" />
+          </div>
+
+          <div className="flex flex-1 items-start justify-between">
+            <div className="flex flex-col gap-y-1">
+              <span className="font-medium">{`#${delivery.ttn}`}</span>
+              <span className="text-text-secondary text-[13px]">{`${t("shipment.detailsFrom")} ${delivery.info.seller}, ${delivery.info.sellerCity}`}</span>
+            </div>
+
+            <span className="text-[15px] font-semibold">{`$${delivery.price}`}</span>
+          </div>
+        </div>
+      </Link>
+
+      {/* Select crypto */}
+      <div className="mb-[26px] flex flex-col">
+        <div className="mb-[14px] text-sm font-semibold">
+          {t("payment.selectCrypto")}
+        </div>
+
+        <div className="flex flex-col gap-y-3">
+          {cryptoList.map((crypto) => (
+            <label
+              key={crypto.id}
+              className="relative flex cursor-pointer items-center gap-x-3"
+            >
+              <input
+                type="radio"
+                name="crypto"
+                value={crypto.id}
+                checked={selectedAsset?.id === crypto.id}
+                onChange={() => handleSelectCrypto(crypto.id)}
+                className="peer absolute h-0 w-0 opacity-0"
+              />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-300 transition-colors peer-checked:border-4 peer-checked:border-red-100"></span>
+              <span className="text-[17px]">{crypto.token}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Select network */}
+      <div className="relative flex flex-col">
+        <div className="mb-[14px] text-sm font-semibold">
+          {t("payment.selectNetwork")}
+        </div>
+
+        <button
+          ref={buttonRef}
+          type="button"
+          className="flex h-[46px] w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px]"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <span
+            className={cn("text-[17px]", {
+              "text-text-primary": isDropdownOpen,
+              "text-text-secondary": !isDropdownOpen
+            })}
+          >
+            {selectedNetwork?.name}
+          </span>
+          <Icon name="chevron" width={24} height={24} />
+        </button>
+
+        {isDropdownOpen && (
+          <ul
+            ref={dropdownRef}
+            className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px]"
+          >
+            {selectedAsset?.networks
+              .filter((network) => network.id !== selectedNetwork?.id)
+              .map((network) => (
+                <li key={network.id}>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectNetwork(network.id)}
+                    className="flex h-[38px] w-full cursor-pointer items-center px-4 text-left hover:bg-blue-100 hover:text-blue-200"
+                  >
+                    {network.name}
+                  </button>
+                </li>
+              ))}
+          </ul>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default PaymentStepSelectAsset;

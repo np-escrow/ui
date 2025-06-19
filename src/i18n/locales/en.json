@@ -1,0 +1,154 @@
+{
+  "common": {
+    "paste": "Paste"
+  },
+  "header": {
+    "greeting": "Hello :)",
+    "greetingWithName": "Hello, {{name}}",
+    "withdraw": "Withdraw",
+    "deposit": "Top Up Wallet",
+    "shipmentInfo": "Shipment Information",
+    "sendPackage": "Send Package",
+    "packagePayment": "Package Payment"
+  },
+  "home": {
+    "availableBalance": "Available Balance",
+    "withdraw": "Withdraw",
+    "deposit": "Top Up",
+    "deliveries": "Deliveries",
+    "sendPackage": "Send Package",
+    "deliveriesListEmptyStateText": "No Deliveries Yet"
+  },
+  "onboarding": {
+    "slide1": {
+      "seller": {
+        "title": "Send a parcel with guarantee",
+        "description1": "You create a delivery and send the link to the recipient.",
+        "description2": "They pay — and the parcel is sent.",
+        "buttonText": "Next"
+      },
+      "recipient": {
+        "title": "A parcel is waiting for you",
+        "description1": "You received a delivery link.",
+        "description2": "Just pay — and the parcel will be on its way to you.",
+        "buttonText": "Next"
+      }
+    },
+    "slide2": {
+      "seller": {
+        "title": "We are the guarantee between you and the recipient",
+        "description1": "The service protects the deal.",
+        "description2": "You will receive the money only after confirmation of receipt.",
+        "buttonText": "Got it"
+      },
+      "recipient": {
+        "title": "We are the guarantee between you and the sender",
+        "description1": "The service guarantees the safety of the deal.",
+        "description2": "If something goes wrong — we will refund your money.",
+        "buttonText": "Got it"
+      }
+    },
+    "slide3": {
+      "seller": {
+        "title": "How does it work?",
+        "description1": "You arrange the delivery — the recipient pays.",
+        "description2": "We hold the amount until the parcel is received. You get the money only after confirmation.",
+        "buttonText": "Go to sending"
+      },
+      "recipient": {
+        "title": "How does it work?",
+        "description1": "You pay — we hold the amount until the parcel is received.",
+        "description2": "The sender receives the money only after your confirmation.",
+        "buttonText": "Go to payment"
+      }
+    }
+  },
+  "deliveries": {
+    "item": {
+      "status": "Status",
+      "sub-to": "to {{recipient}}",
+      "sub-from": "from {{seller}}",
+      "sub-seller": "Seller",
+      "sub-recepient": "Recipient",
+      "statuspending-recepient": "Pending payment",
+      "statuspending-seller": "Pending payment by the recipient",
+      "status-paid": "Paid",
+      "status-completed-archive": "Completed",
+      "status-completed": "Package received, transaction completed",
+      "info-sent": "Sent",
+      "info-receiving": "Receiving"
+    }
+  },
+  "shipment": {
+    "dealTitle": "Deal {{ttn}}",
+    "dealPending": "Pending payment",
+    "dealDone": "Paid",
+    "detailsTitle": "Package Details",
+    "detailsTtn": "TTN",
+    "detailsFrom": "From",
+    "detailsTo": "To",
+    "detailsWeight": "Weight",
+    "paymentTitle": "Payment Details",
+    "paymentPrice": "Package Price:",
+    "paymentFee": "Service Fee (5%):",
+    "totalSeller": "You will get",
+    "total": "Total",
+    "role": "Your role",
+    "roleSeller": "Seller",
+    "roleRecepient": "Recipient"
+  },
+  "withdraw": {
+    "selectCrypto": "Select cryptocurrency",
+    "selectNetwork": "Select network",
+    "sendToAddress": "Send to address",
+    "address": "Address",
+    "continue": "Continue",
+    "available": "Available",
+    "max": "MAX",
+    "switchBetweenUSDAndAsset": "Switch between USD and asset",
+    "recipientAddress": "Recipient address",
+    "fee": "Fee",
+    "amount": "Withdrawal amount",
+    "network": "Network",
+    "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
+    "youSend": "You send"
+  },
+  "payment": {
+    "payment": "Package Payment",
+    "continue": "Continue",
+    "selectCrypto": "Select cryptocurrency",
+    "selectNetwork": "Select network",
+    "paymentDescription": "The amount is frozen and will be transferred to the sender only after your confirmation of receipt.",
+    "pay": "Send",
+    "only": "only",
+    "kg": "kg",
+    "paymentDone": "I paid",
+    "total": "Total to pay"
+  },
+  "sendPackage": {
+    "validateTitle": "Nova Poshta TTN",
+    "detailsTitle": "Review Package Data",
+    "createTitle": "Price (USD)",
+    "validateExample": "Example: 59000391234567",
+    "validateButton": "Validate TTN",
+    "validatePlaceholder": "Enter 14-digit tracking number",
+    "detailsTTN": "TTN",
+    "detailsFrom": "From",
+    "detailsTo": "To",
+    "detailsWeight": "Weight",
+    "detailsDimensions": "Dimensions",
+    "detailsButton": "Continue",
+    "createEmptyDescription": "Specify the amount the recipient must pay. The fee will be deducted upon receipt — you will receive the amount minus the fee after the delivery is confirmed.",
+    "createFullfiledDescription": "The recipient will pay this amount. After deducting the fee, you will receive approximately {amount− ${{fee}}}.`}",
+    "createButton": "Create Deal",
+    "sendDescription": "Share this link with the byer",
+    "sendSubtitle": "Package Payment",
+    "sendTTN": "TTN:",
+    "sendRoute": "Route:",
+    "sendWeight": "Weight:",
+    "sendPrice": "Package Price:",
+    "sendFee": "Fee",
+    "sendTotal": "You will get",
+    "sendButton": "Share"
+  }
+}
