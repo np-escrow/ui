@@ -106,9 +106,25 @@
     "available": "Available",
     "max": "MAX",
     "switchBetweenUSDAndAsset": "Switch between USD and asset",
+    "recipientAddress": "Recipient address",
+    "fee": "Fee",
+    "amount": "Withdrawal amount",
+    "network": "Network",
     "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
     "youSend": "You send"
-},
+  },
+  "payment": {
+    "payment": "Package Payment",
+    "continue": "Continue",
+    "selectCrypto": "Select cryptocurrency",
+    "selectNetwork": "Select network",
+    "paymentDescription": "The amount is frozen and will be transferred to the sender only after your confirmation of receipt.",
+    "pay": "Send",
+    "only": "only",
+    "kg": "kg",
+    "paymentDone": "I paid",
+    "total": "Total to pay"
+  },
   "sendPackage": {
     "validateTitle": "Nova Poshta TTN",
     "detailsTitle": "Review Package Data",
