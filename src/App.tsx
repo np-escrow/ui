@@ -13,6 +13,7 @@ const Scan = lazy(() => import("./pages/Scan/Scan"));
 const ShipmentInformation = lazy(
   () => import("./pages/ShipmentInformation/ShipmentInformation")
 );
+const SendPackage = lazy(() => import("./pages/SendPackage/SendPackage"));
 
 function App() {
   const { i18n } = useTranslation();
@@ -81,6 +82,7 @@ function App() {
           <Route path="/withdraw" element={<Withdraw />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/shipment-info/:id" element={<ShipmentInformation />} />
+          <Route path="/send-package" element={<SendPackage />} />
         </Routes>
       </div>
     </Suspense>

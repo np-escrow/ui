@@ -1,0 +1,41 @@
+.details__box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+
+  margin-top: 14px;
+  width: 100%;
+  padding: 16px;
+
+  border-radius: 16px;
+  border: 1px solid #f2f3f7;
+  background: #fefefe;
+
+  /* Shadow card */
+  box-shadow:
+    0px 4px 16px 0px rgba(0, 0, 0, 0.08),
+    0px 0px 18px 0px rgba(0, 0, 0, 0.08);
+}
+
+.details__subtitle {
+  color: #626c77;
+  /* font-family: "SF Pro Display"; */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 19.2px */
+  text-transform: capitalize;
+}
+.details__value {
+  color: #1d2023;
+
+  text-align: right;
+  /* font-family: "SF Pro Display"; */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 19.2px */
+  text-transform: capitalize;
+}
