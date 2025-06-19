@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { t } from "i18next";
 import cn from "classnames";
 
@@ -9,16 +11,17 @@ import { NavHeader } from "../../components/NavHeader";
 import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
 import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
 import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
-
-import type { Crypto } from "../../types";
-import { cryptoMock } from "./mock";
-import { Icon } from "../../components/Icon";
 import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
 
+import type { Crypto } from "../../types";
+import loader from "../../assets/images/loader.webp";
+import { cryptoMock } from "./mock";
+
 const Withdraw = () => {
+  const navigate = useNavigate();
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const [hasAmountError, setHasAmountError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
@@ -94,9 +97,12 @@ const Withdraw = () => {
 
       default:
         return () => {
-          console.log("todo send withdraw request to backend");
           try {
             setIsLoading(true);
+
+            console.log("todo send withdraw request to backend");
+            // AFTER RESPONSE!!!
+            navigate("/");
             setStep(EWithdrawStep.SELECT_ASSET);
           } catch (error) {
             console.error(error);
@@ -159,13 +165,16 @@ const Withdraw = () => {
           <Button
             actionHandler={handleButtonAction()}
             disabled={getButtonDisabled()}
+            className={cn({
+              "!bg-red-100": isLoading
+            })}
           >
             {isLoading ? (
-              <Icon
-                name="arrow"
-                width={20}
-                height={20}
+              <img
                 className="animate-spin"
+                src={loader}
+                width={24}
+                height={24}
               />
             ) : (
               t("withdraw.continue")
