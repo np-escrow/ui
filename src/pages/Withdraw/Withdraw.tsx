@@ -113,7 +113,7 @@ const Withdraw = () => {
 
             await withdraw({
               currency: selectedAsset.token || "",
-              network: selectedNetwork.name || "",
+              network: selectedNetwork.code || "",
               address: withdrawAddress,
               amount: withdrawAmount
             });

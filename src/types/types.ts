@@ -54,9 +54,19 @@ export type Crypto = {
   logoNetwork: string;
 };
 
+export enum NetworkCode {
+  TRC20 = "TRC20",
+  TRON = "TRON",
+  BITCOIN = "BITCOIN",
+  ETHEREUM = "ETHEREUM",
+  BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
+  POLYGON = "POLYGON"
+}
+
 export type Network = {
   id: string;
   name: string;
+  code: NetworkCode;
   address: string;
 };
 
