@@ -44,13 +44,13 @@ export const cryptoMock: Crypto[] = [
         name: "Ethereum",
         code: NetworkCode.ETHEREUM,
         address: "0x0000000000000000000000000000000000000000"
-      },
-      {
-        id: "5",
-        name: "Polygon",
-        code: NetworkCode.POLYGON,
-        address: "0x0000000000000000000000000000000000000000"
       }
+      //   {
+      //     id: "5",
+      //     name: "Polygon",
+      //     code: NetworkCode.POLYGON,
+      //     address: "0x0000000000000000000000000000000000000000"
+      //   }
       //   {
       //     id: "6",
       //     name: "Solana",
