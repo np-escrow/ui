@@ -6,6 +6,7 @@ import {
 import { useState, type Dispatch, type FC, type SetStateAction } from "react";
 import { Icon } from "../Icon";
 import loader from "../../assets/images/loader.webp";
+import { t } from "i18next";
 
 interface ISendPackagePaymentCreateProps {
   setActiveTab: Dispatch<SetStateAction<ESendPakageTab>>;
@@ -15,7 +16,8 @@ interface ISendPackagePaymentCreateProps {
 const FEE_PERCENTAGE = 0.05; // Example fee percentage
 
 const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
-  setActiveTab
+  setActiveTab,
+  setCreatedPackage
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [amount, setAmount] = useState("");
@@ -38,6 +40,16 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setLoading(false);
+
+    setCreatedPackage({
+      id: "32423423",
+      ttn: "12345678901234",
+      paymentLink: "https://example.com/payment-link",
+      weight: "0.5kg",
+      route: "Kiev to Lviv",
+      price: amount,
+      fee: calculateFee()
+    });
 
     setActiveTab(ESendPakageTab.PaymentSend);
   };
@@ -85,9 +97,10 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
         </div>
         <span className="text-text-secondary text-[12px] text-sm font-normal">
           {!amount
-            ? `Specify the amount the recipient must pay.
-The fee will be deducted upon receipt — you will receive the amount minus the fee after the delivery is confirmed.`
-            : `The recipient will pay this amount. After deducting the fee, you will receive approximately {amount−$${calculateFee()}}.`}
+            ? t("sendPackage.createEmptyDescription")
+            : t("sendPackage.createFullfiledDescription", {
+                fee: calculateFee()
+              })}
         </span>
       </label>
       <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
@@ -100,7 +113,7 @@ The fee will be deducted upon receipt — you will receive the amount minus the 
               height={"24px"}
             />
           ) : (
-            "Create Deal"
+            t("sendPackage.createButton")
           )}
         </Button>
       </div>

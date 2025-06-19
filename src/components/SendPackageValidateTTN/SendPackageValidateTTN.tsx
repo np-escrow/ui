@@ -6,6 +6,8 @@ import {
 import { useState, type FC } from "react";
 import { Icon } from "../Icon";
 import loader from "../../assets/images/loader.webp";
+import { t } from "i18next";
+import { Trans } from "react-i18next";
 
 interface ISendPackageValidateTTNProps {
   setActiveTab: (tab: ESendPakageTab) => void;
@@ -59,7 +61,7 @@ const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
             pattern="\d*"
             value={ttn}
             onChange={handleChange}
-            placeholder={`Enter 14-digit tracking number`}
+            placeholder={t("sendPackage.validatePlaceholder")}
             onFocus={() => setIsFocused(true)}
             onBlur={() =>
               setTimeout(() => {
@@ -83,7 +85,7 @@ const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
           )}
         </div>
         <span className="text-text-secondary text-[12px] text-sm font-normal">
-          Example: 59000391234567
+          {t("sendPackage.validateExample")}
         </span>
       </label>
       <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
@@ -96,7 +98,7 @@ const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
               height={"24px"}
             />
           ) : (
-            "Validate TTN"
+            <Trans i18nKey="sendPackage.validateButton"></Trans>
           )}
         </Button>
       </div>

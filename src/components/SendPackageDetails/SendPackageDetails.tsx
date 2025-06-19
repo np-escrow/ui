@@ -1,8 +1,12 @@
 import { Button } from "../Button";
-import { ESendPakageTab } from "../../pages/SendPackage/SendPackage.type";
+import {
+  ESendPakageTab,
+  type IPackage
+} from "../../pages/SendPackage/SendPackage.type";
 import type { FC } from "react";
-import type { IPackage } from "../../pages/SendPackage/SendPackage";
+
 import styles from "./SendPackageDetails.module.css";
+import { t } from "i18next";
 
 interface ISendPackageDetailsProps {
   setActiveTab: (tab: ESendPakageTab) => void;
@@ -22,23 +26,33 @@ const SendPackageDetails: FC<ISendPackageDetailsProps> = ({
       <div className={styles.details__box}>
         <ul className="flex w-full flex-col gap-[20px]">
           <li className="flex items-center justify-between">
-            <p className={styles.details__subtitle}>TTN</p>
+            <p className={styles.details__subtitle}>
+              {t("sendPackage.detailsTTN")}
+            </p>
             <p className={styles.details__value}>#{pkg.ttn}</p>
           </li>
           <li className="flex items-center justify-between">
-            <p className={styles.details__subtitle}>From</p>
+            <p className={styles.details__subtitle}>
+              {t("sendPackage.detailsFrom")}
+            </p>
             <p className={styles.details__value}>{pkg.from}</p>
           </li>
           <li className="flex items-center justify-between">
-            <p className={styles.details__subtitle}>To</p>
+            <p className={styles.details__subtitle}>
+              {t("sendPackage.detailsTo")}
+            </p>
             <p className={styles.details__value}>{pkg.to}</p>
           </li>
           <li className="flex items-center justify-between">
-            <p className={styles.details__subtitle}>Weight</p>
+            <p className={styles.details__subtitle}>
+              {t("sendPackage.detailsWeight")}
+            </p>
             <p className={styles.details__value}>{pkg.weight}</p>
           </li>
           <li className="flex items-center justify-between">
-            <p className={styles.details__subtitle}>Dimensions</p>
+            <p className={styles.details__subtitle}>
+              {t("sendPackage.detailsDimensions")}
+            </p>
             <p className={styles.details__value}>{pkg.dimensions}</p>
           </li>
         </ul>
@@ -47,7 +61,7 @@ const SendPackageDetails: FC<ISendPackageDetailsProps> = ({
         <Button
           actionHandler={() => setActiveTab(ESendPakageTab.PaymentCreate)}
         >
-          Continue
+          {t("sendPackage.detailsButton")}
         </Button>
       </div>
     </>

@@ -10,6 +10,7 @@ import { SendPackagePaymentSend } from "../../components/SendPackagePaymentSend"
 import { SendPackageValidateTTN } from "../../components/SendPackageValidateTTN";
 import styles from "./SendPackage.module.css";
 import { useState } from "react";
+import { t } from "i18next";
 
 const SendPackage = () => {
   const [activeTab, setActiveTab] = useState<ESendPakageTab>(
@@ -21,9 +22,9 @@ const SendPackage = () => {
   );
 
   const tabTitle = {
-    [ESendPakageTab.ValidateTTN]: "Nova Poshta TTN",
-    [ESendPakageTab.PackageDetails]: "Review Package Data",
-    [ESendPakageTab.PaymentCreate]: "Price (USD)",
+    [ESendPakageTab.ValidateTTN]: t("sendPackage.validateTitle"),
+    [ESendPakageTab.PackageDetails]: t("sendPackage.detailsTitle"),
+    [ESendPakageTab.PaymentCreate]: t("sendPackage.createTitle"),
     [ESendPakageTab.PaymentSend]: ""
   };
 
@@ -67,7 +68,7 @@ const SendPackage = () => {
           <div className="mb-[30px] mt-5 px-[1rem]">
             <NavHeader isLink />
           </div>
-          <div className="px-[1rem]">
+          <div className={styles.tab__box}>
             {activeTab !== ESendPakageTab.PaymentSend && (
               <p className={styles.tab__title}>{tabTitle[activeTab]}</p>
             )}
