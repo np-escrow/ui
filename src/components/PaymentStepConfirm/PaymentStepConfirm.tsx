@@ -1,46 +1,47 @@
 import { useEffect, type FC } from "react";
-import { QRCode } from "react-qrcode-logo";
-import styles from "./PaymentStepConfirm.module.css";
-import { Icon } from "../Icon";
-import { useCopy } from "../../hooks/useCopy";
-import { t } from "i18next";
+// import { QRCode } from "react-qrcode-logo";
+// import styles from "./PaymentStepConfirm.module.css";
+// import { Icon } from "../Icon";
+// import { useCopy } from "../../hooks/useCopy";
+// import { t } from "i18next";
 import type { IDeliveries } from "../../types";
-import { usePaymentStore } from "../../store/paymentStore";
+// import { usePaymentStore } from "../../store/paymentStore";
 
 type Props = {
   delivery: IDeliveries;
 };
 
-const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
-  const { isCopy, handleCopy } = useCopy();
+const PaymentStepConfirm: FC<Props> = () => {
+  // { delivery }
+  // const { isCopy, handleCopy } = useCopy();
 
-  const selectedAsset = usePaymentStore((state) => state.selectedAsset);
-  const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
+  // const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  // const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
 
-  const handleCopyClick = async () => {
-    const text = `https://t.me/AngryMinerBot/?start=${delivery.ttn}`;
-    handleCopy(text);
-  };
+  // const handleCopyClick = async () => {
+  //   const text = `https://t.me/AngryMinerBot/?start=${delivery.ttn}`;
+  //   handleCopy(text);
+  // };
 
   useEffect(() => {}, []);
 
-  const calculateFee = (price: string | number, fee: string | number) => {
-    const packagePrice = typeof price === "number" ? price : parseFloat(price);
-    const packageFee = typeof fee === "number" ? fee : parseFloat(fee);
-    if (
-      isNaN(packagePrice) ||
-      packagePrice <= 0 ||
-      isNaN(packageFee) ||
-      packageFee < 0
-    ) {
-      return "0.00";
-    }
-    return (packagePrice - packageFee).toFixed(2);
-  };
+  // const calculateFee = (price: string | number, fee: string | number) => {
+  //   const packagePrice = typeof price === "number" ? price : parseFloat(price);
+  //   const packageFee = typeof fee === "number" ? fee : parseFloat(fee);
+  //   if (
+  //     isNaN(packagePrice) ||
+  //     packagePrice <= 0 ||
+  //     isNaN(packageFee) ||
+  //     packageFee < 0
+  //   ) {
+  //     return "0.00";
+  //   }
+  //   return (packagePrice - packageFee).toFixed(2);
+  // };
 
   return (
     <div className="max-h-[calc(100vh-100px)] overflow-y-auto pt-[30px]">
-      <span className="mx-auto mb-2 block text-center text-[20px] font-semibold">
+      {/* <span className="mx-auto mb-2 block text-center text-[20px] font-semibold">
         {`${selectedAsset?.token} ${selectedNetwork?.name}`}
       </span>
 
@@ -90,7 +91,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
             ${calculateFee(delivery.price, 1)}
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
