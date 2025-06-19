@@ -28,7 +28,7 @@ const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
         return t("header.deposit");
       case "/send-package":
         return t("header.sendPackage");
-      case "/package-payment":
+      case "/payment":
         return t("header.packagePayment");
     }
   };
@@ -52,7 +52,7 @@ const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
         </button>
       )}
 
-      <h1 className="absolute left-1/2 -translate-x-1/2 text-[20px] font-semibold">
+      <h1 className="absolute left-1/2 -translate-x-1/2 text-[20px] font-semibold text-nowrap">
         {getHeaderTitle()}
       </h1>
     </header>
