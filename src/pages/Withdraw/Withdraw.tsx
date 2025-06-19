@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { t } from "i18next";
+import cn from "classnames";
 
 import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
 
@@ -7,19 +8,28 @@ import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
 import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
+import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
 
 import type { Crypto } from "../../types";
 import { cryptoMock } from "./mock";
+import { Icon } from "../../components/Icon";
+import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
 
 const Withdraw = () => {
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
+  const [hasAmountError, setHasAmountError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const selectedAssetId = useWithdrawStore((state) => state.selectedAssetId);
-  const setSelectedAssetId = useWithdrawStore((state) => state.setSelectedAssetId);
+  const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
+  const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
+  const setSelectedAsset = useWithdrawStore((state) => state.setSelectedAsset);
   const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
-  const setSelectedNetwork = useWithdrawStore((state) => state.setSelectedNetwork);
+  const setSelectedNetwork = useWithdrawStore(
+    (state) => state.setSelectedNetwork
+  );
   const step = useWithdrawStore((state) => state.step);
   const setStep = useWithdrawStore((state) => state.setStep);
+  const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
 
   useEffect(() => {
     if (!cryptoList.length) {
@@ -27,11 +37,11 @@ const Withdraw = () => {
       setCryptoList(cryptoMock);
     }
 
-    if (!selectedAssetId && cryptoList.length) {
-      setSelectedAssetId(cryptoList[0]?.id);
+    if (!selectedAsset && cryptoList.length) {
+      setSelectedAsset(cryptoList[0]);
       setSelectedNetwork(cryptoList[0]?.networks[0]);
     }
-  }, [cryptoList, selectedAssetId, setSelectedAssetId, setSelectedNetwork]);
+  }, [cryptoList, selectedAsset, setSelectedAsset, setSelectedNetwork]);
 
   const handleBack = () => {
     switch (step) {
@@ -84,15 +94,31 @@ const Withdraw = () => {
 
       default:
         return () => {
-          setStep(EWithdrawStep.SELECT_ASSET);
+          console.log("todo send withdraw request to backend");
+          try {
+            setIsLoading(true);
+            setStep(EWithdrawStep.SELECT_ASSET);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setIsLoading(false);
+          }
         };
     }
   };
 
   const getButtonDisabled = () => {
+    if (isLoading) return true;
+
     switch (step) {
       case EWithdrawStep.SELECT_ASSET:
-        return !selectedAssetId || !selectedNetwork;
+        return !selectedAsset || !selectedNetwork;
+
+      case EWithdrawStep.ENTER_ADDRESS:
+        return !selectedAsset || !selectedNetwork || !withdrawAddress;
+
+      case EWithdrawStep.ENTER_AMOUNT:
+        return hasAmountError || !Number(withdrawAmount) || !withdrawAmount;
     }
   };
 
@@ -100,24 +126,33 @@ const Withdraw = () => {
     <main className="page-with-button flex flex-col justify-center">
       <div className="custom-container flex-1">
         <div className="flex h-full flex-col">
-          <div className="mb-[30px] mt-5">
+          <div
+            className={cn("mt-5", {
+              "mb-0": step === EWithdrawStep.CONFIRM,
+              "mb-[30px]": step !== EWithdrawStep.CONFIRM
+            })}
+          >
             <NavHeader {...handleBack()} />
           </div>
 
           {step === EWithdrawStep.SELECT_ASSET && (
-            <WithdrawStepSelectAsset
-              cryptoList={cryptoList}
-            />
+            <WithdrawStepSelectAsset cryptoList={cryptoList} />
           )}
 
           {step === EWithdrawStep.ENTER_ADDRESS && (
             <WithdrawStepEnterAddress
-              selectedCryptoName={
-                cryptoList.find((crypto) => crypto.id === selectedAssetId)
-                  ?.token || ""
-              }
+              selectedCryptoName={selectedAsset?.token || ""}
             />
           )}
+
+          {step === EWithdrawStep.ENTER_AMOUNT && (
+            <WithdrawStepEnterAmount
+              hasAmountError={hasAmountError}
+              setHasAmountError={setHasAmountError}
+            />
+          )}
+
+          {step === EWithdrawStep.CONFIRM && <WithdrawStepConfirm />}
         </div>
 
         <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
@@ -125,7 +160,16 @@ const Withdraw = () => {
             actionHandler={handleButtonAction()}
             disabled={getButtonDisabled()}
           >
-            {t("withdraw.continue")}
+            {isLoading ? (
+              <Icon
+                name="arrow"
+                width={20}
+                height={20}
+                className="animate-spin"
+              />
+            ) : (
+              t("withdraw.continue")
+            )}
           </Button>
         </div>
       </div>

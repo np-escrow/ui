@@ -46,13 +46,19 @@ export type Crypto = {
   id: string;
   token: string;
   networks: Network[];
-}
+  balance: number;
+  balanceUSD: number;
+  price: number;
+  isNative: boolean;
+  logoToken: string;
+  logoNetwork: string;
+};
 
 export type Network = {
   id: string;
   name: string;
   address: string;
-}
+};
 
 export interface IShipmentInfo {
   id: string;

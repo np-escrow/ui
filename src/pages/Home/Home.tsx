@@ -1,15 +1,17 @@
 import { t } from "i18next";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Header } from "../../components/Header";
 import Button from "../../components/Button/Button";
 import { Onboarding } from "../../components/Onboarding";
+
+import { useUserStore } from "../../store/userStore";
 import { BalanceBlock } from "../../components/BalanceBlock";
 import DeliveriesList from "../../components/DeliveriesList/DeliveriesList";
 
-import { useUserStore } from "../../store/userStore";
-
 const Home = () => {
+  const navigate = useNavigate();
   const [isShown, setIsShown] = useState<boolean>(true);
   const { metadata, userType } = useUserStore();
 
@@ -46,7 +48,9 @@ const Home = () => {
             </div>
 
             <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
-              <Button>{t("home.sendPackage")}</Button>
+              <Button actionHandler={() => navigate("/send-package")}>
+                {t("home.sendPackage")}
+              </Button>
             </div>
           </div>
         ) : (

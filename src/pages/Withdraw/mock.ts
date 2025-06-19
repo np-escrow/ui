@@ -1,9 +1,17 @@
 import type { Crypto } from "../../types";
+import imgMock from '../../assets/images/user-avatar-mock.jpg'
+import imgMock2 from '../../assets/images/mock.jpg'
 
 export const cryptoMock: Crypto[] = [
     {
         id: '1',
         token: 'USDT',
+        balance: 100,
+        balanceUSD: 200,
+        price: 2,
+        isNative: false,
+        logoToken: imgMock2,
+        logoNetwork: imgMock,
         networks: [
             {
                 id: '1',
@@ -40,6 +48,12 @@ export const cryptoMock: Crypto[] = [
     {
         id: '2',
         token: 'USDC',
+        balance: 100,
+        balanceUSD: 300,
+        price: 3,
+        isNative: false,
+        logoToken: imgMock2,
+        logoNetwork: imgMock,
         networks: [
             {
                 id: '1',
