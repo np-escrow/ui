@@ -2,7 +2,15 @@ import axios, { Axios, type InternalAxiosRequestConfig } from "axios";
 
 import { getToken } from "./storage";
 
-import type { ResBalance, ResSignin, Signin, UserMetadata } from "./api.types";
+import type {
+  CreateOrder,
+  PrepateOrder,
+  ResBalance,
+  ResOrder,
+  ResSignin,
+  Signin,
+  UserMetadata
+} from "./api.types";
 
 let baseURL: string | undefined = import.meta.env.VITE_APP_API_URL;
 
@@ -56,6 +64,24 @@ class Api {
 
   async getBalance() {
     const res = await this.httpService.get<ResBalance>("/balances");
+    return res.data;
+  }
+
+  async prepateOrder(data: PrepateOrder) {
+    const res = await this.httpService.post<ResOrder>(
+      "/shipments/prepate",
+      data
+    );
+    return res.data;
+  }
+
+  async createOrder(data: CreateOrder) {
+    const res = await this.httpService.post<ResOrder>("/shipments", data);
+    return res.data;
+  }
+
+  async getOrders() {
+    const res = await this.httpService.get<ResOrder[]>("/shipments");
     return res.data;
   }
 }
