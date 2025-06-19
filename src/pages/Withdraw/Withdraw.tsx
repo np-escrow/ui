@@ -21,7 +21,7 @@ const Withdraw = () => {
   const navigate = useNavigate();
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const [hasAmountError, setHasAmountError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
