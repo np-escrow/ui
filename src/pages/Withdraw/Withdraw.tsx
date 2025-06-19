@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { t } from "i18next";
-import cn from "classnames";
-
 import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
+import { useEffect, useState } from "react";
 
 import { Button } from "../../components/Button";
+import type { Crypto } from "../../types";
 import { NavHeader } from "../../components/NavHeader";
-import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
+import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
 import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
 import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
-import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
-
-import type { Crypto } from "../../types";
-import loader from "../../assets/images/loader.webp";
+import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
+import cn from "classnames";
 import { cryptoMock } from "./mock";
+import loader from "../../assets/images/loader.webp";
+import { t } from "i18next";
+import { useBalanceStore } from "../../store/balanceStore";
+import { useNavigate } from "react-router-dom";
 
 const Withdraw = () => {
   const navigate = useNavigate();
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const [hasAmountError, setHasAmountError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { withdraw } = useBalanceStore((state) => state);
 
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
@@ -96,11 +95,29 @@ const Withdraw = () => {
         };
 
       default:
-        return () => {
+        return async () => {
           try {
+            if (
+              !selectedAsset ||
+              !selectedNetwork ||
+              !withdrawAddress ||
+              !withdrawAmount ||
+              isNaN(Number(withdrawAmount))
+            ) {
+              // TODO: show error to user
+              console.log("Missing required fields for withdrawal");
+              return;
+            }
+
             setIsLoading(true);
 
-            console.log("todo send withdraw request to backend");
+            await withdraw({
+              currency: selectedAsset.token || "",
+              network: selectedNetwork.name || "",
+              address: withdrawAddress,
+              amount: withdrawAmount
+            });
+
             // AFTER RESPONSE!!!
             navigate("/");
             setStep(EWithdrawStep.SELECT_ASSET);

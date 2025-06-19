@@ -153,3 +153,10 @@ export type ResOrder = {
   updatedAt: string;
   link: string;
 };
+
+export type WithdrawDto = {
+  currency: string;
+  network: string;
+  address: string;
+  amount: string;
+};
