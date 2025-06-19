@@ -1,25 +1,18 @@
-import {
-  ESendPakageTab,
-  type ICreatePackage,
-  type IPackage
-} from "./SendPackage.type";
+import { t } from "i18next";
+
+import { usePackageStore } from "../../store/packageStore";
+
 import { NavHeader } from "../../components/NavHeader";
 import { SendPackageDetails } from "../../components/SendPackageDetails";
 import { SendPackagePaymentCreate } from "../../components/SendPackagePaymentCreate";
 import { SendPackagePaymentSend } from "../../components/SendPackagePaymentSend";
 import { SendPackageValidateTTN } from "../../components/SendPackageValidateTTN";
+
+import { ESendPakageTab } from "./SendPackage.type";
 import styles from "./SendPackage.module.css";
-import { useState } from "react";
-import { t } from "i18next";
 
 const SendPackage = () => {
-  const [activeTab, setActiveTab] = useState<ESendPakageTab>(
-    ESendPakageTab.ValidateTTN
-  );
-  const [packageData, setPackageData] = useState<null | IPackage>(null);
-  const [createdPackage, setCreatedPackage] = useState<null | ICreatePackage>(
-    null
-  );
+  const { data } = usePackageStore();
 
   const tabTitle = {
     [ESendPakageTab.ValidateTTN]: t("sendPackage.validateTitle"),
@@ -29,35 +22,17 @@ const SendPackage = () => {
   };
 
   const switchTab = () => {
-    switch (activeTab) {
+    switch (data.activeTab) {
       case ESendPakageTab.ValidateTTN:
-        return (
-          <SendPackageValidateTTN
-            setPackage={setPackageData}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <SendPackageValidateTTN />;
       case ESendPakageTab.PackageDetails:
-        return (
-          <SendPackageDetails pkg={packageData} setActiveTab={setActiveTab} />
-        );
+        return <SendPackageDetails />;
       case ESendPakageTab.PaymentCreate:
-        return (
-          <SendPackagePaymentCreate
-            ttn={packageData?.ttn ?? ""}
-            setActiveTab={setActiveTab}
-            setCreatedPackage={setCreatedPackage}
-          />
-        );
+        return <SendPackagePaymentCreate />;
       case ESendPakageTab.PaymentSend:
-        return <SendPackagePaymentSend createdPackage={createdPackage} />;
+        return <SendPackagePaymentSend />;
       default:
-        return (
-          <SendPackageValidateTTN
-            setPackage={setPackageData}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <SendPackageValidateTTN />;
     }
   };
 
@@ -69,8 +44,8 @@ const SendPackage = () => {
             <NavHeader isLink />
           </div>
           <div className={styles.tab__box}>
-            {activeTab !== ESendPakageTab.PaymentSend && (
-              <p className={styles.tab__title}>{tabTitle[activeTab]}</p>
+            {data.activeTab !== ESendPakageTab.PaymentSend && (
+              <p className={styles.tab__title}>{tabTitle[data.activeTab]}</p>
             )}
             {switchTab()}
           </div>

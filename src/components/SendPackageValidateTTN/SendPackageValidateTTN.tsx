@@ -1,26 +1,17 @@
-import { Button } from "../Button";
-import {
-  ESendPakageTab,
-  type IPackage
-} from "../../pages/SendPackage/SendPackage.type";
-import { useState, type FC } from "react";
-import { Icon } from "../Icon";
-import loader from "../../assets/images/loader.webp";
 import { t } from "i18next";
 import { Trans } from "react-i18next";
+import { useState, type FC } from "react";
 
-interface ISendPackageValidateTTNProps {
-  setActiveTab: (tab: ESendPakageTab) => void;
-  setPackage: (pkg: IPackage) => void;
-}
+import { Icon } from "../Icon";
+import { Button } from "../Button";
+import loader from "../../assets/images/loader.webp";
+import { usePackageStore } from "../../store/packageStore";
 
-const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
-  setActiveTab,
-  setPackage
-}) => {
-  const [loading, setLoading] = useState(false);
+const SendPackageValidateTTN: FC = () => {
   const [ttn, setTtn] = useState("");
+  const { loadings, prepare } = usePackageStore();
   const [isFocused, setIsFocused] = useState(false);
+  const loading = loadings.create;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -32,23 +23,7 @@ const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
   };
 
   const handleValidateTTN = async () => {
-    if (loading) return; // Prevent multiple clicks while loading
-
-    setLoading(true);
-    // TODO: Implement TTN validation logic
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setLoading(false);
-    setPackage({
-      id: "1",
-      ttn,
-      weight: "0.5kg",
-      from: "Alex P., Kiev, Ukraine",
-      to: "Linda H., Lviv, Ukraine ",
-      dimensions: "30x20x10 cm"
-    });
-
-    setActiveTab(ESendPakageTab.PackageDetails);
+    prepare({ ttn });
   };
 
   return (
@@ -89,7 +64,10 @@ const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
         </span>
       </label>
       <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
-        <Button actionHandler={handleValidateTTN} disabled={ttn.length !== 14}>
+        <Button
+          actionHandler={handleValidateTTN}
+          disabled={ttn.length !== 14 || loading}
+        >
           {loading ? (
             <img
               className="spinner"

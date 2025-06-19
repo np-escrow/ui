@@ -3,14 +3,14 @@ import axios, { Axios, type InternalAxiosRequestConfig } from "axios";
 import { getToken } from "./storage";
 
 import type {
-  CreateOrder,
-  PrepateOrder,
-  ResBalance,
+  Signin,
   ResOrder,
   ResSignin,
-  Signin,
+  WithdrawDto,
+  ResBalance,
+  CreateOrder,
   UserMetadata,
-  WithdrawDto
+  PrepareOrder
 } from "./api.types";
 
 let baseURL: string | undefined = import.meta.env.VITE_APP_API_URL;
@@ -68,9 +68,9 @@ class Api {
     return res.data;
   }
 
-  async prepateOrder(data: PrepateOrder) {
+  async prepareOrder(data: PrepareOrder) {
     const res = await this.httpService.post<ResOrder>(
-      "/shipments/prepate",
+      "/shipments/prepare",
       data
     );
     return res.data;
@@ -78,6 +78,11 @@ class Api {
 
   async createOrder(data: CreateOrder) {
     const res = await this.httpService.post<ResOrder>("/shipments", data);
+    return res.data;
+  }
+
+  async getOrder(ttn: number) {
+    const res = await this.httpService.get<ResOrder>(`/shipments/${ttn}`);
     return res.data;
   }
 

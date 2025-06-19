@@ -7,7 +7,10 @@ import { t } from "i18next";
 interface IShipmentPaymentsDetailsProps {
   userType: EUserType;
   price: number;
-  fee: number;
+  fee: {
+    fixed: number;
+    percent: number;
+  };
   currency: string;
 }
 
@@ -17,6 +20,8 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
   currency,
   userType
 }) => {
+  const amount = (+price + (price * fee.percent + fee.fixed)).toFixed(2);
+
   return (
     <div className="flex w-full flex-col gap-[16px]">
       <div className="flex items-center justify-between">
@@ -35,7 +40,7 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
             : t("shipment.total")}
           :
         </p>
-        <p className={styles.details__total}>{`${currency} ${price + fee}`}</p>
+        <p className={styles.details__total}>{`${currency} ${amount}`}</p>
       </div>
       <div className="h-[1px] w-full bg-[#BCC3D080]" />
       <div className="flex flex-col gap-[8px]">

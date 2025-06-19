@@ -1,29 +1,26 @@
-import { Button } from "../Button";
-import { type ICreatePackage } from "../../pages/SendPackage/SendPackage.type";
+import { t } from "i18next";
 import type { FC } from "react";
 import { QRCode } from "react-qrcode-logo";
-import styles from "./SendPackagePaymentSend.module.css";
+
 import { Icon } from "../Icon";
+import { Button } from "../Button";
 import { useCopy } from "../../hooks/useCopy";
-import { t } from "i18next";
+import { usePackageStore } from "../../store/packageStore";
 
-interface ISendPackagePaymentSendProps {
-  createdPackage: null | ICreatePackage;
-}
+import styles from "./SendPackagePaymentSend.module.css";
 
-const SendPackagePaymentSend: FC<ISendPackagePaymentSendProps> = ({
-  createdPackage
-}) => {
+const SendPackagePaymentSend: FC = () => {
   const { isCopy, handleCopy } = useCopy();
-  if (!createdPackage) return null;
+  const { data } = usePackageStore();
+  if (!data.create) return null;
 
   const handleCopyClick = async () => {
-    const text = `https://t.me/AngryMinerBot/?start=${createdPackage.ttn}`;
+    const text = data.create!.link;
     handleCopy(text);
   };
 
   const handleShare = () => {
-    const url = `https://t.me/AngryMinerBot/?start=${createdPackage.ttn}`;
+    const url = data.create!.link;
 
     const text = `LInk on your package`;
 
@@ -36,9 +33,16 @@ const SendPackagePaymentSend: FC<ISendPackagePaymentSendProps> = ({
     }
   };
 
-  const calculateFee = (price: string | number, fee: string | number) => {
+  const calculateFee = (
+    price: string | number,
+    fee: {
+      fixed: number;
+      percent: number;
+    }
+  ) => {
     const packagePrice = typeof price === "number" ? price : parseFloat(price);
-    const packageFee = typeof fee === "number" ? fee : parseFloat(fee);
+    const packageFee = +packagePrice * +fee.percent + fee.fixed;
+
     if (
       isNaN(packagePrice) ||
       packagePrice <= 0 ||
@@ -53,11 +57,11 @@ const SendPackagePaymentSend: FC<ISendPackagePaymentSendProps> = ({
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center gap-[8px]">
-        <QRCode value={createdPackage.paymentLink} logoWidth={220} />
+        <QRCode value={data.create!.link} logoWidth={220} />
         <p className={styles.logo__info}>{t("sendPackage.sendDescription")}</p>
       </div>
       <div className={styles.link__box}>
-        <p className={styles.link__text}>{createdPackage.paymentLink}</p>
+        <p className={styles.link__text}>{data.create!.link}</p>
         <button className="cursor-pointer" onClick={handleCopyClick}>
           <Icon name={isCopy ? "little_success" : "copy"} size={24} />
         </button>
@@ -66,19 +70,26 @@ const SendPackagePaymentSend: FC<ISendPackagePaymentSendProps> = ({
       <div className={styles.package__box}>
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__subtitle}>{t("sendPackage.sendTTN")}</p>
-          <p className={styles.package__value}>{createdPackage.ttn}</p>
+          <p className={styles.package__value}>
+            {data.create!.metadata.Number}
+          </p>
         </div>
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__subtitle}>
             {t("sendPackage.sendRoute")}
           </p>
-          <p className={styles.package__value}>{createdPackage.route}</p>
+          <p className={styles.package__value}>
+            {data.create.metadata.CitySender}-
+            {data.create.metadata.CityRecipient}
+          </p>
         </div>
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__subtitle}>
             {t("sendPackage.sendWeight")}
           </p>
-          <p className={styles.package__value}>{createdPackage.weight}</p>
+          <p className={styles.package__value}>
+            {data.create.metadata.FactualWeight}
+          </p>
         </div>
 
         <div className="h-[1px] w-full bg-[#BCC3D080]" />
@@ -87,18 +98,20 @@ const SendPackagePaymentSend: FC<ISendPackagePaymentSendProps> = ({
           <p className={styles.package__subtitle}>
             {t("sendPackage.sendPrice")}
           </p>
-          <p className={styles.package__value}>${createdPackage.price}</p>
+          <p className={styles.package__value}>${data.create.amount}</p>
         </div>
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__subtitle}>{t("sendPackage.sendFee")}</p>
-          <p className={styles.package__value}>${createdPackage.fee}</p>
+          <p className={styles.package__value}>
+            %{data.create.fee.percent} + ${data.create.fee.fixed}
+          </p>
         </div>
 
         <div className="h-[1px] w-full bg-[#BCC3D080]" />
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__total}>{t("sendPackage.sendTotal")}</p>
           <p className={styles.package__total}>
-            ${calculateFee(createdPackage.price, createdPackage.fee)}
+            ${calculateFee(data.create.amount, data.create.fee)}
           </p>
         </div>
       </div>

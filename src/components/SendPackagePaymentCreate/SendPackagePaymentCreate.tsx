@@ -1,28 +1,17 @@
-import { Button } from "../Button";
-import {
-  ESendPakageTab,
-  type ICreatePackage
-} from "../../pages/SendPackage/SendPackage.type";
-import { useState, type Dispatch, type FC, type SetStateAction } from "react";
-import { Icon } from "../Icon";
-import loader from "../../assets/images/loader.webp";
 import { t } from "i18next";
+import { useState, type FC } from "react";
 
-interface ISendPackagePaymentCreateProps {
-  setActiveTab: Dispatch<SetStateAction<ESendPakageTab>>;
-  setCreatedPackage: Dispatch<SetStateAction<ICreatePackage | null>>;
-  ttn: string;
-}
-const FEE_PERCENTAGE = 0.05; // Example fee percentage
+import { Icon } from "../Icon";
+import { Button } from "../Button";
 
-const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
-  setActiveTab,
-  setCreatedPackage
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
+import loader from "../../assets/images/loader.webp";
+import { usePackageStore } from "../../store/packageStore";
+
+const SendPackagePaymentCreate: FC = () => {
   const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
-
+  const [isFocused, setIsFocused] = useState(false);
+  const { loadings, data, create } = usePackageStore();
+  const loading = loadings.create;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace("$", "");
 
@@ -31,36 +20,24 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
     }
   };
 
+  const calculateFee = () => {
+    const fee = {
+      fixed: 1,
+      percent: 0.05
+    };
+
+    return +amount - (+amount || 0 * fee.percent) + fee.fixed;
+  };
+
   const formattedAmount = amount ? `$${amount}` : "";
 
   const handlePaymentCreate = async () => {
-    if (loading) return; // Prevent multiple clicks while loading
+    if (!data.create) return; // Prevent multiple clicks while loading
 
-    setLoading(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setLoading(false);
-
-    setCreatedPackage({
-      id: "32423423",
-      ttn: "12345678901234",
-      paymentLink: "https://example.com/payment-link",
-      weight: "0.5kg",
-      route: "Kiev to Lviv",
-      price: amount,
-      fee: calculateFee()
+    create({
+      ttn: data.create.metadata.Number,
+      amount: +amount
     });
-
-    setActiveTab(ESendPakageTab.PaymentSend);
-  };
-
-  const calculateFee = () => {
-    const amountNumber = parseFloat(amount);
-    if (isNaN(amountNumber) || amountNumber <= 0) {
-      return "0.00";
-    }
-
-    return (amountNumber * FEE_PERCENTAGE).toFixed(2);
   };
 
   return (

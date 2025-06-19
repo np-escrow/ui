@@ -6,6 +6,7 @@ import type { UserMetadata } from "../services/api.types";
 import { setToken } from "../services/storage";
 
 interface UserState {
+  id: number;
   userType: EUserType;
   avatar: string;
   language: EUserLanguage;
@@ -24,6 +25,7 @@ interface UserState {
 }
 
 export const useUserStore = create<UserState>((set) => ({
+  id: 0,
   userType: EUserType.SELLER,
   language: EUserLanguage.UK,
   platform: EPlatform.WEB,
@@ -73,7 +75,7 @@ export const useUserStore = create<UserState>((set) => ({
 
     const res = await api.signin({ message: webApp.initData });
     setToken(res.accessToken);
-    set({ metadata: res.metadata });
+    set({ id: res.id, metadata: res.metadata });
     set((state) => ({
       loadings: {
         ...state.loadings,

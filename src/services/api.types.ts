@@ -8,6 +8,7 @@ export type UserMetadata = {
 };
 
 export type ResSignin = {
+  id: number;
   accessToken: string;
   metadata: UserMetadata;
 };
@@ -17,7 +18,7 @@ export type ResBalance = {
   accessible: number;
 };
 
-export type PrepateOrder = {
+export type PrepareOrder = {
   ttn: string;
 };
 
@@ -28,7 +29,12 @@ export type CreateOrder = {
 
 export type ResOrder = {
   id: string;
+  currency: string;
   sellerId: string;
+  fee: {
+    fixed: number;
+    percent: number;
+  };
   amount: number;
   status: string;
   metadata: {
