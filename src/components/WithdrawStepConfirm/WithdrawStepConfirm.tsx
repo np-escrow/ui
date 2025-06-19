@@ -68,7 +68,7 @@ const WithdrawStepConfirm = () => {
 
           <div className="flex flex-col items-center">
             <span className="text-[40px] font-semibold">
-              {withdrawAmount} {isCalcInUSD ? selectedAsset?.token : "USD"}
+              {withdrawAmount} {isCalcInUSD ? "USD" : selectedAsset?.token}
             </span>
 
             <span className="text-text-secondary">

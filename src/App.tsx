@@ -6,6 +6,7 @@ import classNames from "classnames";
 import useExpand from "./hooks/useExpand";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "./store/userStore";
+import { Loader } from "./components/Loader";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
@@ -75,7 +76,7 @@ function App() {
   ]);
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loader />}>
       <div className={classNames("h-screen", { "mobile-padding": isMobile })}>
         <Routes>
           <Route path="/" element={<Home />} />
