@@ -9,7 +9,8 @@ import type {
   ResOrder,
   ResSignin,
   Signin,
-  UserMetadata
+  UserMetadata,
+  WithdrawDto
 } from "./api.types";
 
 let baseURL: string | undefined = import.meta.env.VITE_APP_API_URL;
@@ -82,6 +83,11 @@ class Api {
 
   async getOrders() {
     const res = await this.httpService.get<ResOrder[]>("/shipments");
+    return res.data;
+  }
+
+  async withdraw(data: WithdrawDto) {
+    const res = await this.httpService.post<void>("/pay/withdrawal", data);
     return res.data;
   }
 }
