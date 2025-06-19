@@ -24,7 +24,16 @@
     "selectNetwork": "Вибір мережі",
     "sendToAddress": "Вивести на адресу",
     "address": "Адреса",
-    "continue": "Продовжити"
+    "continue": "Продовжити",
+    "available": "Доступно",
+    "max": "МАКС",
+    "switchBetweenUSDAndAsset": "Переключити між USD та токеном",
+    "recipientAddress": "Адреса отримувача",
+    "fee": "Комісія",
+    "amount": "Сума списання",
+    "network": "Мережа",
+    "bottomAlertDescription": "Ваші кошти можуть бути втрачені, якщо ви надішлете їх в іншу мережу",
+    "youSend": "Ви надсилаєте"
   },
   "onboarding": {
     "slide1": {

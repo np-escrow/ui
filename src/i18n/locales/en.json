@@ -1,4 +1,7 @@
 {
+  "common": {
+    "paste": "Paste"
+  },
   "header": {
     "greeting": "Hello :)",
     "greetingWithName": "Hello, {{name}}",
@@ -93,5 +96,17 @@
     "role": "Your role",
     "roleSeller": "Seller",
     "roleRecepient": "Recipient"
+  },
+  "withdraw": {
+    "selectCrypto": "Select cryptocurrency",
+    "selectNetwork": "Select network", 
+    "sendToAddress": "Send to address",
+    "address": "Address",
+    "continue": "Continue",
+    "available": "Available",
+    "max": "MAX",
+    "switchBetweenUSDAndAsset": "Switch between USD and asset",
+    "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
+    "youSend": "You send"
   }
 }

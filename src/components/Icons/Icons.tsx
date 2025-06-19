@@ -1354,6 +1354,20 @@ const Icons = () => {
           </symbol>
 
           <symbol
+            id="close-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M15.6612 9.54206C16.1789 9.0226 16.0109 8.49131 15.7652 8.24477C15.5195 7.99824 14.9899 7.8297 14.4722 8.34915L12.0153 10.8141L9.56301 8.35374C9.01905 7.80799 8.515 7.99436 8.26541 8.24477C8.01582 8.49519 7.776 8.94667 8.37402 9.54665L10.8263 12.007L8.37859 14.4628C7.86083 14.9823 8.01968 15.5227 8.26541 15.7693C8.51113 16.0158 9.04983 16.1752 9.56758 15.6557L12.0153 13.1999L14.4676 15.6603C14.9832 16.1776 15.5234 16.0119 15.7691 15.7654C16.0148 15.5189 16.1722 14.9847 15.6566 14.4674L13.2043 12.007L15.6612 9.54206ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+              fill="#969FA8"
+            />
+          </symbol>
+
+          <symbol
             id="arrow"
             viewBox="0 0 22 22"
             fill="none"
@@ -1370,6 +1384,42 @@ const Icons = () => {
               d="M9.625 4.8125L3.4375 11L9.625 17.1875"
               stroke="#1D2023"
               strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </symbol>
+
+          <symbol
+            id="switchArrowsIcon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 16L7 20L11 16"
+              stroke="black"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M7 20V4"
+              stroke="black"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M21 8L17 4L13 8"
+              stroke="black"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M17 4V20"
+              stroke="black"
+              strokeWidth="1.75"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

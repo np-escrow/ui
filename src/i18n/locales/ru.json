@@ -1,4 +1,7 @@
 {
+  "common": {
+    "paste": "Вставить"
+  },
   "header": {
     "greeting": "Привет :)",
     "greetingWithName": "Привет, {{name}}",
@@ -93,5 +96,17 @@
     "role": "Ваша роль",
     "roleSeller": "Продавец",
     "roleRecepient": "Получатель"
+  },
+  "withdraw": {
+    "selectCrypto": "Выбор криптовалюты",
+    "selectNetwork": "Выбор сети",
+    "sendToAddress": "Отправить на адрес", 
+    "address": "Адрес",
+    "continue": "Продолжить",
+    "available": "Доступно",
+    "max": "МАКС",
+    "switchBetweenUSDAndAsset": "Переключить между USD и токеном",
+    "bottomAlertDescription": "Ваши средства могут быть утрачены, если вы отправите их в другую сеть",
+    "youSend": "Вы отправляете"
   }
 }

@@ -27,6 +27,7 @@
     "react-toastify": "^11.0.5",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.10",
+    "tronweb": "^6.0.3",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

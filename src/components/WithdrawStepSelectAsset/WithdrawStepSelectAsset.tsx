@@ -15,10 +15,8 @@ type Props = {
 const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const selectedAssetId = useWithdrawStore((state) => state.selectedAssetId);
-  const setSelectedAssetId = useWithdrawStore(
-    (state) => state.setSelectedAssetId
-  );
+  const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
+  const setSelectedAsset = useWithdrawStore((state) => state.setSelectedAsset);
   const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
   const setSelectedNetwork = useWithdrawStore(
     (state) => state.setSelectedNetwork
@@ -47,7 +45,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
   }, [isDropdownOpen]);
 
   const handleSelectCrypto = (id: string) => {
-    setSelectedAssetId(id);
+    setSelectedAsset(cryptoList.find((crypto) => crypto.id === id) || null);
     setSelectedNetwork(
       cryptoList.find((crypto) => crypto.id === id)?.networks[0] || null
     );
@@ -55,9 +53,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
 
   const handleSelectNetwork = (id: string) => {
     setSelectedNetwork(
-      cryptoList
-        .find((crypto) => crypto.id === selectedAssetId)
-        ?.networks.find((network) => network.id === id) || null
+      selectedAsset?.networks.find((network) => network.id === id) || null
     );
 
     setIsDropdownOpen(false);
@@ -80,7 +76,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
                 type="radio"
                 name="crypto"
                 value={crypto.id}
-                checked={selectedAssetId === crypto.id}
+                checked={selectedAsset?.id === crypto.id}
                 onChange={() => handleSelectCrypto(crypto.id)}
                 className="peer absolute h-0 w-0 opacity-0"
               />
@@ -119,9 +115,8 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
             ref={dropdownRef}
             className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px]"
           >
-            {cryptoList
-              .find((crypto) => crypto.id === selectedAssetId)
-              ?.networks.filter((network) => network.id !== selectedNetwork?.id)
+            {selectedAsset?.networks
+              .filter((network) => network.id !== selectedNetwork?.id)
               .map((network) => (
                 <li key={network.id}>
                   <button
