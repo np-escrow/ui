@@ -20,7 +20,8 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
   currency,
   userType
 }) => {
-  const amount = (+price + (price * fee.percent + fee.fixed)).toFixed(2);
+  const pFee = price * fee.percent + fee.fixed - price;
+  const amount = (+price + pFee).toFixed(2);
 
   return (
     <div className="flex w-full flex-col gap-[16px]">
@@ -30,7 +31,7 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
       </div>
       <div className="flex items-center justify-between">
         <p className={styles.details__subtitle}>{t("shipment.paymentFee")}</p>
-        <p className={styles.details__value}>{`${currency} ${fee}`}</p>
+        <p className={styles.details__value}>{`${currency} ${pFee}`}</p>
       </div>
       <div className="h-[1px] w-full bg-[#BCC3D080]" />
       <div className="flex items-center justify-between">

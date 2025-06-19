@@ -1,11 +1,17 @@
-import { useMemo, type FC } from "react";
-import { EDeliveryStatus, EUserType, type IDeliveries } from "../../types";
-import classNames from "classnames";
-import styles from "./DeliveriesListItem.module.css";
 import { t } from "i18next";
+import classNames from "classnames";
+import { useMemo, type FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 import DeliveriesItemInfo from "../DeliveriesItemInfo/DeliveriesItemInfo";
-import { useNavigate } from "react-router-dom";
+
+import {
+  EUserType,
+  EDeliveryStatus,
+  ParseOrderStatus,
+  type IDeliveries
+} from "../../types";
+import styles from "./DeliveriesListItem.module.css";
 
 interface DeliveriesListItemProps {
   item: IDeliveries;
@@ -13,9 +19,10 @@ interface DeliveriesListItemProps {
 
 const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
   const navigate = useNavigate();
+  const pStatus = ParseOrderStatus[item.status] as unknown as EDeliveryStatus;
 
   const subtitle = useMemo(() => {
-    if (item.status === EDeliveryStatus.PENDING) {
+    if (pStatus === EDeliveryStatus.PENDING) {
       return item.userType === EUserType.SELLER
         ? t("deliveries.item.sub-to", {
             recipient: `${item.info.recipient}, ${item.info.recipientCity}`
@@ -30,17 +37,17 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
   }, [item]);
 
   const status = useMemo(() => {
-    if (item.status === EDeliveryStatus.PENDING) {
+    if (pStatus === EDeliveryStatus.PENDING) {
       if (item.userType === EUserType.RECIPIENT) {
         return t("deliveries.item.statuspending-recepient");
       } else {
         return t("deliveries.item.statuspending-seller");
       }
     }
-    if (item.status === EDeliveryStatus.PAID) {
+    if (pStatus === EDeliveryStatus.PAID) {
       return t("deliveries.item.status-paid");
     }
-    if (item.status === EDeliveryStatus.COMPLETED) {
+    if (pStatus === EDeliveryStatus.COMPLETED) {
       return item.archive
         ? t("deliveries.item.status-completed-archive")
         : t("deliveries.item.status-completed");
@@ -51,8 +58,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
   return (
     <div
       className={classNames(styles.deliveries__box, {
-        [styles.completed]:
-          item.status === EDeliveryStatus.COMPLETED && item.archive
+        [styles.completed]: status === EDeliveryStatus.COMPLETED && item.archive
       })}
       onClick={() => navigate(`/shipment-info/${item.id}`)}
     >
@@ -65,7 +71,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
         </div>
         <p className={styles.deliveries__subtitle}>{subtitle}</p>
       </div>
-      {!item.archive && item.status !== EDeliveryStatus.PENDING && (
+      {!item.archive && status !== EDeliveryStatus.PENDING && (
         <DeliveriesItemInfo
           isDeliveried={
             item.info.deliveryDate

@@ -4,6 +4,7 @@ import { api } from "../services/api.service";
 import { getWebAppFromGlobal } from "../helpers/getWebAppFromGlobal";
 import type { UserMetadata } from "../services/api.types";
 import { setToken } from "../services/storage";
+import type { NavigateFunction } from "react-router-dom";
 
 interface UserState {
   id: number;
@@ -20,7 +21,7 @@ interface UserState {
     auth: boolean;
   };
   getAvatar: () => Promise<void>;
-  signin: (ttn?: number) => Promise<void>;
+  signin: (navigate: NavigateFunction, ttn?: number) => Promise<void>;
   setMetadata: (data: Partial<UserMetadata>) => Promise<void>;
 }
 
@@ -58,7 +59,7 @@ export const useUserStore = create<UserState>((set) => ({
       avatar: res
     });
   },
-  signin: async (ttn?: number) => {
+  signin: async (navigate: NavigateFunction, ttn?: number) => {
     set((state) => ({
       loadings: {
         ...state.loadings,
@@ -82,5 +83,9 @@ export const useUserStore = create<UserState>((set) => ({
         auth: false
       }
     }));
+
+    if (Telegram.WebApp.initDataUnsafe?.start_param) {
+      navigate("/payment");
+    }
   }
 }));

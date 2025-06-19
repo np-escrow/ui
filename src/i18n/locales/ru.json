@@ -100,7 +100,7 @@
   "withdraw": {
     "selectCrypto": "Выбор криптовалюты",
     "selectNetwork": "Выбор сети",
-    "sendToAddress": "Отправить на адрес", 
+    "sendToAddress": "Отправить на адрес",
     "address": "Адрес",
     "continue": "Продолжить",
     "available": "Доступно",

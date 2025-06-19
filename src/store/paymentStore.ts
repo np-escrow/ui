@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import type { Crypto, Network } from '../types';
+import { create } from "zustand";
+import type { Crypto, Network } from "../types";
 
 export enum EPaymentStep {
-  SELECT_ASSET = 'selectAsset',
-  CONFIRM = 'confirm',
+  SELECT_ASSET = "selectAsset",
+  CONFIRM = "confirm"
 }
 
 interface PaymentState {
@@ -29,7 +29,7 @@ export const usePaymentStore = create<PaymentState>((set) => ({
   selectedAsset: null,
   setSelectedAsset: (asset) => set({ selectedAsset: asset }),
   selectedNetwork: null,
-  setSelectedNetwork: (network) => set({ selectedNetwork: network }),
+  setSelectedNetwork: (network) => set({ selectedNetwork: network })
   // withdrawAddress: '',
   // setWithdrawAddress: (address) => set({ withdrawAddress: address }),
   // withdrawAmount: '',
@@ -38,4 +38,4 @@ export const usePaymentStore = create<PaymentState>((set) => ({
   // setWithdrawFee: (fee) => set({ withdrawFee: fee }),
   // isCalcInUSD: false,
   // setIsCalcInUSD: (isCalcInUSD) => set({ isCalcInUSD }),
-})); 
+}));

@@ -1,28 +1,56 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-
 import { t } from "i18next";
 import cn from "classnames";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import PaymentStepSelectAsset from "../../components/PaymentStepSelectAsset/PaymentStepSelectAsset";
 import { PaymentStepConfirm } from "../../components/PaymentStepConfirm";
 
-import type { Crypto, IDeliveries } from "../../types";
-import { cryptoMock, mockDeliveries } from "./mock";
+import { EUserType, type Crypto, type IDeliveries } from "../../types";
+import { cryptoMock } from "./mock";
 import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
+import { usePackageStore } from "../../store/packageStore";
+import { useUserStore } from "../../store/userStore";
 
 const Payment = () => {
-  const [deliveries, setDeliveries] = useState<IDeliveries[]>([]);
-  const [delivery, setDelivery] = useState<IDeliveries | null>(null);
-  const [searchParams] = useSearchParams();
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
+  const { id } = useUserStore();
+  const { data, loadings, get } = usePackageStore();
+
+  const loading = loadings.get;
+  const delivery: IDeliveries | null = data.details
+    ? {
+        id: data.details.id,
+        currency: data.details.currency,
+        price: `${data.details.amount}`,
+        ttn: data.details.id,
+        userType:
+          +id === +data.details.sellerId
+            ? EUserType.SELLER
+            : EUserType.RECIPIENT,
+        status: data.details.status,
+        archive: false,
+        info: {
+          createdAt: data.details.createDt,
+          recipient: data.details.metadata.RecipientFullNameEW,
+          seller: data.details.metadata.SenderFullNameEW,
+          sellerCity: data.details.metadata.CitySender,
+          recipientCity: data.details.metadata.CityRecipient,
+          deliveryDate: data.details.metadata.ScheduledDeliveryDate
+        }
+      }
+    : null;
+
+  useEffect(() => {
+    if (Telegram.WebApp.initDataUnsafe?.start_param)
+      get(+Telegram.WebApp.initDataUnsafe?.start_param);
+  }, []);
 
   const navigate = useNavigate();
 
-  // todo remove ttn mock!!!
-  const ttn = searchParams.get("ttn") || "123456789065";
+  const ttn = Telegram.WebApp.initDataUnsafe?.start_param;
 
   const selectedAsset = usePaymentStore((state) => state.selectedAsset);
   const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
@@ -34,14 +62,6 @@ const Payment = () => {
   const setStep = usePaymentStore((state) => state.setStep);
 
   useEffect(() => {
-    if (!deliveries.length) {
-      // todo get deliveries list from backend
-      setDeliveries(mockDeliveries);
-      setDelivery(
-        mockDeliveries.find((delivery) => delivery.ttn === ttn) || null
-      );
-    }
-
     if (!cryptoList.length) {
       // todo get crypto list from backend
       setCryptoList(cryptoMock);
@@ -51,14 +71,7 @@ const Payment = () => {
       setSelectedAsset(cryptoList[0]);
       setSelectedNetwork(cryptoList[0]?.networks[0]);
     }
-  }, [
-    cryptoList,
-    deliveries.length,
-    selectedAsset,
-    setSelectedAsset,
-    setSelectedNetwork,
-    ttn
-  ]);
+  }, [cryptoList, selectedAsset, setSelectedAsset, setSelectedNetwork, ttn]);
 
   const handleBack = () => {
     switch (step) {
@@ -99,6 +112,10 @@ const Payment = () => {
         return !selectedAsset || !selectedNetwork;
     }
   };
+
+  if (loading) {
+    return "Loading...";
+  }
 
   if (!delivery) {
     return null;

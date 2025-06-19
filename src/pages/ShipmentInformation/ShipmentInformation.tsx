@@ -2,45 +2,15 @@ import { t } from "i18next";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
-import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
 
 import { usePackageStore } from "../../store/packageStore";
-import { EDeliveryStatus, EUserType, type IShipmentInfo } from "../../types";
+import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
 
 import styles from "./ShipmentInformation.module.css";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
-
-// const mockShipmentInfo: IShipmentInfo = {
-//   id: "shipment_123456",
-//   ttn: "#2040506070809",
-//   status: EDeliveryStatus.PENDING,
-//   userType: EUserType.SELLER,
-//   paimentData: [
-//     {
-//       id: "pay_1",
-//       name: "Initial Payment",
-//       date: "2025-06-17T10:30:00Z"
-//     },
-//     {
-//       id: "pay_2",
-//       name: "Final Payment",
-//       date: "2025-06-18T12:00:00Z"
-//     }
-//   ],
-//   packageDetails: {
-//     from: "Kyiv",
-//     to: "Lviv",
-//     weight: "2.5kg"
-//   },
-//   paymentDetails: {
-//     price: 500.0,
-//     currency: "UAH",
-//     fee: 15.0
-//   }
-// };
 
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,6 +31,9 @@ const ShipmentInformation = () => {
 
   const userType =
     +data.details.sellerId === userId ? EUserType.SELLER : EUserType.RECIPIENT;
+  const pStatus = ParseOrderStatus[
+    data.details.status
+  ] as unknown as EDeliveryStatus;
 
   return (
     <main className="page-with-button flex flex-col justify-start">
@@ -74,8 +47,8 @@ const ShipmentInformation = () => {
             <div className={styles.shipment__box}>
               {/* <ShipmentDealInfo
                 ttn={data.details.metadata.Number}
-                status={mockShipmentInfo.status}
-                data={mockShipmentInfo.paimentData}
+                status={data.details.status}
+                data={data.details.paimentData}
               /> */}
             </div>
             <div className="w-full">
@@ -97,7 +70,7 @@ const ShipmentInformation = () => {
                       {t("shipment.detailsFrom")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.SenderFullNameEW}
+                      {data.details.metadata.SenderAddress}
                     </p>
                   </li>
                   <li className="flex items-center justify-between">
@@ -105,7 +78,7 @@ const ShipmentInformation = () => {
                       {t("shipment.detailsTo")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.RecipientFullNameEW}
+                      {data.details.metadata.RecipientAddress}
                     </p>
                   </li>
                   <li className="flex items-center justify-between">
@@ -134,11 +107,11 @@ const ShipmentInformation = () => {
             </div>
           </div>
 
-          {/* {mockShipmentInfo.status !== EDeliveryStatus.COMPLETED && (
+          {pStatus !== EDeliveryStatus.COMPLETED && (
             <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
               <Button>{userType === EUserType.SELLER ? "Share" : "Pay"}</Button>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </main>

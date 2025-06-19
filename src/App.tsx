@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import classNames from "classnames";
@@ -20,6 +20,7 @@ import { EPlatform, EUserLanguage, EUserType } from "./types";
 
 function App() {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
   const { signin, loadings } = useUserStore();
   const { handleExpand, isExpanded } = useExpand();
   const [isMobile, setIsMobile] = useState(false);
@@ -48,13 +49,6 @@ function App() {
         (Telegram.WebApp as any).requestFullscreen();
       }
 
-      // User type
-      const params = new URLSearchParams(location.search);
-      const userType = params.has("recepient")
-        ? EUserType.RECIPIENT
-        : EUserType.SELLER;
-      setUserType(userType);
-
       // Language
       const lang = Telegram.WebApp.initDataUnsafe?.user?.language_code;
       let targetLang: EUserLanguage = EUserLanguage.EN;
@@ -62,19 +56,27 @@ function App() {
       else if (lang === "ru") targetLang = EUserLanguage.RU;
       setLanguage(targetLang);
       i18n.changeLanguage(targetLang.toLowerCase());
-
-      const param = Telegram.WebApp.initDataUnsafe?.start_param
-        ?.split("_")?.[1]
-        ?.replace(/([A-Z])/g, "/$1");
-      const ttn = param ? +param : undefined;
-
-      signin(ttn);
     }
   }, [handleExpand, isExpanded, i18n]);
 
+  useEffect(() => {
+    // User type
+    const param = Telegram.WebApp.initDataUnsafe?.start_param;
+    const ttn = param ? +param : undefined;
+
+    const userType = ttn ? EUserType.RECIPIENT : EUserType.SELLER;
+    setUserType(userType);
+
+    signin(navigate, ttn);
+  }, []);
+
   // TODO add loader
   if (loadings.auth) {
-    return "Loading....";
+    return (
+      <div className={classNames("h-screen", { "mobile-padding": isMobile })}>
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -86,7 +88,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/shipment-info/:id" element={<ShipmentInformation />} />
-          <Route path="/send-package" element={<SendPackage />} /> 
+          <Route path="/send-package" element={<SendPackage />} />
         </Routes>
       </div>
     </Suspense>

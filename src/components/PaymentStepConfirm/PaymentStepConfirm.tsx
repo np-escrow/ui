@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 import { QRCode } from "react-qrcode-logo";
 import styles from "./PaymentStepConfirm.module.css";
 import { Icon } from "../Icon";
@@ -11,9 +11,6 @@ type Props = {
   delivery: IDeliveries;
 };
 
-const MOCK_PAYMENT_ADDRESS = "0x1234567890123456789012345678901234567890";
-const MOCK_PACKAGE_WEIGHT = "10";
-
 const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   const { isCopy, handleCopy } = useCopy();
 
@@ -24,6 +21,8 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
     const text = `https://t.me/AngryMinerBot/?start=${delivery.ttn}`;
     handleCopy(text);
   };
+
+  useEffect(() => {}, []);
 
   const calculateFee = (price: string | number, fee: string | number) => {
     const packagePrice = typeof price === "number" ? price : parseFloat(price);
@@ -40,7 +39,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   };
 
   return (
-    <div className="pt-[30px] max-h-[calc(100vh-100px)] overflow-y-auto">
+    <div className="max-h-[calc(100vh-100px)] overflow-y-auto pt-[30px]">
       <span className="mx-auto mb-2 block text-center text-[20px] font-semibold">
         {`${selectedAsset?.token} ${selectedNetwork?.name}`}
       </span>

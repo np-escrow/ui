@@ -95,6 +95,11 @@ class Api {
     const res = await this.httpService.post<void>("/pay/withdrawal", data);
     return res.data;
   }
+
+  async pay(data: WithdrawDto) {
+    const res = await this.httpService.post<void>("/pay/withdrawal", data);
+    return res.data;
+  }
 }
 const api = new Api();
 

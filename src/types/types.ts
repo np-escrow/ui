@@ -24,11 +24,25 @@ export enum EDeliveryStatus {
   COMPLETED = "completed"
 }
 
+export enum ParseOrderStatus {
+  new = EDeliveryStatus.PENDING,
+  paid = EDeliveryStatus.PAID,
+  closed = EDeliveryStatus.COMPLETED,
+  revert = EDeliveryStatus.COMPLETED
+}
+
+export enum OrderStatus {
+  new = "new",
+  paid = "paid",
+  closed = "closed",
+  revert = "revert"
+}
+
 export interface IDeliveries {
   id: string;
   ttn: string;
   userType: EUserType;
-  status: string;
+  status: OrderStatus;
   price: string;
   currency: string;
   info: {

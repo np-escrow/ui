@@ -1,3 +1,5 @@
+import type { OrderStatus } from "../types";
+
 export type Signin = {
   message: string;
 };
@@ -36,7 +38,7 @@ export type ResOrder = {
     percent: number;
   };
   amount: number;
-  status: string;
+  status: OrderStatus;
   metadata: {
     Number: string;
     StatusCode: string;
