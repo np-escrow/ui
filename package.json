@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
     "@types/telegram-web-app": "^7.10.1",
+    "axios": "^1.10.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "eslint-config-prettier": "^10.1.5",

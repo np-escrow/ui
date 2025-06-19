@@ -1,24 +1,19 @@
+import { t } from "i18next";
 import { useEffect, useState } from "react";
 
-import { BalanceBlock } from "../../components/BalanceBlock";
-import Button from "../../components/Button/Button";
-import DeliveriesList from "../../components/DeliveriesList/DeliveriesList";
-import { EUserType } from "../../types";
 import { Header } from "../../components/Header";
+import Button from "../../components/Button/Button";
 import { Onboarding } from "../../components/Onboarding";
-import { t } from "i18next";
+import { BalanceBlock } from "../../components/BalanceBlock";
+import DeliveriesList from "../../components/DeliveriesList/DeliveriesList";
 
-// import { useUIStore } from "../../store/uiStore";
+import { useUserStore } from "../../store/userStore";
 
 const Home = () => {
   const [isShown, setIsShown] = useState<boolean>(true);
-  // todo: get user type from backend
-  const [userType] = useState<EUserType>(EUserType.RECIPIENT);
+  const { metadata, userType } = useUserStore();
 
-  const shownOnboarding = true;
-  // todo
-  // const shownPrivateModeOnboarding =
-  // userData?.authData?.user.metadata?.shownPrivateModeOnboarding;
+  const shownOnboarding = metadata?.senderOnboarding;
 
   useEffect(() => {
     setIsShown(shownOnboarding);

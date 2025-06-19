@@ -1,5 +1,4 @@
-import { EPlatform, EUserLanguage, EUserType } from "./types";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import classNames from "classnames";
@@ -8,21 +7,22 @@ import { useTranslation } from "react-i18next";
 import { useUserStore } from "./store/userStore";
 
 const Home = lazy(() => import("./pages/Home/Home"));
-const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
 const Scan = lazy(() => import("./pages/Scan/Scan"));
+const Withdraw = lazy(() => import("./pages/Withdraw/Withdraw"));
 const ShipmentInformation = lazy(
   () => import("./pages/ShipmentInformation/ShipmentInformation")
 );
 
+import { EPlatform, EUserLanguage, EUserType } from "./types";
+
 function App() {
   const { i18n } = useTranslation();
+  const { signin, loadings } = useUserStore();
   const { handleExpand, isExpanded } = useExpand();
   const [isMobile, setIsMobile] = useState(false);
-  const location = useLocation();
   const setUserType = useUserStore((state) => state.setUserType);
   const setLanguage = useUserStore((state) => state.setLanguage);
   const setPlatform = useUserStore((state) => state.setPlatform);
-  const setUsername = useUserStore((state) => state.setUsername);
 
   useEffect(() => {
     if (!isExpanded) handleExpand();
@@ -36,16 +36,14 @@ function App() {
       const isMobileDevice =
         platform === EPlatform.IOS || platform === EPlatform.ANDROID;
       setIsMobile(isMobileDevice);
-      
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (isMobileDevice && Number(version) >= 8 && typeof (Telegram.WebApp as any).requestFullscreen === 'function') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+      if (
+        isMobileDevice &&
+        Number(version) >= 8 &&
+        typeof (Telegram.WebApp as any).requestFullscreen === "function"
+      ) {
         (Telegram.WebApp as any).requestFullscreen();
       }
-
-      // Username
-      const username = Telegram.WebApp.initDataUnsafe?.user?.username;
-      setUsername(username);
 
       // User type
       const params = new URLSearchParams(location.search);
@@ -61,17 +59,20 @@ function App() {
       else if (lang === "ru") targetLang = EUserLanguage.RU;
       setLanguage(targetLang);
       i18n.changeLanguage(targetLang.toLowerCase());
+
+      const param = Telegram.WebApp.initDataUnsafe?.start_param
+        ?.split("_")?.[1]
+        ?.replace(/([A-Z])/g, "/$1");
+      const ttn = param ? +param : undefined;
+
+      signin(ttn);
     }
-  }, [
-    handleExpand,
-    isExpanded,
-    i18n,
-    location.search,
-    setUserType,
-    setLanguage,
-    setPlatform,
-    setUsername
-  ]);
+  }, [handleExpand, isExpanded, i18n]);
+
+  // TODO add loader
+  if (loadings.auth) {
+    return "Loading....";
+  }
 
   return (
     <Suspense>
