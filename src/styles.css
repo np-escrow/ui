@@ -216,3 +216,53 @@ a {
   stroke-width: 3 !important;
   stroke: #cdf599 !important;
 }
+
+/* Withdraw enter amount */
+.number-input-group {
+  position: relative;
+  display: inline-block;
+  height: 47.1px;
+  background-color: transparent;
+
+  & input {
+    max-width: calc(100vw - 150px);
+    outline: none;
+    box-sizing: border-box;
+    font-family: "SFProDisplay", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 600;
+    background-color: transparent;
+
+    &::placeholder {
+      color: var(--placeholder-color);
+    }
+    &::-webkit-input-placeholder {
+      color: var(--placeholder-color);
+    }
+    &::-moz-placeholder {
+      color: var(--placeholder-color);
+    }
+    &:-ms-input-placeholder {
+      color: var(--placeholder-color);
+    }
+    &:-moz-placeholder {
+      color: var(--placeholder-color);
+    }
+  }
+
+  & > span {
+    max-width: calc(100vw - 150px);
+    position: absolute;
+    min-width: 30px;
+    visibility: hidden;
+    white-space: pre;
+    font-variant-numeric: tabular-nums;
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 600;
+    font-family: "SFProDisplay", system-ui, sans-serif;
+    box-sizing: border-box;
+  }
+}

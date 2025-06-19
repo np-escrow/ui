@@ -1,10 +1,10 @@
 import { useEffect, useState, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useWithdrawStore } from "../../store/withdrawStore";
-
 import { t } from "i18next";
+import cn from "classnames";
 
+import { useWithdrawStore } from "../../store/withdrawStore";
 import { useUserStore } from "../../store/userStore";
 import useReadTextFromClipboard from "../../hooks/useReadTextFromClipboard";
 
@@ -50,6 +50,7 @@ const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
       }
     });
   };
+
   return (
     <form>
       <label className="relative flex flex-col gap-y-[14px]">
@@ -69,11 +70,13 @@ const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
                 setIsFocused(false);
               }, 100)
             }
-            className="h-[46px] flex-1 bg-transparent focus:outline-none"
+            className={cn("h-[46px] flex-1 bg-transparent focus:outline-none", {
+              truncate: !isFocused
+            })}
           />
 
           {/* Paste and Scan buttons */}
-          {isFocused && (
+          {isFocused && !withdrawAddress && (
             <div className="flex items-center">
               {isClipboardAllowed && (
                 <button
@@ -96,6 +99,21 @@ const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
                 </button>
               )}
             </div>
+          )}
+
+          {isFocused && withdrawAddress.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setWithdrawAddress("");
+                setTimeout(() => {
+                  setIsFocused(true);
+                }, 100);
+              }}
+              className="cursor-pointer"
+            >
+              <Icon name="close-icon" width={24} height={24} />
+            </button>
           )}
         </div>
       </label>
