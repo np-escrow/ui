@@ -108,5 +108,31 @@
     "switchBetweenUSDAndAsset": "Переключить между USD и токеном",
     "bottomAlertDescription": "Ваши средства могут быть утрачены, если вы отправите их в другую сеть",
     "youSend": "Вы отправляете"
+},
+  "sendPackage": {
+    "validateTitle": "Новая Почта ТТН",
+    "detailsTitle": "Проверьте данные посылки",
+    "createTitle": "Цена (USD)",
+    "validateExample": "Пример: 59000391234567",
+    "validateButton": "Проверить ТТН",
+    "validatePlaceholder": "Введите 14-значный номер отслеживания",
+    "detailsTTN": "ТТН",
+    "detailsFrom": "Откуда",
+    "detailsTo": "Куда",
+    "detailsWeight": "Вес",
+    "detailsDimensions": "Габариты",
+    "detailsButton": "Продолжить",
+    "createEmptyDescription": "Укажите сумму, которую должен оплатить получатель. Комиссия будет вычтена при получении — вы получите сумму за вычетом комиссии после подтверждения доставки.",
+    "createFullfiledDescription": "Получатель оплатит эту сумму. После вычета комиссии вы получите примерно {amount− ${{fee}}}.",
+    "createButton": "Создать сделку",
+    "sendDescription": "Поделитесь этой ссылкой с покупателем",
+    "sendSubtitle": "Оплата посылки",
+    "sendTTN": "ТТН:",
+    "sendRoute": "Маршрут:",
+    "sendWeight": "Вес:",
+    "sendPrice": "Цена посылки:",
+    "sendFee": "Комиссия",
+    "sendTotal": "Вы получите",
+    "sendButton": "Поделиться"
   }
 }

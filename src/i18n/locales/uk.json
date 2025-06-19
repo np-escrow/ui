@@ -112,5 +112,31 @@
     "role": "Ваша роль",
     "roleSeller": "Продавець",
     "roleRecepient": "Одержувач"
+  },
+  "sendPackage": {
+    "validateTitle": "Нова Пошта ТТН",
+    "detailsTitle": "Перевірка даних посилки",
+    "createTitle": "Ціна (USD)",
+    "validateExample": "Приклад: 59000391234567",
+    "validateButton": "Перевірити ТТН",
+    "validatePlaceholder": "Введіть 14-значний номер відстеження",
+    "detailsTTN": "ТТН",
+    "detailsFrom": "Звідки",
+    "detailsTo": "Куди",
+    "detailsWeight": "Вага",
+    "detailsDimensions": "Габарити",
+    "detailsButton": "Продовжити",
+    "createEmptyDescription": "Вкажіть суму, яку має оплатити одержувач. Комісію буде утримано при отриманні — ви отримаєте суму за вирахуванням комісії після підтвердження доставки.",
+    "createFullfiledDescription": "Одержувач сплатить цю суму. Після вирахування комісії ви отримаєте приблизно {amount− ${{fee}}}.",
+    "createButton": "Створити угоду",
+    "sendDescription": "Поділіться цим посиланням з покупцем",
+    "sendSubtitle": "Оплата посилки",
+    "sendTTN": "ТТН:",
+    "sendRoute": "Маршрут:",
+    "sendWeight": "Вага:",
+    "sendPrice": "Ціна посилки:",
+    "sendFee": "Комісія",
+    "sendTotal": "Ви отримаєте",
+    "sendButton": "Поділитися"
   }
 }

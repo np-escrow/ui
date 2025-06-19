@@ -108,5 +108,31 @@
     "switchBetweenUSDAndAsset": "Switch between USD and asset",
     "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
     "youSend": "You send"
+},
+  "sendPackage": {
+    "validateTitle": "Nova Poshta TTN",
+    "detailsTitle": "Review Package Data",
+    "createTitle": "Price (USD)",
+    "validateExample": "Example: 59000391234567",
+    "validateButton": "Validate TTN",
+    "validatePlaceholder": "Enter 14-digit tracking number",
+    "detailsTTN": "TTN",
+    "detailsFrom": "From",
+    "detailsTo": "To",
+    "detailsWeight": "Weight",
+    "detailsDimensions": "Dimensions",
+    "detailsButton": "Continue",
+    "createEmptyDescription": "Specify the amount the recipient must pay. The fee will be deducted upon receipt — you will receive the amount minus the fee after the delivery is confirmed.",
+    "createFullfiledDescription": "The recipient will pay this amount. After deducting the fee, you will receive approximately {amount− ${{fee}}}.`}",
+    "createButton": "Create Deal",
+    "sendDescription": "Share this link with the byer",
+    "sendSubtitle": "Package Payment",
+    "sendTTN": "TTN:",
+    "sendRoute": "Route:",
+    "sendWeight": "Weight:",
+    "sendPrice": "Package Price:",
+    "sendFee": "Fee",
+    "sendTotal": "You will get",
+    "sendButton": "Share"
   }
 }
