@@ -1,21 +1,29 @@
-FROM node as vite-app
+# Dockerfile
 
-WORKDIR /app/client
-COPY ./client .
+# Use an existing node alpine image as a base image.
+FROM node:20.12.2-alpine
 
-RUN "npm i && \
-    npm run build"
+# Set the working directory.
+WORKDIR /app
 
-FROM nginx:alpine
+# Copy the package.json file.
+COPY package.json .
 
-WORKDIR /usr/share/nginx/
+# Copy the package-lock.json file.
+COPY package-lock.json .
 
-RUN "rm -rf html && \
-    mkdir html"
+# Install application dependencies.
+RUN npm install
 
-WORKDIR /
+# Copy the rest of the application files.
+COPY . .
 
-COPY ./nginx.conf /etc/nginx
-COPY --from=vite-app ./app/client/dist /usr/share/nginx/html
+# Expose the port.
+EXPOSE 3000
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+USER root
+RUN npm install -g serve
+RUN npm run build
+
+# Run the application.
+CMD ["npm", "run", "start:prod"]
