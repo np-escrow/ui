@@ -14,6 +14,7 @@ const ShipmentInformation = lazy(
   () => import("./pages/ShipmentInformation/ShipmentInformation")
 );
 const SendPackage = lazy(() => import("./pages/SendPackage/SendPackage"));
+const Payment = lazy(() => import("./pages/Payment/Payment"));
 
 import { EPlatform, EUserLanguage, EUserType } from "./types";
 
@@ -82,9 +83,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/shipment-info/:id" element={<ShipmentInformation />} />
-          <Route path="/send-package" element={<SendPackage />} />
+          <Route path="/send-package" element={<SendPackage />} /> 
         </Routes>
       </div>
     </Suspense>
