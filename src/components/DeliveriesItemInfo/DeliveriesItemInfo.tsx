@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { Icon } from "../Icon";
 import { Trans } from "react-i18next";
+import { format } from "date-fns";
 import styles from "./DeliveriesItemInfo.module.css";
 
 interface DeliveriesItemInfoProps {
@@ -31,7 +32,7 @@ const DeliveriesItemInfo: FC<DeliveriesItemInfoProps> = ({
           </p>
           <p
             className={styles.info__subtitle}
-          >{`${sellerCity}, ${createdAt}`}</p>
+          >{`${sellerCity}, ${format(createdAt, "dd MMM, yyyy")}`}</p>
         </div>
         <div>
           <p className={styles.info__title}>
@@ -39,7 +40,7 @@ const DeliveriesItemInfo: FC<DeliveriesItemInfoProps> = ({
           </p>
           <p
             className={styles.info__subtitle}
-          >{`${recepientCity}, ${deliveryDate}`}</p>
+          >{`${recepientCity}, ${format(deliveryDate, "dd MMM, yyyy")}`}</p>
         </div>
       </div>
     </div>
