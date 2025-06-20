@@ -47,7 +47,7 @@ const Payment = () => {
         archive: false,
         info: {
           createdAt: data.details.createDt,
-          recipient: data.details.metadata.RecipientFullNameEW,
+          recipient: data.details.metadata.RecipientFullName,
           seller: data.details.metadata.SenderFullNameEW,
           sellerCity: data.details.metadata.CitySender,
           recipientCity: data.details.metadata.CityRecipient,

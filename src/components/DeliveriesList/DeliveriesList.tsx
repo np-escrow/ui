@@ -35,7 +35,7 @@ const DeliveriesList = () => {
       archive: false,
       info: {
         createdAt: delivery.createDt,
-        recipient: delivery.metadata.RecipientFullNameEW,
+        recipient: delivery.metadata.RecipientFullName,
         seller: delivery.metadata.SenderFullNameEW,
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
