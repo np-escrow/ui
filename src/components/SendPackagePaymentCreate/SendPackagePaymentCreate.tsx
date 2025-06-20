@@ -26,7 +26,7 @@ const SendPackagePaymentCreate: FC = () => {
       percent: 0.05
     };
 
-    return +amount - (+amount || 0 * fee.percent) + fee.fixed;
+    return +amount + +amount * fee.percent + fee.fixed;
   };
 
   const formattedAmount = amount ? `$${amount}` : "";
