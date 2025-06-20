@@ -1,4 +1,5 @@
 import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { Loader } from "../../components/Loader";
@@ -9,13 +10,13 @@ import styles from "./ShipmentInformation.module.css";
 import { t } from "i18next";
 import { useEffect } from "react";
 import { usePackageStore } from "../../store/packageStore";
-import { useParams } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
   const { id: userId } = useUserStore();
   const { data, loadings, get } = usePackageStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) get(+id);
@@ -44,6 +45,10 @@ const ShipmentInformation = () => {
         `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
       );
       window.open(data.details.link, "_blank");
+    }
+    if (userType === EUserType.RECIPIENT && data.details?.status === "new") {
+      navigate("/payment?ttn=" + data.details.metadata.Number);
+      // window.Telegram.WebApp.openTelegramLink(data.details.link);
     }
   };
 
