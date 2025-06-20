@@ -24,16 +24,15 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
 
   useEffect(() => {
-    if (!data)
-      payment({
-        currency: selectedAsset!.code,
-        id: Telegram.WebApp.initDataUnsafe!.start_param!,
-        network: selectedNetwork!.code as NetworkCode
-      });
+    payment({
+      currency: selectedAsset!.code,
+      id: Telegram.WebApp.initDataUnsafe!.start_param!,
+      network: selectedNetwork!.code as NetworkCode
+    });
   }, []);
 
   const handleCopyClick = async () => {
-    const text = `https://t.me/AngryMinerBot/?start=${delivery.ttn}`;
+    const text = data?.address || "";
     handleCopy(text);
   };
 

@@ -4,9 +4,9 @@ import {
   COLOR
 } from "./ShipmentDealInfo.styles";
 
-import { OrderStatus } from "../../types";
 import type { FC } from "react";
 import { Icon } from "../Icon";
+import { OrderStatus } from "../../types";
 import { format } from "date-fns";
 import styles from "./ShipmentDealInfo.module.css";
 import { t } from "i18next";

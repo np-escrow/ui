@@ -84,10 +84,10 @@
     "dealPending": "Ожидание оплаты",
     "dealDone": "Оплачено",
     "detailsTitle": "Детали посылки",
-    "detailsTtn": "Номер ТТН",
-    "detailsFrom": "Откуда",
-    "detailsTo": "Куда",
-    "detailsWeight": "Вес",
+    "detailsTtn": "Номер ТТН:",
+    "detailsFrom": "Откуда:",
+    "detailsTo": "Куда:",
+    "detailsWeight": "Вес:",
     "paymentTitle": "Детали оплаты",
     "paymentPrice": "Стоимость посылки:",
     "paymentFee": "Комиссия сервиса (5%):",
@@ -95,8 +95,7 @@
     "total": "Итого",
     "role": "Ваша роль",
     "roleSeller": "Продавец",
-    "roleRecepient": "Получатель", 
-    "weightValue": "{{ value }}кг"
+    "roleRecepient": "Получатель"
   },
   "withdraw": {
     "selectCrypto": "Выбор криптовалюты",
