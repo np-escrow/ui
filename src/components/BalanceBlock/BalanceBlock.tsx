@@ -2,12 +2,11 @@ import { t } from "i18next";
 import { useEffect } from "react";
 
 import { Button } from "../Button";
-import { LoaderMini } from "../LoaderMini";
 
 import { useBalanceStore } from "../../store/balanceStore";
 
 const BalanceBlock = () => {
-  const { data, loading, getBalance } = useBalanceStore((state) => state);
+  const { data, getBalance } = useBalanceStore((state) => state);
 
   useEffect(() => {
     getBalance();
@@ -22,7 +21,7 @@ const BalanceBlock = () => {
           {t("home.availableBalance")}
         </div>
         <div className="text-[20px] font-semibold">
-          ${loading ? <LoaderMini /> : balance}
+          {balance}
         </div>
       </div>
 

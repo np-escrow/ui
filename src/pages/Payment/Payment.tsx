@@ -17,6 +17,8 @@ import { Loader } from "../../components/Loader";
 
 const Payment = () => {
   const { id } = useUserStore();
+
+  const { data, get } = usePackageStore();
   const navigate = useNavigate();
   const step = usePaymentStore((state) => state.step);
   const setStep = usePaymentStore((state) => state.setStep);
@@ -30,9 +32,7 @@ const Payment = () => {
   const setSelectedNetwork = usePaymentStore(
     (state) => state.setSelectedNetwork
   );
-  const { data, loadings, get } = usePackageStore();
 
-  const loading = loadings.get;
   const delivery: IDeliveries | null = data.details
     ? {
         id: data.details.id,
@@ -114,10 +114,6 @@ const Payment = () => {
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!delivery) {
     return null;
   }
@@ -145,7 +141,6 @@ const Payment = () => {
             <PaymentStepSelectAsset delivery={delivery} />
           )}
 
-          {/* {step === EPaymentStep.CONFIRM && <div>CONTENT</div>} */}
           {step === EPaymentStep.CONFIRM && (
             <PaymentStepConfirm delivery={delivery} />
           )}

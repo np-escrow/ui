@@ -1,5 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
+import { useLoadingStore } from "./store/loadingStore";
 
 import classNames from "classnames";
 import useExpand from "./hooks/useExpand";
@@ -21,12 +22,13 @@ import { EPlatform, EUserLanguage, EUserType } from "./types";
 function App() {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
-  const { signin, loadings } = useUserStore();
+  const { signin } = useUserStore();
   const { handleExpand, isExpanded } = useExpand();
   const [isMobile, setIsMobile] = useState(false);
   const setUserType = useUserStore((state) => state.setUserType);
   const setLanguage = useUserStore((state) => state.setLanguage);
   const setPlatform = useUserStore((state) => state.setPlatform);
+  const { isMainLoading } = useLoadingStore();
 
   useEffect(() => {
     if (!isExpanded) handleExpand();
@@ -70,28 +72,32 @@ function App() {
     signin(navigate, ttn);
   }, []);
 
-  // TODO add loader
-  if (loadings.auth) {
-    return (
-      <div className={classNames("h-screen", { "mobile-padding": isMobile })}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
-    <Suspense fallback={<Loader />}>
-      <div className={classNames("h-screen", { "mobile-padding": isMobile })}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/withdraw" element={<Withdraw />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/scan" element={<Scan />} />
-          <Route path="/shipment-info/:id" element={<ShipmentInformation />} />
-          <Route path="/send-package" element={<SendPackage />} />
-        </Routes>
-      </div>
-    </Suspense>
+    <>
+      <Suspense fallback={<Loader />}>
+        <div
+          className={classNames("h-screen", {
+            "mobile-padding": isMobile,
+            "opacity-0": isMainLoading,
+            "opacity-100": !isMainLoading
+          })}
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/withdraw" element={<Withdraw />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/scan" element={<Scan />} />
+            <Route
+              path="/shipment-info/:id"
+              element={<ShipmentInformation />}
+            />
+            <Route path="/send-package" element={<SendPackage />} />
+          </Routes>
+        </div>
+      </Suspense>
+
+      {isMainLoading && <Loader />}
+    </>
   );
 }
 

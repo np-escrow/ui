@@ -10,6 +10,7 @@ export enum EPaymentStep {
 interface PaymentState {
   step: EPaymentStep;
   setStep: (step: EPaymentStep) => void;
+
   selectedAsset: ResAssets[0] | null;
   setSelectedAsset: (asset: ResAssets[0] | null) => void;
   selectedNetwork: ResAssets[0]["networks"][0] | null;
@@ -27,6 +28,7 @@ interface PaymentState {
   };
   getAssets: () => Promise<void>;
   payment: (data: Payment) => Promise<void>;
+
 }
 
 export const usePaymentStore = create<PaymentState>((set) => ({
@@ -88,4 +90,5 @@ export const usePaymentStore = create<PaymentState>((set) => ({
       loadings: { ...s.loadings, payment: false }
     }));
   }
+
 }));

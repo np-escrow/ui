@@ -145,7 +145,7 @@ a {
 }
 
 #onboarding-slider .swiper-pagination {
-  bottom: 0;
+  bottom: calc((100% - 460px - 8vh)/2);
   display: flex;
   align-items: center;
   justify-content: center;
