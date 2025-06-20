@@ -114,10 +114,10 @@
     "dealPending": "Очікується оплата",
     "dealDone": "Оплачено",
     "detailsTitle": "Деталі посилки",
-    "detailsTtn": "ТТН",
-    "detailsFrom": "Звідки",
-    "detailsTo": "Куди",
-    "detailsWeight": "Вага",
+    "detailsTtn": "ТТН:",
+    "detailsFrom": "Звідки:",
+    "detailsTo": "Куди:",
+    "detailsWeight": "Вага:",
     "paymentTitle": "Деталі оплати",
     "paymentPrice": "Вартість посилки:",
     "paymentFee": "Комісія сервісу (5%):",
@@ -125,7 +125,8 @@
     "total": "Разом",
     "role": "Ваша роль",
     "roleSeller": "Продавець",
-    "roleRecepient": "Одержувач"
+    "roleRecepient": "Одержувач",
+    "weightValue": "{{ value }}кг"
   },
   "sendPackage": {
     "validateTitle": "Нова Пошта ТТН",

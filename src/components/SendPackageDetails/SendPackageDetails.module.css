@@ -38,4 +38,8 @@
   font-weight: 500;
   line-height: 120%; /* 19.2px */
   text-transform: capitalize;
+
+  max-width: 70%; /* или любое другое значение */
+  white-space: wrap;
+  text-align: right;
 }

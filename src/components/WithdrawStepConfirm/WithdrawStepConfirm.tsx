@@ -11,7 +11,7 @@ const WithdrawStepConfirm = () => {
   const isCalcInUSD = useWithdrawStore((state) => state.isCalcInUSD);
 
   const calculateAlternateValue = (amount: string) => {
-    if (!selectedAsset || !selectedAsset.price || !amount) {
+    if (!selectedAsset || !amount) {
       return "0.00";
     }
 
@@ -21,10 +21,7 @@ const WithdrawStepConfirm = () => {
       return "0.00";
     }
 
-    const convertedValue =
-      isCalcInUSD && selectedAsset.price > 0
-        ? numericAmount / selectedAsset.price
-        : numericAmount * selectedAsset.price;
+    const convertedValue = isCalcInUSD ? numericAmount : numericAmount;
 
     return convertedValue
       .toLocaleString("en-US", {
@@ -40,16 +37,12 @@ const WithdrawStepConfirm = () => {
         {/* Logo block */}
         <div className="relative flex items-center justify-center">
           <img
-            src={
-              selectedAsset?.isNative
-                ? selectedAsset?.logoNetwork
-                : selectedAsset?.logoToken
-            }
+            src={selectedAsset?.logoToken}
             alt={`${selectedAsset?.token} logo`}
             className="size-[60px] rounded-full"
           />
 
-          {!selectedAsset?.isNative && (
+          {
             <div className="absolute -bottom-[6px] left-1/2 size-[26px] -translate-x-[calc(50%-20px)]">
               <img
                 src={selectedAsset?.logoNetwork}
@@ -57,10 +50,10 @@ const WithdrawStepConfirm = () => {
                 className="size-full rounded-full"
               />
             </div>
-          )}
+          }
         </div>
         {/* Description block */}
-        <div className="flex flex-col items-center justify-evenly bg-green-777">
+        <div className="bg-green-777 flex flex-col items-center justify-evenly">
           <span className="text-lg font-semibold">
             {t("withdraw.youSend")} {selectedAsset?.token}{" "}
             {selectedNetwork?.name}
@@ -130,7 +123,7 @@ const WithdrawStepConfirm = () => {
       </div>
 
       {/* Bottom alert description */}
-      <p className="text-text-secondary text-[13px] mb-7">
+      <p className="text-text-secondary mb-7 text-[13px]">
         {t("withdraw.bottomAlertDescription")}
       </p>
     </div>

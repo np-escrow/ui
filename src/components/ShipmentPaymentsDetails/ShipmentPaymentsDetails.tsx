@@ -16,23 +16,21 @@ interface IShipmentPaymentsDetailsProps {
 
 const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
   price,
-  fee,
-  currency,
   userType
 }) => {
-  const pFee = price * fee.percent + fee.fixed - price;
-  const amount = (+price + pFee).toFixed(2);
+  // const pFee = price * fee.percent + fee.fixed - price;
+  // const amount = (+price + pFee).toFixed(2);
 
   return (
     <div className="flex w-full flex-col gap-[16px]">
       <div className="flex items-center justify-between">
         <p className={styles.details__subtitle}>{t("shipment.paymentPrice")}</p>
-        <p className={styles.details__value}>{`${currency} ${price}`}</p>
+        <p className={styles.details__value}>{`$${price}`}</p>
       </div>
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <p className={styles.details__subtitle}>{t("shipment.paymentFee")}</p>
-        <p className={styles.details__value}>{`${currency} ${pFee}`}</p>
-      </div>
+        <p className={styles.details__value}>{`$${pFee.toFixed(2)}`}</p>
+      </div> */}
       <div className="h-[1px] w-full bg-[#BCC3D080]" />
       <div className="flex items-center justify-between">
         <p className={styles.details__total}>
@@ -41,7 +39,7 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
             : t("shipment.total")}
           :
         </p>
-        <p className={styles.details__total}>{`${currency} ${amount}`}</p>
+        <p className={styles.details__total}>{`$${price}`}</p>
       </div>
       <div className="h-[1px] w-full bg-[#BCC3D080]" />
       <div className="flex flex-col gap-[8px]">

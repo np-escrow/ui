@@ -84,10 +84,10 @@
     "dealPending": "Pending payment",
     "dealDone": "Paid",
     "detailsTitle": "Package Details",
-    "detailsTtn": "TTN",
-    "detailsFrom": "From",
-    "detailsTo": "To",
-    "detailsWeight": "Weight",
+    "detailsTtn": "TTN:",
+    "detailsFrom": "From:",
+    "detailsTo": "To:",
+    "detailsWeight": "Weight:",
     "paymentTitle": "Payment Details",
     "paymentPrice": "Package Price:",
     "paymentFee": "Service Fee (5%):",
@@ -95,7 +95,9 @@
     "total": "Total",
     "role": "Your role",
     "roleSeller": "Seller",
-    "roleRecepient": "Recipient"
+    "roleRecepient": "Recipient",
+    "weightValue": "{{ value }}kg",
+    "shareText": "Your package is ready for delivery. TTN: {{ ttn }}"
   },
   "withdraw": {
     "selectCrypto": "Select cryptocurrency",

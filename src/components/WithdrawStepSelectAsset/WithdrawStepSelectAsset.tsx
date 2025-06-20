@@ -44,10 +44,10 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
     };
   }, [isDropdownOpen]);
 
-  const handleSelectCrypto = (id: string) => {
-    setSelectedAsset(cryptoList.find((crypto) => crypto.id === id) || null);
+  const handleSelectCrypto = (code: string) => {
+    setSelectedAsset(cryptoList.find((crypto) => crypto.code === code) || null);
     setSelectedNetwork(
-      cryptoList.find((crypto) => crypto.id === id)?.networks[0] || null
+      cryptoList.find((crypto) => crypto.code === code)?.networks[0] || null
     );
   };
 
@@ -69,15 +69,15 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
         <div className="flex flex-col gap-y-3">
           {cryptoList.map((crypto) => (
             <label
-              key={crypto.id}
+              key={crypto.code}
               className="relative flex cursor-pointer items-center gap-x-3"
             >
               <input
                 type="radio"
                 name="crypto"
-                value={crypto.id}
-                checked={selectedAsset?.id === crypto.id}
-                onChange={() => handleSelectCrypto(crypto.id)}
+                value={crypto.code}
+                checked={selectedAsset?.code === crypto.code}
+                onChange={() => handleSelectCrypto(crypto.code)}
                 className="peer absolute h-0 w-0 opacity-0"
               />
               <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-300 transition-colors peer-checked:border-4 peer-checked:border-red-100"></span>

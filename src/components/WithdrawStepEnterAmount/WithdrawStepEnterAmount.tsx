@@ -40,7 +40,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   const setIsCalcInUSD = useWithdrawStore((state) => state.setIsCalcInUSD);
   const withdrawFee = useWithdrawStore((state) => state.withdrawFee);
   const setWithdrawFee = useWithdrawStore((state) => state.setWithdrawFee);
-  
+
   const inputNumberRef = useRef<HTMLInputElement>(null);
   const shortTitleRef = useRef<HTMLDivElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
@@ -53,45 +53,28 @@ const WithdrawStepEnterAmount: FC<Props> = ({
       return;
     }
 
-    if (isCalcInUSD && amount > selectedAsset.balanceUSD) {
+    if (isCalcInUSD) {
       setHasAmountError(true);
       return;
     }
 
-    if (!isCalcInUSD && amount > selectedAsset.balance) {
+    if (!isCalcInUSD && amount > 1) {
       setHasAmountError(true);
       return;
     }
 
-    if (
-      !isCalcInUSD &&
-      selectedAsset.isNative &&
-      amount > selectedAsset.balance - withdrawFee
-    ) {
+    if (!isCalcInUSD && amount > 1 - withdrawFee) {
       setHasAmountError(true);
       return;
     }
 
-    if (
-      isCalcInUSD &&
-      selectedAsset.isNative &&
-      amount > selectedAsset.balanceUSD - withdrawFee * selectedAsset.price
-    ) {
+    if (isCalcInUSD && amount > 1 - withdrawFee * 1) {
       setHasAmountError(true);
       return;
     }
 
     setHasAmountError(false);
-  }, [
-    isCalcInUSD,
-    selectedAsset.balance,
-    selectedAsset.balanceUSD,
-    selectedAsset.isNative,
-    selectedAsset.price,
-    setHasAmountError,
-    withdrawAmount,
-    withdrawFee
-  ]);
+  }, [isCalcInUSD, setHasAmountError, withdrawAmount, withdrawFee]);
 
   const handleNumberInputChange = (value: string) => {
     const amount = formatInputNumericValue(value);
@@ -108,27 +91,18 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   };
 
   const maxValue = useMemo(() => {
-    const fee = isCalcInUSD ? withdrawFee * selectedAsset.price : withdrawFee;
+    const fee = isCalcInUSD ? withdrawFee * 1 : withdrawFee;
 
-    const maxValue = BigNumber(
-      isCalcInUSD ? selectedAsset.balanceUSD : selectedAsset.balance
-    )
+    const maxValue = BigNumber(isCalcInUSD ? 1 : 1)
       .multipliedBy(100)
       .div(100)
-      .minus(selectedAsset.isNative ? fee : 0)
+      .minus(fee)
       .decimalPlaces(6, BigNumber.ROUND_DOWN)
       .abs()
       .toFixed();
 
     return maxValue;
-  }, [
-    isCalcInUSD,
-    selectedAsset.balance,
-    selectedAsset.balanceUSD,
-    selectedAsset.isNative,
-    selectedAsset.price,
-    withdrawFee
-  ]);
+  }, [isCalcInUSD, withdrawFee]);
 
   const handlePasteMaxValue = () => {
     setWithdrawAmount(`${+maxValue || 0}`);
@@ -159,7 +133,12 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   }, [validateAmount]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "KeyE" || e.key === "+" || e.key === "-" || e.key === "Enter") {
+    if (
+      e.code === "KeyE" ||
+      e.key === "+" ||
+      e.key === "-" ||
+      e.key === "Enter"
+    ) {
       e.preventDefault();
     }
   };
@@ -171,7 +150,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   const handleToggleCalcInUSD = () => {
     if (!isCalcInUSD) {
       const newValue = BigNumber(withdrawAmount || "0")
-        .multipliedBy(selectedAsset.price)
+        .multipliedBy(1)
         .decimalPlaces(6, BigNumber.ROUND_DOWN)
         .toNumber();
 
@@ -179,7 +158,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
       setSpanValue(`${newValue}`);
     } else {
       const newValue = BigNumber(withdrawAmount || "0")
-        .div(selectedAsset.price)
+        .div(1)
         .decimalPlaces(6, BigNumber.ROUND_DOWN)
         .toNumber();
 
@@ -206,7 +185,10 @@ const WithdrawStepEnterAmount: FC<Props> = ({
       <div className="flex items-center justify-between gap-x-[5px]">
         <div className="relative h-[72px] w-full flex-col overflow-hidden">
           <div className="number-input-group">
-            <form className="relative flex w-full gap-x-1" onSubmit={handleSubmit}>
+            <form
+              className="relative flex w-full gap-x-1"
+              onSubmit={handleSubmit}
+            >
               <input
                 ref={inputNumberRef}
                 type="text"
@@ -233,9 +215,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
             spanValue
               ? (
                   Number(spanValue.replace(/,/g, "").replace(/\s/g, "")) *
-                  (isCalcInUSD && selectedAsset.price > 0
-                    ? 1 / selectedAsset.price
-                    : selectedAsset.price)
+                  (isCalcInUSD && 1 > 0 ? 1 / 1 : 1)
                 )
                   .toLocaleString("en-US", {
                     minimumFractionDigits: 2,

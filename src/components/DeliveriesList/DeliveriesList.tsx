@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useUserStore } from "../../store/userStore";
 import { usePackageStore } from "../../store/packageStore";
 
+import { Loader } from "../Loader";
 import { DeliveriesListEmptyState } from "../DeliveriesListEmptyState";
 import DeliveriesListItem from "../DeliveriesListItem/DeliveriesListItem";
 
@@ -30,14 +31,17 @@ const DeliveriesList = () => {
       archive: false,
       info: {
         createdAt: delivery.createDt,
-        recipient: delivery.metadata.RecipientFullNameEW,
+        recipient: delivery.metadata.RecipientFullName,
         seller: delivery.metadata.SenderFullNameEW,
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
-        deliveryDate: delivery.metadata.ScheduledDeliveryDate
-      }
+        deliveryDate: new Date().toISOString() //delivery.metadata.ScheduledDeliveryDate
+      },
+      link: delivery.link
     };
   });
+
+  console.log(list);
 
   return (
     <>

@@ -4,7 +4,7 @@
   align-items: center;
   gap: 30px;
 
-  height: calc(100% - 160px);
+  height: calc(100vh - 160px);
 
   padding: 16px;
 
@@ -68,4 +68,10 @@
   font-weight: 500;
   line-height: 120%; /* 19.2px */
   text-transform: capitalize;
+
+  max-width: 70%; /* или любое другое значение */
+  /* overflow: hidden; */
+  white-space: wrap;
+  text-align: right;
+  /* text-overflow: ellipsis; */
 }

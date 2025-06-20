@@ -1,13 +1,11 @@
-import { t } from "i18next";
-import type { FC } from "react";
-import { QRCode } from "react-qrcode-logo";
-
-import { Icon } from "../Icon";
 import { Button } from "../Button";
+import type { FC } from "react";
+import { Icon } from "../Icon";
+import { QRCode } from "react-qrcode-logo";
+import styles from "./SendPackagePaymentSend.module.css";
+import { t } from "i18next";
 import { useCopy } from "../../hooks/useCopy";
 import { usePackageStore } from "../../store/packageStore";
-
-import styles from "./SendPackagePaymentSend.module.css";
 
 const SendPackagePaymentSend: FC = () => {
   const { isCopy, handleCopy } = useCopy();
@@ -22,7 +20,9 @@ const SendPackagePaymentSend: FC = () => {
   const handleShare = () => {
     const url = data.create!.link;
 
-    const text = `LInk on your package`;
+    const text = t("shipment.shareText", {
+      ttn: data.create!.metadata.Number
+    });
 
     try {
       window.Telegram.WebApp.openTelegramLink(
@@ -33,26 +33,16 @@ const SendPackagePaymentSend: FC = () => {
     }
   };
 
-  const calculateFee = (
-    price: string | number,
-    fee: {
-      fixed: number;
-      percent: number;
-    }
-  ) => {
-    const packagePrice = typeof price === "number" ? price : parseFloat(price);
-    const packageFee = +packagePrice * +fee.percent + fee.fixed;
-
-    if (
-      isNaN(packagePrice) ||
-      packagePrice <= 0 ||
-      isNaN(packageFee) ||
-      packageFee < 0
-    ) {
-      return "0.00";
-    }
-    return (packagePrice - packageFee).toFixed(2);
-  };
+  // const calculateFee = (
+  //   price: string | number,
+  //   fee: {
+  //     fixed: number;
+  //     percent: number;
+  //   }
+  // ) => {
+  //   const packagePrice = +price * fee.percent + fee.fixed;
+  //   return +price + +price - packagePrice;
+  // };
 
   return (
     <>
@@ -100,19 +90,17 @@ const SendPackagePaymentSend: FC = () => {
           </p>
           <p className={styles.package__value}>${data.create.amount}</p>
         </div>
-        <div className="flex w-full items-center justify-between">
+        {/* <div className="flex w-full items-center justify-between">
           <p className={styles.package__subtitle}>{t("sendPackage.sendFee")}</p>
           <p className={styles.package__value}>
             %{data.create.fee.percent} + ${data.create.fee.fixed}
           </p>
-        </div>
+        </div> */}
 
         <div className="h-[1px] w-full bg-[#BCC3D080]" />
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__total}>{t("sendPackage.sendTotal")}</p>
-          <p className={styles.package__total}>
-            ${calculateFee(data.create.amount, data.create.fee)}
-          </p>
+          <p className={styles.package__total}>${data.create.amount}</p>
         </div>
       </div>
       {/* <div className="pb-[40px]" /> */}

@@ -4,18 +4,17 @@ import {
   COLOR
 } from "./ShipmentDealInfo.styles";
 
-import { EDeliveryStatus } from "../../types";
 import type { FC } from "react";
 import { Icon } from "../Icon";
+import { OrderStatus } from "../../types";
 import { format } from "date-fns";
 import styles from "./ShipmentDealInfo.module.css";
 import { t } from "i18next";
 
 interface IShipmentDealInfoProps {
   ttn: string;
-  status: EDeliveryStatus;
+  status: OrderStatus;
   data: Array<{
-    id: string;
     name: string;
     date: string;
   }>;
@@ -35,14 +34,14 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
     <>
       <div className="flex w-full items-center justify-between">
         <p className={styles.deal_info__title}>
-          {t("shipment.dealTitle", { ttn })}
+          {t("shipment.dealTitle", { ttn: `#${ttn}` })}
         </p>
         <div
           style={bgColorProperty as React.CSSProperties}
           className={styles.deal_info__box}
         >
           <p>
-            {status === EDeliveryStatus.PENDING
+            {status === OrderStatus.new
               ? t("shipment.dealPending")
               : t("shipment.dealDone")}
           </p>
@@ -50,7 +49,7 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
       </div>
       <div className="mt-[16px] flex flex-col gap-[20px]">
         {data.map((item) => (
-          <div key={item.id} className={styles.deal_info__item}>
+          <div key={+new Date(item.date)} className={styles.deal_info__item}>
             <Icon name="success" size={34} />
             <div>
               <p className={styles.deal_info__title}>{item.name}</p>
