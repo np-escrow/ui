@@ -95,7 +95,8 @@
     "total": "Итого",
     "role": "Ваша роль",
     "roleSeller": "Продавец",
-    "roleRecepient": "Получатель"
+    "roleRecepient": "Получатель", 
+    "weightValue": "{{ value }}кг"
   },
   "withdraw": {
     "selectCrypto": "Выбор криптовалюты",

@@ -1,14 +1,12 @@
-import { t } from "i18next";
+import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
-
-import { usePackageStore } from "../../store/packageStore";
-import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
-
 import styles from "./ShipmentInformation.module.css";
+import { t } from "i18next";
 import { useEffect } from "react";
+import { usePackageStore } from "../../store/packageStore";
 import { useParams } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 
@@ -35,6 +33,18 @@ const ShipmentInformation = () => {
     data.details.status
   ] as unknown as EDeliveryStatus;
 
+  const handleClick = () => {
+    if (userType === EUserType.SELLER && data.details?.link) {
+      const text = t("shipment.shareText", {
+        ttn: data.details.metadata.Number
+      });
+      window.Telegram.WebApp.openTelegramLink(
+        `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
+      );
+      // window.open(data.details.link, "_blank");
+    }
+  };
+
   return (
     <main className="page-with-button flex flex-col justify-start">
       <div className="custom-container flex-1 !px-0">
@@ -59,7 +69,7 @@ const ShipmentInformation = () => {
                 <ul className="flex w-full flex-col gap-[14px]">
                   <li className="flex items-center justify-between">
                     <p className={styles.package_detail__subtitle}>
-                      {t("shipment.detailsTtn")}
+                      #{t("shipment.detailsTtn")}
                     </p>
                     <p className={styles.package_detail__value}>
                       {data.details.metadata.Number}
@@ -86,7 +96,9 @@ const ShipmentInformation = () => {
                       {t("shipment.detailsWeight")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.FactualWeight}
+                      {t("shipment.weightValue", {
+                        value: data.details.metadata.FactualWeight
+                      })}
                     </p>
                   </li>
                 </ul>
@@ -109,7 +121,9 @@ const ShipmentInformation = () => {
 
           {pStatus !== EDeliveryStatus.COMPLETED && (
             <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
-              <Button>{userType === EUserType.SELLER ? "Share" : "Pay"}</Button>
+              <Button actionHandler={handleClick}>
+                {userType === EUserType.SELLER ? "Share" : "Pay"}
+              </Button>
             </div>
           )}
         </div>

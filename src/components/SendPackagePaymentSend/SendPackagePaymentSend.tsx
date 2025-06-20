@@ -1,13 +1,11 @@
-import { t } from "i18next";
-import type { FC } from "react";
-import { QRCode } from "react-qrcode-logo";
-
-import { Icon } from "../Icon";
 import { Button } from "../Button";
+import type { FC } from "react";
+import { Icon } from "../Icon";
+import { QRCode } from "react-qrcode-logo";
+import styles from "./SendPackagePaymentSend.module.css";
+import { t } from "i18next";
 import { useCopy } from "../../hooks/useCopy";
 import { usePackageStore } from "../../store/packageStore";
-
-import styles from "./SendPackagePaymentSend.module.css";
 
 const SendPackagePaymentSend: FC = () => {
   const { isCopy, handleCopy } = useCopy();
@@ -22,7 +20,9 @@ const SendPackagePaymentSend: FC = () => {
   const handleShare = () => {
     const url = data.create!.link;
 
-    const text = `LInk on your package`;
+    const text = t("shipment.shareText", {
+      ttn: data.create!.metadata.Number
+    });
 
     try {
       window.Telegram.WebApp.openTelegramLink(

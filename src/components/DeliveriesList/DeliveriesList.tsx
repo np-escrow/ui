@@ -39,7 +39,8 @@ const DeliveriesList = () => {
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
         deliveryDate: delivery.metadata.ScheduledDeliveryDate
-      }
+      },
+      link: delivery.link
     };
   });
 
