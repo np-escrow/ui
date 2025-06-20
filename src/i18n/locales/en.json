@@ -111,7 +111,9 @@
     "amount": "Withdrawal amount",
     "network": "Network",
     "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
-    "youSend": "You send"
+    "youSend": "You send",
+    "invalidNetworkFormat": "Invalid address format for {{network}}",
+    "walletRequired": "Address is required"
   },
   "payment": {
     "payment": "Package Payment",
@@ -149,6 +151,7 @@
     "sendPrice": "Package Price:",
     "sendFee": "Fee",
     "sendTotal": "You will get",
-    "sendButton": "Share"
+    "sendButton": "Share",
+    "ttnError": "The number was not found in the system or has already been registered."
   }
 }

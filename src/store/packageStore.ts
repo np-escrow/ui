@@ -1,13 +1,12 @@
-import { create } from "zustand";
-
-import { api } from "../services/api.service";
-
 import type {
-  ResOrder,
   CreateOrder,
-  PrepareOrder
+  PrepareOrder,
+  ResOrder
 } from "../services/api.types";
+
 import { ESendPakageTab } from "../pages/SendPackage/SendPackage.type";
+import { api } from "../services/api.service";
+import { create } from "zustand";
 
 interface PackageStore {
   error: {
@@ -118,12 +117,16 @@ export const usePackageStore = create<PackageStore>((set) => ({
           ...s.data,
           create: res,
           activeTab: ESendPakageTab.PackageDetails
-        }
+        },
+        error: { ...s.error, create: null }
       }));
     } catch (err) {
       console.log(err);
       set((s) => ({
-        error: { ...s.error, error: "Not found ttn" }
+        error: {
+          ...s.error,
+          create: err // или err.message, если нужно только текст
+        }
       }));
     }
 

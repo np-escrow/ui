@@ -6,10 +6,11 @@ import { Icon } from "../Icon";
 import { Button } from "../Button";
 import loader from "../../assets/images/loader.webp";
 import { usePackageStore } from "../../store/packageStore";
+import classNames from "classnames";
 
 const SendPackageValidateTTN: FC = () => {
   const [ttn, setTtn] = useState("");
-  const { loadings, prepare } = usePackageStore();
+  const { error, loadings, prepare } = usePackageStore();
   const [isFocused, setIsFocused] = useState(false);
   const loading = loadings.create;
 
@@ -29,7 +30,14 @@ const SendPackageValidateTTN: FC = () => {
   return (
     <>
       <label className="relative mt-[8px] flex flex-col gap-y-[8px]">
-        <div className="flex items-center justify-between gap-x-[10px] rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px] focus-within:border-blue-300">
+        <div
+          className={classNames(
+            "flex items-center justify-between gap-x-[10px] rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px] focus-within:border-blue-300",
+            {
+              "!border-[#F95721]": error.create
+            }
+          )}
+        >
           <input
             type="tel"
             inputMode="numeric"
@@ -59,9 +67,15 @@ const SendPackageValidateTTN: FC = () => {
             </div>
           )}
         </div>
-        <span className="text-text-secondary text-[12px] text-sm font-normal">
-          {t("sendPackage.validateExample")}
-        </span>
+        {error.create ? (
+          <span className="text-[12px] text-sm font-normal text-[#F95721]">
+            {t("sendPackage.ttnError")}
+          </span>
+        ) : (
+          <span className="text-text-secondary text-[12px] text-sm font-normal">
+            {t("sendPackage.validateExample")}
+          </span>
+        )}
       </label>
       <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
         <Button
