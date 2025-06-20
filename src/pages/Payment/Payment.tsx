@@ -1,22 +1,34 @@
 import { t } from "i18next";
 import cn from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
-import PaymentStepSelectAsset from "../../components/PaymentStepSelectAsset/PaymentStepSelectAsset";
 import { PaymentStepConfirm } from "../../components/PaymentStepConfirm";
+import PaymentStepSelectAsset from "../../components/PaymentStepSelectAsset/PaymentStepSelectAsset";
 
-import { EUserType, type Crypto, type IDeliveries } from "../../types";
-import { cryptoMock } from "./mock";
-import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
-import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
+import { usePackageStore } from "../../store/packageStore";
+import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
+
+import { EUserType, type IDeliveries } from "../../types";
 
 const Payment = () => {
-  const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const { id } = useUserStore();
+  const navigate = useNavigate();
+  const step = usePaymentStore((state) => state.step);
+  const setStep = usePaymentStore((state) => state.setStep);
+  const assets = usePaymentStore((state) => state.data.assets);
+  const getAssets = usePaymentStore((state) => state.getAssets);
+  const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
+  const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
+  const assetsLoadings = usePaymentStore((state) => state.loadings.assets);
+  const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
+  const setSelectedNetwork = usePaymentStore(
+    (state) => state.setSelectedNetwork
+  );
   const { data, loadings, get } = usePackageStore();
 
   const loading = loadings.get;
@@ -44,34 +56,22 @@ const Payment = () => {
     : null;
 
   useEffect(() => {
+    getAssets();
+  }, []);
+
+  useEffect(() => {
     if (Telegram.WebApp.initDataUnsafe?.start_param)
       get(+Telegram.WebApp.initDataUnsafe?.start_param);
   }, []);
 
-  const navigate = useNavigate();
-
   const ttn = Telegram.WebApp.initDataUnsafe?.start_param;
 
-  const selectedAsset = usePaymentStore((state) => state.selectedAsset);
-  const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
-  const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
-  const setSelectedNetwork = usePaymentStore(
-    (state) => state.setSelectedNetwork
-  );
-  const step = usePaymentStore((state) => state.step);
-  const setStep = usePaymentStore((state) => state.setStep);
-
   useEffect(() => {
-    if (!cryptoList.length) {
-      // todo get crypto list from backend
-      setCryptoList(cryptoMock);
+    if (assets.length) {
+      setSelectedAsset(assets[0]);
+      setSelectedNetwork(assets[0]?.networks[0]);
     }
-
-    if (!selectedAsset && cryptoList.length) {
-      setSelectedAsset(cryptoList[0]);
-      setSelectedNetwork(cryptoList[0]?.networks[0]);
-    }
-  }, [cryptoList, selectedAsset, setSelectedAsset, setSelectedNetwork, ttn]);
+  }, [assets]);
 
   const handleBack = () => {
     switch (step) {
@@ -121,6 +121,10 @@ const Payment = () => {
     return null;
   }
 
+  if (paymentLoadings || assetsLoadings) {
+    return "Loading...";
+  }
+
   return (
     <main className="page-with-button flex flex-col justify-center">
       <div className="custom-container flex-1">
@@ -137,10 +141,7 @@ const Payment = () => {
 
           {/* Select asset */}
           {step === EPaymentStep.SELECT_ASSET && (
-            <PaymentStepSelectAsset
-              cryptoList={cryptoList}
-              delivery={delivery}
-            />
+            <PaymentStepSelectAsset delivery={delivery} />
           )}
 
           {/* {step === EPaymentStep.CONFIRM && <div>CONTENT</div>} */}

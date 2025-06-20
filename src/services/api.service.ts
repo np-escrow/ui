@@ -10,7 +10,10 @@ import type {
   ResBalance,
   CreateOrder,
   UserMetadata,
-  PrepareOrder
+  PrepareOrder,
+  Payment,
+  ResPayment,
+  ResAssets
 } from "./api.types";
 
 let baseURL: string | undefined = import.meta.env.VITE_APP_API_URL;
@@ -96,8 +99,13 @@ class Api {
     return res.data;
   }
 
-  async pay(data: WithdrawDto) {
-    const res = await this.httpService.post<void>("/pay/withdrawal", data);
+  async payment(data: Payment) {
+    const res = await this.httpService.post<ResPayment>("/pay/payment", data);
+    return res.data;
+  }
+
+  async assets() {
+    const res = await this.httpService.get<ResAssets>("/pay/assets");
     return res.data;
   }
 }

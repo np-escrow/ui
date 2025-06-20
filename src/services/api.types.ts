@@ -1,4 +1,4 @@
-import type { OrderStatus } from "../types";
+import type { NetworkCode, OrderStatus } from "../types";
 
 export type Signin = {
   message: string;
@@ -168,3 +168,35 @@ export type WithdrawDto = {
   address: string;
   amount: string;
 };
+
+export type Payment = {
+  id: string;
+  network: NetworkCode;
+  currency: string;
+};
+
+export type ResPayment = {
+  orderId: string;
+  network: NetworkCode;
+  price: string;
+  address: string;
+};
+
+export type ResAssets = {
+  name: string;
+  code: string;
+  networks: {
+    name: string;
+    code: string;
+    fee: {
+      payment: {
+        fixed: number;
+        percent: number;
+      };
+      withdraw: {
+        fixed: number;
+        percent: number;
+      };
+    };
+  }[];
+}[];

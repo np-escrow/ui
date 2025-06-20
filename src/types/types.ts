@@ -58,31 +58,23 @@ export interface IDeliveries {
 }
 
 export type Crypto = {
-  id: string;
   token: string;
-  networks: Network[];
-  balance: number;
-  balanceUSD: number;
-  price: number;
-  isNative: boolean;
+  code: string;
   logoToken: string;
   logoNetwork: string;
+  networks: Network[];
 };
 
 export enum NetworkCode {
-  TRC20 = "TRC20",
   TRON = "TRON",
-  BITCOIN = "BITCOIN",
   ETHEREUM = "ETHEREUM",
-  BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
-  POLYGON = "POLYGON"
+  BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN"
 }
 
 export type Network = {
   id: string;
   name: string;
   code: NetworkCode;
-  address: string;
 };
 
 export interface IShipmentInfo {
