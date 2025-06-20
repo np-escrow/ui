@@ -2,7 +2,6 @@ import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
-import { Loader } from "../../components/Loader";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
