@@ -125,7 +125,8 @@
     "total": "Разом",
     "role": "Ваша роль",
     "roleSeller": "Продавець",
-    "roleRecepient": "Одержувач"
+    "roleRecepient": "Одержувач",
+    "weightValue": "{{ value }}кг"
   },
   "sendPackage": {
     "validateTitle": "Нова Пошта ТТН",

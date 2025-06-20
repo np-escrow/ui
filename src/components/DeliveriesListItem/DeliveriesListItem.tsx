@@ -65,9 +65,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
       <div className="w-full">
         <div className="flex items-center justify-between">
           <p className={styles.deliveries__header}>{item.ttn}</p>
-          <p
-            className={styles.deliveries__header}
-          >{`${item.price} ${item.currency}`}</p>
+          <p className={styles.deliveries__header}>{`$${item.price}`}</p>
         </div>
         <p className={styles.deliveries__subtitle}>{subtitle}</p>
       </div>

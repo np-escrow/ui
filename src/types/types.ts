@@ -54,6 +54,7 @@ export interface IDeliveries {
     recipientCity: string;
   };
   archive: boolean;
+  link?: string;
 }
 
 export type Crypto = {

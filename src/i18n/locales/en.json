@@ -95,7 +95,9 @@
     "total": "Total",
     "role": "Your role",
     "roleSeller": "Seller",
-    "roleRecepient": "Recipient"
+    "roleRecepient": "Recipient",
+    "weightValue": "{{ value }}kg",
+    "shareText": "Your package is ready for delivery. TTN: {{ ttn }}"
   },
   "withdraw": {
     "selectCrypto": "Select cryptocurrency",
