@@ -1,17 +1,20 @@
 export const BACKGROUND_COLOR = {
-  pending: "#FFFAEB",
+  new: "#FFFAEB",
   paid: "#ECFDF3",
-  completed: "#ECFDF3"
+  closed: "#ECFDF3",
+  revert: "red"
 } as const;
 
 export const BORDER_COLOR = {
-  pending: "#FEDF89",
+  new: "#FEDF89",
   paid: "#ABEFC6",
-  completed: "#ABEFC6"
+  closed: "#ABEFC6",
+  revert: "red"
 } as const;
 
 export const COLOR = {
-  pending: "#B54708",
+  new: "#B54708",
   paid: "#067647",
-  completed: "#067647"
+  closed: "#067647",
+  revert: "red"
 } as const;

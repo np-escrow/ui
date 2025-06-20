@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useUserStore } from "../../store/userStore";
 import { usePackageStore } from "../../store/packageStore";
 
+import { Loader } from "../Loader";
 import { DeliveriesListEmptyState } from "../DeliveriesListEmptyState";
 import DeliveriesListItem from "../DeliveriesListItem/DeliveriesListItem";
 
@@ -19,7 +20,7 @@ const DeliveriesList = () => {
   }, []);
 
   if (loadings.get) {
-    return "Loading...";
+    return <Loader />;
   }
 
   const list = data.all.map<IDeliveries>((delivery) => {

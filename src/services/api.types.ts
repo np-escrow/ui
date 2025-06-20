@@ -33,6 +33,10 @@ export type ResOrder = {
   id: string;
   currency: string;
   sellerId: string;
+  paimentData: {
+    name: string;
+    date: string;
+  }[];
   fee: {
     fixed: number;
     percent: number;

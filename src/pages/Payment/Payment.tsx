@@ -13,6 +13,7 @@ import { usePackageStore } from "../../store/packageStore";
 import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
 
 import { EUserType, type IDeliveries } from "../../types";
+import { Loader } from "../../components/Loader";
 
 const Payment = () => {
   const { id } = useUserStore();
@@ -114,7 +115,7 @@ const Payment = () => {
   };
 
   if (loading) {
-    return "Loading...";
+    return <Loader />;
   }
 
   if (!delivery) {
@@ -122,7 +123,7 @@ const Payment = () => {
   }
 
   if (paymentLoadings || assetsLoadings) {
-    return "Loading...";
+    return <Loader />;
   }
 
   return (

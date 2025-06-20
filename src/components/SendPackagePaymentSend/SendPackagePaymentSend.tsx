@@ -40,18 +40,8 @@ const SendPackagePaymentSend: FC = () => {
       percent: number;
     }
   ) => {
-    const packagePrice = typeof price === "number" ? price : parseFloat(price);
-    const packageFee = +packagePrice * +fee.percent + fee.fixed;
-
-    if (
-      isNaN(packagePrice) ||
-      packagePrice <= 0 ||
-      isNaN(packageFee) ||
-      packageFee < 0
-    ) {
-      return "0.00";
-    }
-    return (packagePrice - packageFee).toFixed(2);
+    const packagePrice = +price * fee.percent + fee.fixed;
+    return +price + +price - packagePrice;
   };
 
   return (

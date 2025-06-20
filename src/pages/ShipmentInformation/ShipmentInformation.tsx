@@ -1,14 +1,18 @@
-import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
+import { t } from "i18next";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
-import styles from "./ShipmentInformation.module.css";
-import { t } from "i18next";
-import { useEffect } from "react";
-import { usePackageStore } from "../../store/packageStore";
-import { useParams } from "react-router-dom";
+
 import { useUserStore } from "../../store/userStore";
+import { usePackageStore } from "../../store/packageStore";
+import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
+
+import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
+import styles from "./ShipmentInformation.module.css";
+import { Loader } from "../../components/Loader";
 
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +24,7 @@ const ShipmentInformation = () => {
   }, []);
 
   if (loadings.create) {
-    return "Loading...";
+    return <Loader />;
   }
 
   if (!data.details) {
@@ -41,7 +45,7 @@ const ShipmentInformation = () => {
       window.Telegram.WebApp.openTelegramLink(
         `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
       );
-      // window.open(data.details.link, "_blank");
+      window.open(data.details.link, "_blank");
     }
   };
 
@@ -55,11 +59,11 @@ const ShipmentInformation = () => {
 
           <div className={styles.shipment__container}>
             <div className={styles.shipment__box}>
-              {/* <ShipmentDealInfo
+              <ShipmentDealInfo
                 ttn={data.details.metadata.Number}
                 status={data.details.status}
                 data={data.details.paimentData}
-              /> */}
+              />
             </div>
             <div className="w-full">
               <p className={styles.shipment__subtitle}>
