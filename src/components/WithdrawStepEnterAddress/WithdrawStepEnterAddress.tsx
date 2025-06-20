@@ -1,4 +1,10 @@
-import { useEffect, useState, type FC } from "react";
+import {
+  useEffect,
+  useState,
+  type Dispatch,
+  type FC,
+  type SetStateAction
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { t } from "i18next";
@@ -11,12 +17,24 @@ import useReadTextFromClipboard from "../../hooks/useReadTextFromClipboard";
 import { Icon } from "../Icon";
 import { EPlatform } from "../../types";
 
+import classNames from "classnames";
+
 type Props = {
   selectedCryptoName: string;
+
+  error: string;
+  setError: Dispatch<SetStateAction<string>>;
+  validate: () => Promise<void>;
 };
 
-const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
+const WithdrawStepEnterAddress: FC<Props> = ({
+  selectedCryptoName,
+  validate,
+  error,
+  setError
+}) => {
   const [isFocused, setIsFocused] = useState(false);
+
   const platform = useUserStore((state) => state.platform);
   const [isClipboardAllowed, setIsClipboardAllowed] = useState(false);
 
@@ -58,18 +76,31 @@ const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
           {t("withdraw.sendToAddress")}
         </span>
 
-        <div className="flex items-center justify-between gap-x-[10px] rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px] focus-within:border-blue-300">
+        <div
+          className={classNames(
+            "flex items-center justify-between gap-x-[10px] rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px] focus-within:border-blue-300",
+            {
+              "!border-[#F95721]": error
+            }
+          )}
+        >
           <input
             type="text"
             value={withdrawAddress}
-            onChange={(e) => setWithdrawAddress(e.target.value)}
+            onChange={(e) => {
+              setWithdrawAddress(e.target.value);
+            }}
             placeholder={`${selectedCryptoName} ${selectedNetwork?.name} ${t("withdraw.address")}`}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() =>
+            onFocus={() => {
+              setError("");
+              setIsFocused(true);
+            }}
+            onBlur={() => {
+              validate();
               setTimeout(() => {
                 setIsFocused(false);
-              }, 100)
-            }
+              }, 100);
+            }}
             className={cn("h-[46px] flex-1 bg-transparent focus:outline-none", {
               truncate: !isFocused
             })}
@@ -116,6 +147,11 @@ const WithdrawStepEnterAddress: FC<Props> = ({ selectedCryptoName }) => {
             </button>
           )}
         </div>
+        {error && (
+          <span className="text-[12px] text-sm font-normal text-[#F95721]">
+            {error}
+          </span>
+        )}
       </label>
     </form>
   );

@@ -14,13 +14,16 @@ import loader from "../../assets/images/loader.webp";
 import { t } from "i18next";
 import { useBalanceStore } from "../../store/balanceStore";
 import { useNavigate } from "react-router-dom";
+import { useNetworkSchema } from "../../hooks/validation/useNetworkSchema";
 
 const Withdraw = () => {
   const navigate = useNavigate();
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const [hasAmountError, setHasAmountError] = useState<boolean>(false);
+  const [networkError, setNetworkError] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { withdraw } = useBalanceStore((state) => state);
+  const getSchema = useNetworkSchema();
 
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
@@ -32,6 +35,17 @@ const Withdraw = () => {
   const step = useWithdrawStore((state) => state.step);
   const setStep = useWithdrawStore((state) => state.setStep);
   const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
+
+  const validate = async () => {
+    const schema = getSchema(selectedNetwork?.code ?? null);
+    try {
+      await schema.validate({ network: withdrawAddress }); // 👈 вручную валидируем объект
+      setNetworkError("");
+      // console.log("✅ Valid address:", address);
+    } catch (err: any) {
+      setNetworkError(err.message);
+    }
+  };
 
   useEffect(() => {
     if (!cryptoList.length) {
@@ -86,6 +100,14 @@ const Withdraw = () => {
 
       case EWithdrawStep.ENTER_ADDRESS:
         return () => {
+          if (networkError) return;
+
+          try {
+            validate();
+          } catch (error) {
+            return;
+          }
+
           setStep(EWithdrawStep.ENTER_AMOUNT);
         };
 
@@ -164,7 +186,10 @@ const Withdraw = () => {
 
           {step === EWithdrawStep.ENTER_ADDRESS && (
             <WithdrawStepEnterAddress
+              error={networkError}
+              setError={setNetworkError}
               selectedCryptoName={selectedAsset?.token || ""}
+              validate={validate}
             />
           )}
 
