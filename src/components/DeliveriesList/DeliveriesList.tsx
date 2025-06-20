@@ -39,11 +39,13 @@ const DeliveriesList = () => {
         seller: delivery.metadata.SenderFullNameEW,
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
-        deliveryDate: delivery.metadata.ScheduledDeliveryDate
+        deliveryDate: new Date().toISOString() //delivery.metadata.ScheduledDeliveryDate
       },
       link: delivery.link
     };
   });
+
+  console.log(list);
 
   return (
     <>
