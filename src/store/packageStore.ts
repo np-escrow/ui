@@ -7,13 +7,13 @@ import type {
 import { ESendPakageTab } from "../pages/SendPackage/SendPackage.type";
 import { api } from "../services/api.service";
 import { create } from "zustand";
+import { useLoadingStore } from "./loadingStore";
 
 interface PackageStore {
   error: {
     create: any;
   };
   loadings: {
-    get: boolean;
     create: boolean;
   };
   data: {
@@ -34,7 +34,6 @@ export const usePackageStore = create<PackageStore>((set) => ({
     create: null
   },
   loadings: {
-    get: false,
     create: false
   },
   data: {
@@ -49,40 +48,34 @@ export const usePackageStore = create<PackageStore>((set) => ({
     }));
   },
   get: async (id: number) => {
-    set((s) => ({
-      loadings: { ...s.loadings, get: true }
-    }));
+    const { addPromise } = useLoadingStore.getState();
+
+    const orderPromise = api.getOrder(id);
+    addPromise(orderPromise);
 
     try {
-      const res = await api.getOrder(id);
+      const res = await orderPromise;
       set((s) => ({
         data: { ...s.data, details: res }
       }));
     } catch (err) {
       console.log(err);
     }
-
-    set((s) => ({
-      loadings: { ...s.loadings, get: false }
-    }));
   },
   getAll: async () => {
-    set((s) => ({
-      loadings: { ...s.loadings, get: true }
-    }));
+    const { addPromise } = useLoadingStore.getState();
+
+    const ordersPromise = api.getOrders();
+    addPromise(ordersPromise);
 
     try {
-      const res = await api.getOrders();
+      const res = await ordersPromise;
       set((s) => ({
         data: { ...s.data, all: res }
       }));
     } catch (err) {
       console.log(err);
     }
-
-    set((s) => ({
-      loadings: { ...s.loadings, get: false }
-    }));
   },
   create: async (data: CreateOrder) => {
     set((s) => ({
@@ -106,12 +99,13 @@ export const usePackageStore = create<PackageStore>((set) => ({
     }));
   },
   prepare: async (data: PrepareOrder) => {
-    set((s) => ({
-      loadings: { ...s.loadings, create: true }
-    }));
+    const { addPromise } = useLoadingStore.getState();
+
+    const preparePromise = api.prepareOrder(data);
+    addPromise(preparePromise);
 
     try {
-      const res = await api.prepareOrder(data);
+      const res = await preparePromise;
       set((s) => ({
         data: {
           ...s.data,
@@ -129,9 +123,5 @@ export const usePackageStore = create<PackageStore>((set) => ({
         }
       }));
     }
-
-    set((s) => ({
-      loadings: { ...s.loadings, create: false }
-    }));
   }
 }));

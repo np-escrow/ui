@@ -5,6 +5,7 @@ import { getWebAppFromGlobal } from "../helpers/getWebAppFromGlobal";
 import type { UserMetadata } from "../services/api.types";
 import { setToken } from "../services/storage";
 import type { NavigateFunction } from "react-router-dom";
+import { useLoadingStore } from "./loadingStore";
 
 interface UserState {
   id: number;
@@ -17,9 +18,6 @@ interface UserState {
   setUserType: (type: EUserType) => void;
   setLanguage: (lang: EUserLanguage) => void;
   setPlatform: (platform: EPlatform) => void;
-  loadings: {
-    auth: boolean;
-  };
   getAvatar: () => Promise<void>;
   signin: (navigate: NavigateFunction, ttn?: number) => Promise<void>;
   setMetadata: (data: Partial<UserMetadata>) => Promise<void>;
@@ -39,9 +37,6 @@ export const useUserStore = create<UserState>((set) => ({
   setUserType: (type) => set({ userType: type }),
   setLanguage: (lang) => set({ language: lang }),
   setPlatform: (platform) => set({ platform }),
-  loadings: {
-    auth: false
-  },
   setMetadata: async (data: Partial<UserMetadata>) => {
     set((state) => ({
       metadata: {
@@ -53,20 +48,26 @@ export const useUserStore = create<UserState>((set) => ({
     await api.patchUserMetadata(data);
   },
   getAvatar: async () => {
-    const res = await api.getAvatar();
+    const { addPromise } = useLoadingStore.getState();
 
-    set({
-      avatar: res
-    });
+    const avatarPromise = api.getAvatar();
+    addPromise(avatarPromise);
+
+    try {
+      const res = await avatarPromise;
+      if (res) {
+        set({
+          avatar: res
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching avatar:", error);
+    }
   },
   signin: async (navigate: NavigateFunction, ttn?: number) => {
-    set((state) => ({
-      loadings: {
-        ...state.loadings,
-        auth: true
-      },
-      userType: ttn ? EUserType.RECIPIENT : EUserType.SELLER
-    }));
+    const { addPromise } = useLoadingStore.getState();
+
+    set({ userType: ttn ? EUserType.RECIPIENT : EUserType.SELLER });
 
     const webApp = getWebAppFromGlobal();
 
@@ -74,15 +75,12 @@ export const useUserStore = create<UserState>((set) => ({
       throw new Error("Not support telegram auth");
     }
 
-    const res = await api.signin({ message: webApp.initData });
+    const signinPromise = api.signin({ message: webApp.initData });
+    addPromise(signinPromise);
+
+    const res = await signinPromise;
     setToken(res.accessToken);
     set({ id: res.id, metadata: res.metadata });
-    set((state) => ({
-      loadings: {
-        ...state.loadings,
-        auth: false
-      }
-    }));
 
     if (Telegram.WebApp.initDataUnsafe?.start_param) {
       navigate("/payment");

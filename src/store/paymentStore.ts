@@ -13,14 +13,6 @@ interface PaymentState {
   setSelectedAsset: (asset: Crypto | null) => void;
   selectedNetwork: Network | null;
   setSelectedNetwork: (network: Network | null) => void;
-  // withdrawAddress: string;
-  // setWithdrawAddress: (address: string) => void;
-  // withdrawAmount: string;
-  // setWithdrawAmount: (amount: string) => void;
-  // withdrawFee: number;
-  // setWithdrawFee: (fee: number) => void;
-  // isCalcInUSD: boolean;
-  // setIsCalcInUSD: (isCalcInUSD: boolean) => void;
 }
 
 export const usePaymentStore = create<PaymentState>((set) => ({
@@ -30,12 +22,4 @@ export const usePaymentStore = create<PaymentState>((set) => ({
   setSelectedAsset: (asset) => set({ selectedAsset: asset }),
   selectedNetwork: null,
   setSelectedNetwork: (network) => set({ selectedNetwork: network })
-  // withdrawAddress: '',
-  // setWithdrawAddress: (address) => set({ withdrawAddress: address }),
-  // withdrawAmount: '',
-  // setWithdrawAmount: (amount) => set({ withdrawAmount: amount }),
-  // withdrawFee: 0,
-  // setWithdrawFee: (fee) => set({ withdrawFee: fee }),
-  // isCalcInUSD: false,
-  // setIsCalcInUSD: (isCalcInUSD) => set({ isCalcInUSD }),
 }));

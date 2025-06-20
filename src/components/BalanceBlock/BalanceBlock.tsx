@@ -6,7 +6,7 @@ import { t } from "i18next";
 const BALANCE_SYMBOL_MOCK = "$";
 
 const BalanceBlock = () => {
-  const { data, loading, getBalance } = useBalanceStore((state) => state);
+  const { data, getBalance } = useBalanceStore((state) => state);
 
   useEffect(() => {
     getBalance();
@@ -22,14 +22,11 @@ const BalanceBlock = () => {
         </div>
         <div className="text-[20px] font-semibold">
           {BALANCE_SYMBOL_MOCK}
-          {
-            // TODO add loader
-            loading ? "Loading..." : balance
-          }
+          {balance}
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-x-3 w-1/2">
+      <div className="flex w-1/2 items-center justify-center gap-x-3">
         {/* <Button isLink linkto="/deposit" variant="secondary">
           {t("home.deposit")}
         </Button> */}

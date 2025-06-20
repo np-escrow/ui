@@ -15,15 +15,11 @@ import { useUserStore } from "../../store/userStore";
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
   const { id: userId } = useUserStore();
-  const { data, loadings, get } = usePackageStore();
+  const { data, get } = usePackageStore();
 
   useEffect(() => {
     if (id) get(+id);
   }, []);
-
-  if (loadings.create) {
-    return "Loading...";
-  }
 
   if (!data.details) {
     return "Not found";

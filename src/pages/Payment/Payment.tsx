@@ -17,9 +17,8 @@ import { useUserStore } from "../../store/userStore";
 const Payment = () => {
   const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
   const { id } = useUserStore();
-  const { data, loadings, get } = usePackageStore();
+  const { data, get } = usePackageStore();
 
-  const loading = loadings.get;
   const delivery: IDeliveries | null = data.details
     ? {
         id: data.details.id,
@@ -113,10 +112,6 @@ const Payment = () => {
     }
   };
 
-  if (loading) {
-    return "Loading...";
-  }
-
   if (!delivery) {
     return null;
   }
@@ -143,7 +138,6 @@ const Payment = () => {
             />
           )}
 
-          {/* {step === EPaymentStep.CONFIRM && <div>CONTENT</div>} */}
           {step === EPaymentStep.CONFIRM && (
             <PaymentStepConfirm delivery={delivery} />
           )}

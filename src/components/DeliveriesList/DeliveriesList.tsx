@@ -12,15 +12,11 @@ import styles from "./DeliveriesList.module.css";
 
 const DeliveriesList = () => {
   const { id } = useUserStore();
-  const { data, loadings, getAll } = usePackageStore();
+  const { data, getAll } = usePackageStore();
 
   useEffect(() => {
     getAll();
   }, []);
-
-  if (loadings.get) {
-    return "Loading...";
-  }
 
   const list = data.all.map<IDeliveries>((delivery) => {
     return {
@@ -50,7 +46,6 @@ const DeliveriesList = () => {
       </span>
       <div
         className={styles.scroll__container}
-        //   style={{ outline: "1px solid tomato" }}
       >
         {list.length ? (
           <div className="flex flex-col gap-[30px]">
