@@ -1,18 +1,16 @@
-import { t } from "i18next";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
 
 import { Button } from "../../components/Button";
-import { NavHeader } from "../../components/NavHeader";
-import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
-
-import { useUserStore } from "../../store/userStore";
-import { usePackageStore } from "../../store/packageStore";
-import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
-
-import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
-import styles from "./ShipmentInformation.module.css";
 import { Loader } from "../../components/Loader";
+import { NavHeader } from "../../components/NavHeader";
+import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
+import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
+import styles from "./ShipmentInformation.module.css";
+import { t } from "i18next";
+import { useEffect } from "react";
+import { usePackageStore } from "../../store/packageStore";
+import { useParams } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
 
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
@@ -71,15 +69,15 @@ const ShipmentInformation = () => {
               </p>
               <div className={styles.shipment__box}>
                 <ul className="flex w-full flex-col gap-[14px]">
-                  <li className="flex items-center justify-between">
+                  <li className="flex items-start justify-between">
                     <p className={styles.package_detail__subtitle}>
-                      #{t("shipment.detailsTtn")}
+                      {t("shipment.detailsTtn")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.Number}
+                      #{data.details.metadata.Number}
                     </p>
                   </li>
-                  <li className="flex items-center justify-between">
+                  <li className="flex items-start justify-between">
                     <p className={styles.package_detail__subtitle}>
                       {t("shipment.detailsFrom")}
                     </p>
@@ -87,7 +85,7 @@ const ShipmentInformation = () => {
                       {data.details.metadata.SenderAddress}
                     </p>
                   </li>
-                  <li className="flex items-center justify-between">
+                  <li className="flex items-start justify-between">
                     <p className={styles.package_detail__subtitle}>
                       {t("shipment.detailsTo")}
                     </p>
@@ -95,7 +93,7 @@ const ShipmentInformation = () => {
                       {data.details.metadata.RecipientAddress}
                     </p>
                   </li>
-                  <li className="flex items-center justify-between">
+                  <li className="flex items-start justify-between">
                     <p className={styles.package_detail__subtitle}>
                       {t("shipment.detailsWeight")}
                     </p>

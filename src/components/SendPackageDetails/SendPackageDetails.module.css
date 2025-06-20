@@ -40,7 +40,6 @@
   text-transform: capitalize;
 
   max-width: 70%; /* или любое другое значение */
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: wrap;
+  text-align: right;
 }
