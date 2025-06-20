@@ -34,7 +34,7 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
     <>
       <div className="flex w-full items-center justify-between">
         <p className={styles.deal_info__title}>
-          {t("shipment.dealTitle", { ttn })}
+          {t("shipment.dealTitle", { ttn: `#${ttn}` })}
         </p>
         <div
           style={bgColorProperty as React.CSSProperties}
