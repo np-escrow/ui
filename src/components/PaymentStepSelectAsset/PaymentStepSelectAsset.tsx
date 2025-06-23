@@ -8,6 +8,7 @@ import type { IDeliveries } from "../../types";
 import { usePaymentStore } from "../../store/paymentStore";
 import parcelImage from "../../assets/images/parcel.png";
 import { Link } from "react-router-dom";
+import { useAssetStore } from "../../store/assetStore";
 
 type Props = {
   delivery: IDeliveries;
@@ -16,7 +17,7 @@ type Props = {
 const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const assets = usePaymentStore((state) => state.data.assets);
+  const assets = useAssetStore((state) => state.data.assets);
   const selectedAsset = usePaymentStore((state) => state.selectedAsset);
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
   const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);

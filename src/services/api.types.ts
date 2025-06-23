@@ -197,10 +197,7 @@ export type ResAssets = {
         fixed: number;
         percent: number;
       };
-      withdraw: {
-        fixed: number;
-        percent: number;
-      };
+      withdraw: { min: number; fix: number; mult: number };
     };
   }[];
 }[];

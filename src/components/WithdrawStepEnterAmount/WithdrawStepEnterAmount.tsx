@@ -1,46 +1,45 @@
 import {
-  useCallback,
-  useEffect,
   useRef,
   useState,
-  type Dispatch,
+  useEffect,
+  useCallback,
   type FC,
+  type Dispatch,
   type SetStateAction
 } from "react";
-
+import { t } from "i18next";
 import cn from "classnames";
-import { BigNumber } from "tronweb";
-
-import { useWithdrawStore } from "../../store/withdrawStore";
+import BigNumber from "bignumber.js";
 
 import { Icon } from "../Icon";
 import { formatInputNumericValue } from "../../helpers/formatInputNumericValue";
-import { t } from "i18next";
+
 import { useBalanceStore } from "../../store/balanceStore";
+import { useWithdrawStore } from "../../store/withdrawStore";
 
 type Props = {
   hasAmountError: boolean;
   setHasAmountError: Dispatch<SetStateAction<boolean>>;
 };
 
-const FEE_IN_STORE_MOCK = 0.1;
-
 const WithdrawStepEnterAmount: FC<Props> = ({
   hasAmountError,
   setHasAmountError
 }) => {
   const [spanValue, setSpanValue] = useState("0");
+  const [errorText, setErrorText] = useState("");
 
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const setWithdrawAmount = useWithdrawStore(
     (state) => state.setWithdrawAmount
   );
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset)!;
+  const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork)!;
   const isCalcInUSD = useWithdrawStore((state) => state.isCalcInUSD);
   const setIsCalcInUSD = useWithdrawStore((state) => state.setIsCalcInUSD);
-  const withdrawFee = useWithdrawStore((state) => state.withdrawFee);
-  const setWithdrawFee = useWithdrawStore((state) => state.setWithdrawFee);
   const { data, getBalance } = useBalanceStore((state) => state);
+
+  const fee = selectedNetwork.fee;
 
   useEffect(() => {
     getBalance();
@@ -56,32 +55,39 @@ const WithdrawStepEnterAmount: FC<Props> = ({
     const amount = Number(withdrawAmount);
 
     if (isNaN(amount)) {
+      setErrorText(`Enter the amount`);
       setHasAmountError(true);
       return;
     }
 
-    if (isCalcInUSD) {
+    if (+amount === 0) {
+      setErrorText(`Enter the amount`);
       setHasAmountError(true);
       return;
     }
 
-    if (!isCalcInUSD && amount > 1) {
+    const withdrawFee =
+      +amount - Math.abs(+amount * fee.withdraw.mult - fee.withdraw.fix);
+
+    if (withdrawFee < 0) {
+      setErrorText(`The withdrawal amount does not cover the commission`);
       setHasAmountError(true);
       return;
     }
 
-    if (!isCalcInUSD && amount > 1 - withdrawFee) {
+    if (amount > balance) {
       setHasAmountError(true);
       return;
     }
 
-    if (isCalcInUSD && amount > 1 - withdrawFee * 1) {
+    if (!(amount > fee.withdraw.min)) {
+      setErrorText(`The withdrawal amount must be greater ${fee.withdraw.min}`);
       setHasAmountError(true);
       return;
     }
 
     setHasAmountError(false);
-  }, [isCalcInUSD, setHasAmountError, withdrawAmount, withdrawFee]);
+  }, [setHasAmountError, withdrawAmount, fee]);
 
   const handleNumberInputChange = (value: string) => {
     const amount = formatInputNumericValue(value);
@@ -103,8 +109,10 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   };
 
   useEffect(() => {
-    setWithdrawFee(FEE_IN_STORE_MOCK);
-  }, [setWithdrawFee]);
+    if (!hasAmountError) {
+      setErrorText("");
+    }
+  }, [hasAmountError]);
 
   useEffect(() => {
     // Width
@@ -163,77 +171,84 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   };
 
   return (
-    <div className="relative flex flex-col">
-      <div className="mb-2 flex h-8 items-center gap-x-1 font-semibold">
-        <span className="text-text-secondary text-[15px]">{`${t("withdraw.available")}: ${balance} ${isCalcInUSD ? "USD" : selectedAsset.token}`}</span>
-        <button
-          type="button"
-          onClick={handlePasteMaxValue}
-          className="cursor-pointer text-base text-red-100 hover:opacity-85 active:opacity-85"
-        >
-          {t("withdraw.max")}
-        </button>
-      </div>
-
-      <div className="flex items-center justify-between gap-x-[5px]">
-        <div className="relative h-[72px] w-full flex-col overflow-hidden">
-          <div className="number-input-group">
-            <form
-              className="relative flex w-full gap-x-1"
-              onSubmit={handleSubmit}
-            >
-              <input
-                ref={inputNumberRef}
-                type="text"
-                value={withdrawAmount}
-                onChange={(e) => handleNumberInputChange(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="0"
-                inputMode="decimal"
-                className={cn(hasAmountError && "text-red-100")}
-              />
-
-              <div
-                ref={shortTitleRef}
-                className="text-text-secondary flex items-end pb-[3px] text-2xl font-semibold"
-              >
-                {isCalcInUSD ? "USD" : selectedAsset.token}
-              </div>
-            </form>
-
-            <span ref={spanRef}>{spanValue}</span>
-          </div>
-
-          <span className="text-text-secondary absolute bottom-0 left-0 block w-full text-base font-medium">{`${spanValue && Number(spanValue.replace(/,/g, "").replace(/\s/g, "")) > 0 ? "~" : ""}${
-            spanValue
-              ? (
-                  Number(spanValue.replace(/,/g, "").replace(/\s/g, "")) *
-                  (isCalcInUSD && 1 > 0 ? 1 / 1 : 1)
-                )
-                  .toLocaleString("en-US", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: isCalcInUSD ? 5 : 2
-                  })
-                  .replace(/,/g, "")
-              : "0.00"
-          } ${isCalcInUSD ? selectedAsset.token : "USD"}`}</span>
+    <>
+      <div className="relative flex flex-col">
+        <div className="mb-2 flex h-8 items-center gap-x-1 font-semibold">
+          <span className="text-text-secondary text-[15px]">{`${t("withdraw.available")}: ${balance} ${isCalcInUSD ? "USD" : selectedAsset.code}`}</span>
+          <button
+            type="button"
+            onClick={handlePasteMaxValue}
+            className="cursor-pointer text-base text-red-100 hover:opacity-85 active:opacity-85"
+          >
+            {t("withdraw.max")}
+          </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleToggleCalcInUSD}
-          className="flex size-8 shrink-0 cursor-pointer items-center justify-center"
-        >
-          <Icon
-            name="switchArrowsIcon"
-            width={21}
-            height={20}
-            className="flex size-8 shrink-0 items-center justify-center"
-            aria-label={t("withdraw.switchBetweenUSDAndAsset")}
-          />
-        </button>
+        <div className="flex items-center justify-between gap-x-[5px]">
+          <div className="relative h-[72px] w-full flex-col overflow-hidden">
+            <div className="number-input-group">
+              <form
+                className="relative flex w-full gap-x-1"
+                onSubmit={handleSubmit}
+              >
+                <input
+                  ref={inputNumberRef}
+                  type="text"
+                  value={withdrawAmount}
+                  onChange={(e) => handleNumberInputChange(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="0"
+                  inputMode="decimal"
+                  className={cn(hasAmountError && "text-red-100")}
+                />
+
+                <div
+                  ref={shortTitleRef}
+                  className="text-text-secondary flex items-end pb-[3px] text-2xl font-semibold"
+                >
+                  {isCalcInUSD ? "USD" : selectedAsset.code}
+                </div>
+              </form>
+
+              <span ref={spanRef}>{spanValue}</span>
+            </div>
+
+            <span className="text-text-secondary absolute bottom-0 left-0 block w-full text-base font-medium">{`${spanValue && Number(spanValue.replace(/,/g, "").replace(/\s/g, "")) > 0 ? "~" : ""}${
+              spanValue
+                ? (
+                    Number(spanValue.replace(/,/g, "").replace(/\s/g, "")) *
+                    (isCalcInUSD && 1 > 0 ? 1 / 1 : 1)
+                  )
+                    .toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: isCalcInUSD ? 5 : 2
+                    })
+                    .replace(/,/g, "")
+                : "0.00"
+            } ${isCalcInUSD ? selectedAsset.code : "USD"}`}</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleToggleCalcInUSD}
+            className="flex size-8 shrink-0 cursor-pointer items-center justify-center"
+          >
+            <Icon
+              name="switchArrowsIcon"
+              width={21}
+              height={20}
+              className="flex size-8 shrink-0 items-center justify-center"
+              aria-label={t("withdraw.switchBetweenUSDAndAsset")}
+            />
+          </button>
+        </div>
       </div>
-    </div>
+      {errorText && (
+        <span className="blok mt-2 w-full text-[11px] text-red-100 opacity-50">
+          {errorText}
+        </span>
+      )}
+    </>
   );
 };
 

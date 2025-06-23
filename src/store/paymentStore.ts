@@ -19,16 +19,12 @@ interface PaymentState {
     payment: any;
   };
   loadings: {
-    assets: boolean;
     payment: boolean;
   };
   data: {
-    assets: ResAssets;
     payment: ResPayment | null;
   };
-  getAssets: () => Promise<void>;
   payment: (data: Payment) => Promise<void>;
-
 }
 
 export const usePaymentStore = create<PaymentState>((set) => ({
@@ -43,33 +39,10 @@ export const usePaymentStore = create<PaymentState>((set) => ({
     payment: null
   },
   loadings: {
-    assets: false,
     payment: false
   },
   data: {
-    assets: [],
     payment: null
-  },
-  getAssets: async () => {
-    set((s) => ({
-      loadings: { ...s.loadings, assets: true }
-    }));
-
-    try {
-      const res = await api.assets();
-      set((s) => ({
-        data: { ...s.data, assets: res }
-      }));
-    } catch (err) {
-      console.log(err);
-      set((s) => ({
-        errors: { ...s.errors, payment: err }
-      }));
-    }
-
-    set((s) => ({
-      loadings: { ...s.loadings, assets: false }
-    }));
   },
   payment: async (data: Payment) => {
     set((s) => ({
@@ -90,5 +63,4 @@ export const usePaymentStore = create<PaymentState>((set) => ({
       loadings: { ...s.loadings, payment: false }
     }));
   }
-
 }));

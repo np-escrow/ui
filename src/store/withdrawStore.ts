@@ -1,26 +1,24 @@
-import { create } from 'zustand';
-import type { Crypto, Network } from '../types';
+import { create } from "zustand";
+import type { ResAssets } from "../services/api.types";
 
 export enum EWithdrawStep {
-  SELECT_ASSET = 'selectAsset',
-  ENTER_ADDRESS = 'enterAddress',
-  ENTER_AMOUNT = 'enterAmount',
-  CONFIRM = 'confirm',
+  SELECT_ASSET = "selectAsset",
+  ENTER_ADDRESS = "enterAddress",
+  ENTER_AMOUNT = "enterAmount",
+  CONFIRM = "confirm"
 }
 
 interface WithdrawState {
   step: EWithdrawStep;
   setStep: (step: EWithdrawStep) => void;
-  selectedAsset: Crypto | null;
-  setSelectedAsset: (asset: Crypto | null) => void;
-  selectedNetwork: Network | null;
-  setSelectedNetwork: (network: Network | null) => void;
+  selectedAsset: ResAssets[0] | null;
+  setSelectedAsset: (asset: ResAssets[0] | null) => void;
+  selectedNetwork: ResAssets[0]["networks"][0] | null;
+  setSelectedNetwork: (network: ResAssets[0]["networks"][0] | null) => void;
   withdrawAddress: string;
   setWithdrawAddress: (address: string) => void;
   withdrawAmount: string;
   setWithdrawAmount: (amount: string) => void;
-  withdrawFee: number;
-  setWithdrawFee: (fee: number) => void;
   isCalcInUSD: boolean;
   setIsCalcInUSD: (isCalcInUSD: boolean) => void;
 }
@@ -32,12 +30,10 @@ export const useWithdrawStore = create<WithdrawState>((set) => ({
   setSelectedAsset: (asset) => set({ selectedAsset: asset }),
   selectedNetwork: null,
   setSelectedNetwork: (network) => set({ selectedNetwork: network }),
-  withdrawAddress: '',
+  withdrawAddress: "",
   setWithdrawAddress: (address) => set({ withdrawAddress: address }),
-  withdrawAmount: '',
+  withdrawAmount: "",
   setWithdrawAmount: (amount) => set({ withdrawAmount: amount }),
-  withdrawFee: 0,
-  setWithdrawFee: (fee) => set({ withdrawFee: fee }),
   isCalcInUSD: false,
-  setIsCalcInUSD: (isCalcInUSD) => set({ isCalcInUSD }),
-})); 
+  setIsCalcInUSD: (isCalcInUSD) => set({ isCalcInUSD })
+}));

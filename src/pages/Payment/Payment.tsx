@@ -14,6 +14,7 @@ import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
 
 import { EUserType, type IDeliveries } from "../../types";
 import { Loader } from "../../components/Loader";
+import { useAssetStore } from "../../store/assetStore";
 
 const Payment = () => {
   const { id } = useUserStore();
@@ -22,12 +23,12 @@ const Payment = () => {
   const navigate = useNavigate();
   const step = usePaymentStore((state) => state.step);
   const setStep = usePaymentStore((state) => state.setStep);
-  const assets = usePaymentStore((state) => state.data.assets);
-  const getAssets = usePaymentStore((state) => state.getAssets);
+  const assets = useAssetStore((state) => state.data.assets);
+  const getAssets = useAssetStore((state) => state.getAssets);
   const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  const assetsLoadings = useAssetStore((state) => state.loadings.assets);
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
   const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
-  const assetsLoadings = usePaymentStore((state) => state.loadings.assets);
   const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
   const setSelectedNetwork = usePaymentStore(
     (state) => state.setSelectedNetwork
