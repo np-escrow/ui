@@ -1,12 +1,13 @@
+import { EPlatform, EUserLanguage, EUserType } from "./types";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { useLoadingStore } from "./store/loadingStore";
 
+import { Loader } from "./components/Loader";
 import classNames from "classnames";
 import useExpand from "./hooks/useExpand";
+import { useLoadingStore } from "./store/loadingStore";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "./store/userStore";
-import { Loader } from "./components/Loader";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Scan = lazy(() => import("./pages/Scan/Scan"));
@@ -16,8 +17,6 @@ const ShipmentInformation = lazy(
 );
 const SendPackage = lazy(() => import("./pages/SendPackage/SendPackage"));
 const Payment = lazy(() => import("./pages/Payment/Payment"));
-
-import { EPlatform, EUserLanguage, EUserType } from "./types";
 
 function App() {
   const { i18n } = useTranslation();
@@ -78,14 +77,14 @@ function App() {
         <div
           className={classNames("h-screen", {
             "mobile-padding": isMobile,
-            "opacity-0 pointer-events-none": isMainLoading,
-            "opacity-100 pointer-events-auto": !isMainLoading
+            "pointer-events-none opacity-0": isMainLoading,
+            "pointer-events-auto opacity-100": !isMainLoading
           })}
         >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/withdraw" element={<Withdraw />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/payment/:id" element={<Payment />} />
             <Route path="/scan" element={<Scan />} />
             <Route
               path="/shipment-info/:id"

@@ -18,7 +18,6 @@ const ShipmentInformation = () => {
   const { data, get } = usePackageStore();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (id) get(+id);
   }, []);
@@ -44,7 +43,7 @@ const ShipmentInformation = () => {
       window.open(data.details.link, "_blank");
     }
     if (userType === EUserType.RECIPIENT && data.details?.status === "new") {
-      navigate("/payment?ttn=" + data.details.metadata.Number);
+      navigate(`/payment/${data.details.metadata.Number}`);
       // window.Telegram.WebApp.openTelegramLink(data.details.link);
     }
   };
