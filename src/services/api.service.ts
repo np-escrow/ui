@@ -49,8 +49,13 @@ class Api {
   }
 
   async signin(data: Signin) {
-    const res = await this.httpService.post<ResSignin>("/auth/signin", data);
-    return res.data;
+    try {
+      const res = await this.httpService.post<ResSignin>("/auth/signin", data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 
   async getAvatar() {

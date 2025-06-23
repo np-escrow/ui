@@ -4,16 +4,12 @@ import { useWithdrawStore } from "../../store/withdrawStore";
 import { t } from "i18next";
 
 import { Icon } from "../Icon";
+import { useAssetStore } from "../../store/assetStore";
 
-import type { Crypto } from "../../types";
-
-type Props = {
-  cryptoList: Crypto[];
-};
-
-const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
+const WithdrawStepSelectAsset: FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const assets = useAssetStore((state) => state.data.assets);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
   const setSelectedAsset = useWithdrawStore((state) => state.setSelectedAsset);
   const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
@@ -44,15 +40,14 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
   }, [isDropdownOpen]);
 
   const handleSelectCrypto = (code: string) => {
-    setSelectedAsset(cryptoList.find((crypto) => crypto.code === code) || null);
-    setSelectedNetwork(
-      cryptoList.find((crypto) => crypto.code === code)?.networks[0] || null
-    );
+    const asset = assets.find((crypto) => crypto.code === code) || null;
+    setSelectedAsset(asset!);
+    setSelectedNetwork(asset!.networks[0]);
   };
 
-  const handleSelectNetwork = (id: string) => {
+  const handleSelectNetwork = (code: string) => {
     setSelectedNetwork(
-      selectedAsset?.networks.find((network) => network.id === id) || null
+      selectedAsset?.networks.find((network) => network.code === code) || null
     );
 
     setIsDropdownOpen(false);
@@ -66,7 +61,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
         </div>
 
         <div className="flex flex-col gap-y-3">
-          {cryptoList.map((crypto) => (
+          {assets.map((crypto) => (
             <label
               key={crypto.code}
               className="relative flex cursor-pointer items-center gap-x-3"
@@ -80,7 +75,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
                 className="peer absolute h-0 w-0 opacity-0"
               />
               <span className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-300 transition-colors peer-checked:border-4 peer-checked:border-red-100"></span>
-              <span className="text-[17px]">{crypto.token}</span>
+              <span className="text-[17px]">{crypto.name}</span>
             </label>
           ))}
         </div>
@@ -108,12 +103,12 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
             className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px]"
           >
             {selectedAsset?.networks
-              .filter((network) => network.id !== selectedNetwork?.id)
+              .filter((network) => network.code !== selectedNetwork?.code)
               .map((network) => (
-                <li key={network.id}>
+                <li key={network.code}>
                   <button
                     type="button"
-                    onClick={() => handleSelectNetwork(network.id)}
+                    onClick={() => handleSelectNetwork(network.code)}
                     className="flex h-[38px] w-full cursor-pointer items-center px-4 text-left hover:bg-blue-100 hover:text-blue-200"
                   >
                     {network.name}

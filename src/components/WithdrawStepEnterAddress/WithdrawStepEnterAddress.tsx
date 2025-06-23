@@ -1,23 +1,21 @@
 import {
-  useEffect,
   useState,
-  type Dispatch,
+  useEffect,
   type FC,
+  type Dispatch,
   type SetStateAction
 } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { t } from "i18next";
 import cn from "classnames";
+import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
-import { useWithdrawStore } from "../../store/withdrawStore";
 import { useUserStore } from "../../store/userStore";
+import { useWithdrawStore } from "../../store/withdrawStore";
 import useReadTextFromClipboard from "../../hooks/useReadTextFromClipboard";
 
 import { Icon } from "../Icon";
 import { EPlatform } from "../../types";
-
-import classNames from "classnames";
 
 type Props = {
   selectedCryptoName: string;
@@ -55,15 +53,12 @@ const WithdrawStepEnterAddress: FC<Props> = ({
   }, [platform]);
 
   const handlePaste = () => {
-    console.log("handlePaste");
     readTextFromClipboardFunction().then((value) => {
       if (!value) {
-        console.log("no value");
         navigator.clipboard.readText().then((text) => {
           setWithdrawAddress(text || "test1");
         });
       } else {
-        console.log("value", value);
         setWithdrawAddress(value || "test2");
       }
     });

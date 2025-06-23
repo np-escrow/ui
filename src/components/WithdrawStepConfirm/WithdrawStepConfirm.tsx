@@ -1,14 +1,24 @@
 import { t } from "i18next";
 
 import { useWithdrawStore } from "../../store/withdrawStore";
+import { getAssetImg } from "../../helpers/iconAssets";
 
 const WithdrawStepConfirm = () => {
   const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
   const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
-  const withdrawFee = useWithdrawStore((state) => state.withdrawFee);
   const isCalcInUSD = useWithdrawStore((state) => state.isCalcInUSD);
+
+  const imgs = getAssetImg({
+    token: selectedAsset!.code,
+    network: selectedNetwork!.code
+  });
+  const fee = selectedNetwork!.fee;
+  console.log(222, withdrawAmount, fee);
+  const withdrawFee = +Math.abs(
+    +withdrawAmount * fee.withdraw.mult - fee.withdraw.fix
+  ).toFixed(2);
 
   const calculateAlternateValue = (amount: string) => {
     if (!selectedAsset || !amount) {
@@ -37,16 +47,16 @@ const WithdrawStepConfirm = () => {
         {/* Logo block */}
         <div className="relative flex items-center justify-center">
           <img
-            src={selectedAsset?.logoToken}
-            alt={`${selectedAsset?.token} logo`}
+            src={imgs.token}
+            alt={`${selectedAsset?.code} logo`}
             className="size-[60px] rounded-full"
           />
 
           {
             <div className="absolute -bottom-[6px] left-1/2 size-[26px] -translate-x-[calc(50%-20px)]">
               <img
-                src={selectedAsset?.logoNetwork}
-                alt={`${selectedAsset?.token} logo`}
+                src={imgs.network}
+                alt={`${selectedAsset?.code} logo`}
                 className="size-full rounded-full"
               />
             </div>
@@ -55,19 +65,19 @@ const WithdrawStepConfirm = () => {
         {/* Description block */}
         <div className="bg-green-777 flex flex-col items-center justify-evenly">
           <span className="text-lg font-semibold">
-            {t("withdraw.youSend")} {selectedAsset?.token}{" "}
+            {t("withdraw.youSend")} {selectedAsset?.code}{" "}
             {selectedNetwork?.name}
           </span>
 
           <div className="flex flex-col items-center">
             <span className="text-[40px] font-semibold">
-              {withdrawAmount} {isCalcInUSD ? "USD" : selectedAsset?.token}
+              {withdrawAmount} {isCalcInUSD ? "USD" : selectedAsset?.code}
             </span>
 
             <span className="text-text-secondary">
               {isCalcInUSD ? "$" : ""}
               {calculateAlternateValue(withdrawAmount)}
-              {isCalcInUSD ? ` ${selectedAsset?.token}` : ""}
+              {isCalcInUSD ? ` ${selectedAsset?.code}` : ""}
             </span>
           </div>
         </div>
@@ -88,12 +98,12 @@ const WithdrawStepConfirm = () => {
           </span>
           <div>
             <span>
-              {withdrawFee} {isCalcInUSD ? "USD" : selectedAsset?.token}
+              {withdrawFee} {isCalcInUSD ? "USD" : selectedAsset?.code}
               {" ~ "}
             </span>
             <span className="text-text-secondary">
               {calculateAlternateValue(withdrawFee.toString())}{" "}
-              {isCalcInUSD ? selectedAsset?.token : "USD"}
+              {isCalcInUSD ? selectedAsset?.code : "USD"}
             </span>
           </div>
         </div>
@@ -104,12 +114,12 @@ const WithdrawStepConfirm = () => {
           </span>
           <div>
             <span>
-              {withdrawAmount} {isCalcInUSD ? "USD" : selectedAsset?.token}
+              {withdrawAmount} {isCalcInUSD ? "USD" : selectedAsset?.code}
               {" ~ "}
             </span>
             <span className="text-text-secondary">
               {calculateAlternateValue(withdrawAmount)}{" "}
-              {isCalcInUSD ? selectedAsset?.token : "USD"}
+              {isCalcInUSD ? selectedAsset?.code : "USD"}
             </span>
           </div>
         </div>

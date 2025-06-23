@@ -1,30 +1,36 @@
-import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
+import { t } from "i18next";
+import cn from "classnames";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "../../components/Button";
-import type { Crypto } from "../../types";
 import { NavHeader } from "../../components/NavHeader";
 import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
-import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
 import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
 import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
-import cn from "classnames";
-import { cryptoMock } from "./mock";
+import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
+
+import type { NetworkCode } from "../../types";
 import loader from "../../assets/images/loader.webp";
-import { t } from "i18next";
+import { useAssetStore } from "../../store/assetStore";
 import { useBalanceStore } from "../../store/balanceStore";
-import { useNavigate } from "react-router-dom";
+import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
 import { useNetworkSchema } from "../../hooks/validation/useNetworkSchema";
 
 const Withdraw = () => {
   const navigate = useNavigate();
-  const [cryptoList, setCryptoList] = useState<Crypto[]>([]);
-  const [hasAmountError, setHasAmountError] = useState<boolean>(false);
-  const [networkError, setNetworkError] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { withdraw } = useBalanceStore((state) => state);
   const getSchema = useNetworkSchema();
 
+  const step = useWithdrawStore((state) => state.step);
+  const setStep = useWithdrawStore((state) => state.setStep);
+
+  const [networkError, setNetworkError] = useState("");
+  const [hasAmountError, setHasAmountError] = useState<boolean>(false);
+  const { withdraw } = useBalanceStore((state) => state);
+
+  const loadings = useAssetStore((state) => state.loadings);
+  const assets = useAssetStore((state) => state.data.assets);
+  const getAssets = useAssetStore((state) => state.getAssets);
   const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
   const setSelectedAsset = useWithdrawStore((state) => state.setSelectedAsset);
@@ -32,32 +38,28 @@ const Withdraw = () => {
   const setSelectedNetwork = useWithdrawStore(
     (state) => state.setSelectedNetwork
   );
-  const step = useWithdrawStore((state) => state.step);
-  const setStep = useWithdrawStore((state) => state.setStep);
   const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
 
   const validate = async () => {
-    const schema = getSchema(selectedNetwork?.code ?? null);
+    const schema = getSchema((selectedNetwork?.code as NetworkCode) ?? null);
     try {
-      await schema.validate({ network: withdrawAddress }); // 👈 вручную валидируем объект
+      await schema.validate({ network: withdrawAddress });
       setNetworkError("");
-      // console.log("✅ Valid address:", address);
     } catch (err: any) {
       setNetworkError(err.message);
     }
   };
 
   useEffect(() => {
-    if (!cryptoList.length) {
-      // todo get crypto list from backend
-      setCryptoList(cryptoMock);
-    }
+    getAssets();
+  }, []);
 
-    if (!selectedAsset && cryptoList.length) {
-      setSelectedAsset(cryptoList[0]);
-      setSelectedNetwork(cryptoList[0]?.networks[0]);
+  useEffect(() => {
+    if (assets.length) {
+      setSelectedAsset(assets[0]);
+      setSelectedNetwork(assets[0]?.networks[0]);
     }
-  }, [cryptoList, selectedAsset, setSelectedAsset, setSelectedNetwork]);
+  }, [assets]);
 
   const handleBack = () => {
     switch (step) {
@@ -131,10 +133,8 @@ const Withdraw = () => {
               return;
             }
 
-            setIsLoading(true);
-
             await withdraw({
-              currency: selectedAsset.token || "",
+              currency: selectedAsset.code || "",
               network: selectedNetwork.code || "",
               address: withdrawAddress,
               amount: withdrawAmount
@@ -145,22 +145,25 @@ const Withdraw = () => {
             setStep(EWithdrawStep.SELECT_ASSET);
           } catch (error) {
             console.error(error);
-          } finally {
-            setIsLoading(false);
           }
         };
     }
   };
 
   const getButtonDisabled = () => {
-    if (isLoading) return true;
+    if (loadings.assets) return true;
 
     switch (step) {
       case EWithdrawStep.SELECT_ASSET:
         return !selectedAsset || !selectedNetwork;
 
       case EWithdrawStep.ENTER_ADDRESS:
-        return !selectedAsset || !selectedNetwork || !withdrawAddress;
+        return (
+          !selectedAsset ||
+          !selectedNetwork ||
+          !withdrawAddress ||
+          !!networkError
+        );
 
       case EWithdrawStep.ENTER_AMOUNT:
         return hasAmountError || !Number(withdrawAmount) || !withdrawAmount;
@@ -180,15 +183,13 @@ const Withdraw = () => {
             <NavHeader {...handleBack()} />
           </div>
 
-          {step === EWithdrawStep.SELECT_ASSET && (
-            <WithdrawStepSelectAsset cryptoList={cryptoList} />
-          )}
+          {step === EWithdrawStep.SELECT_ASSET && <WithdrawStepSelectAsset />}
 
           {step === EWithdrawStep.ENTER_ADDRESS && (
             <WithdrawStepEnterAddress
               error={networkError}
               setError={setNetworkError}
-              selectedCryptoName={selectedAsset?.token || ""}
+              selectedCryptoName={selectedAsset?.name || ""}
               validate={validate}
             />
           )}
@@ -208,10 +209,10 @@ const Withdraw = () => {
             actionHandler={handleButtonAction()}
             disabled={getButtonDisabled()}
             className={cn({
-              "!bg-red-100": isLoading
+              "!bg-red-100": loadings.assets
             })}
           >
-            {isLoading ? (
+            {loadings.assets ? (
               <img
                 className="animate-spin"
                 src={loader}
