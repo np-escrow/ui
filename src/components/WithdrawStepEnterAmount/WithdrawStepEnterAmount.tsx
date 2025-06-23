@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type Dispatch,
@@ -17,6 +16,7 @@ import { useWithdrawStore } from "../../store/withdrawStore";
 import { Icon } from "../Icon";
 import { formatInputNumericValue } from "../../helpers/formatInputNumericValue";
 import { t } from "i18next";
+import { useBalanceStore } from "../../store/balanceStore";
 
 type Props = {
   hasAmountError: boolean;
@@ -40,10 +40,17 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   const setIsCalcInUSD = useWithdrawStore((state) => state.setIsCalcInUSD);
   const withdrawFee = useWithdrawStore((state) => state.withdrawFee);
   const setWithdrawFee = useWithdrawStore((state) => state.setWithdrawFee);
+  const { data, getBalance } = useBalanceStore((state) => state);
+
+  useEffect(() => {
+    getBalance();
+  }, []);
 
   const inputNumberRef = useRef<HTMLInputElement>(null);
   const shortTitleRef = useRef<HTMLDivElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
+
+  const balance = data?.accessible || 0;
 
   const validateAmount = useCallback(() => {
     const amount = Number(withdrawAmount);
@@ -90,23 +97,9 @@ const WithdrawStepEnterAmount: FC<Props> = ({
     }
   };
 
-  const maxValue = useMemo(() => {
-    const fee = isCalcInUSD ? withdrawFee * 1 : withdrawFee;
-
-    const maxValue = BigNumber(isCalcInUSD ? 1 : 1)
-      .multipliedBy(100)
-      .div(100)
-      .minus(fee)
-      .decimalPlaces(6, BigNumber.ROUND_DOWN)
-      .abs()
-      .toFixed();
-
-    return maxValue;
-  }, [isCalcInUSD, withdrawFee]);
-
   const handlePasteMaxValue = () => {
-    setWithdrawAmount(`${+maxValue || 0}`);
-    setSpanValue(`${+maxValue || 0}`);
+    setWithdrawAmount(`${balance || 0}`);
+    setSpanValue(`${balance || 0}`);
   };
 
   useEffect(() => {
@@ -172,7 +165,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   return (
     <div className="relative flex flex-col">
       <div className="mb-2 flex h-8 items-center gap-x-1 font-semibold">
-        <span className="text-text-secondary text-[15px]">{`${t("withdraw.available")}: ${maxValue} ${isCalcInUSD ? "USD" : selectedAsset.token}`}</span>
+        <span className="text-text-secondary text-[15px]">{`${t("withdraw.available")}: ${balance} ${isCalcInUSD ? "USD" : selectedAsset.token}`}</span>
         <button
           type="button"
           onClick={handlePasteMaxValue}

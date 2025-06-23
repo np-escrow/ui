@@ -78,8 +78,8 @@ function App() {
         <div
           className={classNames("h-screen", {
             "mobile-padding": isMobile,
-            "opacity-0": isMainLoading,
-            "opacity-100": !isMainLoading
+            "opacity-0 pointer-events-none": isMainLoading,
+            "opacity-100 pointer-events-auto": !isMainLoading
           })}
         >
           <Routes>

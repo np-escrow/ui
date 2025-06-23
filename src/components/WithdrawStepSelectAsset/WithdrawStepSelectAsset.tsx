@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type FC } from "react";
 import { useWithdrawStore } from "../../store/withdrawStore";
 
 import { t } from "i18next";
-import cn from "classnames";
 
 import { Icon } from "../Icon";
 
@@ -99,14 +98,7 @@ const WithdrawStepSelectAsset: FC<Props> = ({ cryptoList }) => {
           className="flex h-[46px] w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300/50 bg-gray-200 pl-3 pr-[10px]"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          <span
-            className={cn("text-[17px]", {
-              "text-text-primary": isDropdownOpen,
-              "text-text-secondary": !isDropdownOpen
-            })}
-          >
-            {selectedNetwork?.name}
-          </span>
+          <span className="text-[17px]">{selectedNetwork?.name}</span>
           <Icon name="chevron" width={24} height={24} />
         </button>
 
