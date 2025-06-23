@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type FC } from "react";
 
 import { t } from "i18next";
-import cn from "classnames";
 
 import { Icon } from "../Icon";
 
