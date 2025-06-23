@@ -38,7 +38,7 @@ const SendPackage = () => {
 
   return (
     <main className="page-with-button flex flex-col justify-start">
-      <div className="custom-container flex-1 !px-0">
+      <div className="custom-container flex-1 max-h-full !px-0">
         <div className="flex h-full flex-col">
           <div className="mb-[30px] mt-5 px-[1rem]">
             <NavHeader isLink />
