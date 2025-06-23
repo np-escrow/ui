@@ -124,7 +124,7 @@ const Payment = () => {
 
   return (
     <main className="page-with-button flex flex-col justify-center">
-      <div className="custom-container flex-1">
+      <div className="custom-container flex-1 max-h-full">
         <div className="flex h-full flex-col">
           {/* Header */}
           <div
