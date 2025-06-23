@@ -33,16 +33,13 @@ const SendPackagePaymentSend: FC = () => {
     }
   };
 
-  // const calculateFee = (
-  //   price: string | number,
-  //   fee: {
-  //     fixed: number;
-  //     percent: number;
-  //   }
-  // ) => {
-  //   const packagePrice = +price * fee.percent + fee.fixed;
-  //   return +price + +price - packagePrice;
-  // };
+  const calculateFee = (
+    amount: string | number,
+    fee: { fixed: number; percent: number }
+  ) => {
+    const res = +amount - (+amount * fee.percent + fee.fixed);
+    return +res < 0 ? 0 : res;
+  };
 
   return (
     <>
@@ -100,7 +97,9 @@ const SendPackagePaymentSend: FC = () => {
         <div className="h-[1px] w-full bg-[#BCC3D080]" />
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__total}>{t("sendPackage.sendTotal")}</p>
-          <p className={styles.package__total}>${data.create.amount}</p>
+          <p className={styles.package__total}>
+            ${calculateFee(data.create.amount, data.create.fee)}
+          </p>
         </div>
       </div>
       {/* <div className="pb-[40px]" /> */}

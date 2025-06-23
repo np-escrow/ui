@@ -1,4 +1,5 @@
 import { t } from "i18next";
+import { parse } from "date-fns";
 import { useEffect } from "react";
 
 import { useUserStore } from "../../store/userStore";
@@ -34,22 +35,22 @@ const DeliveriesList = () => {
         seller: delivery.metadata.SenderFullNameEW,
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
-        deliveryDate: new Date().toISOString() //delivery.metadata.ScheduledDeliveryDate
+        deliveryDate: parse(
+          delivery.metadata.ScheduledDeliveryDate,
+          "dd-MM-yyyy HH:mm:ss",
+          new Date()
+        ).toISOString()
       },
       link: delivery.link
     };
   });
-
-  console.log(list);
 
   return (
     <>
       <span className="px-[1rem] text-[15px] font-semibold">
         {t("home.deliveries")}
       </span>
-      <div
-        className={styles.scroll__container}
-      >
+      <div className={styles.scroll__container}>
         {list.length ? (
           <div className="flex flex-col gap-[30px]">
             {list.map((delivery) => (
