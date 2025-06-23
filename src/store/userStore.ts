@@ -1,10 +1,11 @@
-import { create } from "zustand";
-import { EUserType, EUserLanguage, EPlatform } from "../types";
-import { api } from "../services/api.service";
-import { getWebAppFromGlobal } from "../helpers/getWebAppFromGlobal";
-import type { UserMetadata } from "../services/api.types";
-import { setToken } from "../services/storage";
+import { EPlatform, EUserLanguage, EUserType } from "../types";
+
 import type { NavigateFunction } from "react-router-dom";
+import type { UserMetadata } from "../services/api.types";
+import { api } from "../services/api.service";
+import { create } from "zustand";
+import { getWebAppFromGlobal } from "../helpers/getWebAppFromGlobal";
+import { setToken } from "../services/storage";
 import { useLoadingStore } from "./loadingStore";
 
 interface UserState {
@@ -83,7 +84,7 @@ export const useUserStore = create<UserState>((set) => ({
     set({ id: res.id, metadata: res.metadata });
 
     if (Telegram.WebApp.initDataUnsafe?.start_param) {
-      navigate("/payment");
+      navigate(`/payment/${Telegram.WebApp.initDataUnsafe.start_param}`);
     }
   }
 }));

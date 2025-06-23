@@ -1,9 +1,8 @@
-import { t } from "i18next";
-
+import type { FC } from "react";
 import { Icon } from "../Icon";
 import { Link } from "react-router-dom";
-import type { FC } from "react";
 import cn from "classnames";
+import { t } from "i18next";
 
 type Props = {
   isLink: boolean;
@@ -15,11 +14,15 @@ type Props = {
 const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
   const getHeaderTitle = () => {
     const path = location.pathname;
-      if (path.startsWith("/shipment-info/")) {
+    if (path.startsWith("/shipment-info/")) {
       return t("header.shipmentInfo");
     }
-    
-    switch (location.pathname) {        
+
+    if (path.startsWith("/payment/")) {
+      return t("header.packagePayment");
+    }
+
+    switch (location.pathname) {
       case "/withdraw":
         return t("header.withdraw");
       case "/scan":
@@ -28,13 +31,13 @@ const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
         return t("header.deposit");
       case "/send-package":
         return t("header.sendPackage");
-      case "/payment":
-        return t("header.packagePayment");
     }
   };
 
   return (
-    <header className={cn("relative flex h-11 items-center gap-x-[10px]", className)}>
+    <header
+      className={cn("relative flex h-11 items-center gap-x-[10px]", className)}
+    >
       {isLink ? (
         <Link
           to={link || "/"}
@@ -52,7 +55,7 @@ const NavHeader: FC<Props> = ({ isLink, link, action, className }) => {
         </button>
       )}
 
-      <h1 className="absolute left-1/2 -translate-x-1/2 text-[20px] font-semibold text-nowrap">
+      <h1 className="absolute left-1/2 -translate-x-1/2 text-nowrap text-[20px] font-semibold">
         {getHeaderTitle()}
       </h1>
     </header>
