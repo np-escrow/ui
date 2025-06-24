@@ -113,7 +113,7 @@ const SendPackagePaymentSend: FC = () => {
         </div>
       </div>
       {/* <div className="pb-[40px]" /> */}
-      <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
+      <div className="custom-container primary-button-container">
         <Button actionHandler={handleShare}>
           {t("sendPackage.sendButton")}
         </Button>

@@ -22,6 +22,7 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
 
   const swiperRef = useRef<SwiperCore>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const updateData =
     userType === EUserType.SELLER
@@ -60,17 +61,17 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
       >
         {/* Slide #1 */}
         <SwiperSlide className="pt-[8vh]">
-          <div className="flex flex-col items-center">
+          <div ref={contentRef} className="flex flex-col items-center">
             <Icon
               name="onboardingIcon1"
-              width={301}
-              height={301}
+              width={240}
+              height={240}
               className="mb-[6vh]"
             />
-            <h2 className="mb-4 text-center text-2xl font-bold">
+            <h2 className="custom-container mb-4 text-center text-2xl font-bold">
               {t(`onboarding.slide1.${userType}.title`)}
             </h2>
-            <p className="text-text-secondary text-center">
+            <p className="custom-container text-text-secondary text-center">
               {t(`onboarding.slide1.${userType}.description1`)}
               <br />
               {t(`onboarding.slide1.${userType}.description2`)}
@@ -83,14 +84,14 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
           <div className="flex flex-col items-center">
             <Icon
               name="onboardingIcon2"
-              width={301}
-              height={301}
+              width={240}
+              height={240}
               className="mb-[6vh]"
             />
-            <h2 className="mb-4 text-center text-2xl font-bold">
+            <h2 className="custom-container mb-4 text-center text-2xl font-bold">
               {t(`onboarding.slide2.${userType}.title`)}
             </h2>
-            <p className="text-text-secondary text-center">
+            <p className="custom-container text-text-secondary text-center">
               {t(`onboarding.slide2.${userType}.description1`)}
               <br />
               {t(`onboarding.slide2.${userType}.description2`)}
@@ -103,14 +104,14 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
           <div className="flex flex-col items-center">
             <Icon
               name="onboardingIcon3"
-              width={301}
-              height={301}
+              width={240}
+              height={240}
               className="mb-[6vh]"
             />
-            <h2 className="mb-4 text-center text-2xl font-bold">
+            <h2 className="custom-container mb-4 text-center text-2xl font-bold">
               {t(`onboarding.slide3.${userType}.title`)}
             </h2>
-            <p className="text-text-secondary text-center">
+            <p className="custom-container text-text-secondary text-center">
               {t(`onboarding.slide3.${userType}.description1`)}
               <br />
               {t(`onboarding.slide3.${userType}.description2`)}
@@ -118,10 +119,15 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
           </div>
         </SwiperSlide>
 
-        <div className="swiper-pagination"></div>
+        <div
+          style={{
+            bottom: `calc((100% - 8vh - ${contentRef.current?.clientHeight ?? 0}px)/2)`
+          }}
+          className="swiper-pagination"
+        ></div>
       </Swiper>
 
-      <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2">
+      <div className="custom-container primary-button-container">
         <Button actionHandler={getActionHandler}>
           {t(`onboarding.slide${activeSlideIndex + 1}.${userType}.buttonText`)}
         </Button>

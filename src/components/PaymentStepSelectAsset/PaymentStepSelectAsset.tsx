@@ -137,7 +137,7 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
         {isDropdownOpen && (
           <ul
             ref={dropdownRef}
-            className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px]"
+            className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px] z-20"
           >
             {selectedAsset?.networks
               .filter((network) => network.code !== selectedNetwork?.code)

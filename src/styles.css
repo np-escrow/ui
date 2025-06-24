@@ -135,6 +135,16 @@ body {
   margin-inline: auto;
 }
 
+.primary-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 40px;
+  z-index: 11;
+  background-color: var(--color-bg-primary);
+}
+
 a {
   text-decoration: none;
 }
@@ -145,7 +155,6 @@ a {
 }
 
 #onboarding-slider .swiper-pagination {
-  bottom: calc((100% - 460px - 8vh)/2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,7 +177,7 @@ a {
 }
 
 .page-with-button {
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
 }
 
 .page-without-button {
