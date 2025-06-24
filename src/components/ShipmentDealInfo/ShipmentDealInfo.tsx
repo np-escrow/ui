@@ -32,7 +32,7 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
   };
   return (
     <>
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-start justify-between">
         <p className={styles.deal_info__title}>
           {t("shipment.dealTitle", { ttn: `#${ttn}` })}
         </p>
@@ -40,7 +40,7 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
           style={bgColorProperty as React.CSSProperties}
           className={styles.deal_info__box}
         >
-          <p>
+          <p className="text-nowrap">
             {status === OrderStatus.new
               ? t("shipment.dealPending")
               : t("shipment.dealDone")}

@@ -81,7 +81,7 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
           <div className="flex flex-1 items-start justify-between">
             <div className="flex flex-col gap-y-1">
               <span className="font-medium">{`#${delivery.ttn}`}</span>
-              <span className="text-text-secondary text-[13px]">{`${t("shipment.detailsFrom")} ${delivery.info.seller}, ${delivery.info.sellerCity}`}</span>
+              <span className="text-text-secondary text-[13px]">{`${t("shipment.detailsFrom")} ${delivery.info.sellerCity}`}</span>
             </div>
 
             <span className="text-[15px] font-semibold">{`$${delivery.price}`}</span>
