@@ -1462,42 +1462,6 @@ const Icons = () => {
           </symbol>
 
           <symbol
-            id="switchArrowsIcon"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3 16L7 20L11 16"
-              stroke="black"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M7 20V4"
-              stroke="black"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M21 8L17 4L13 8"
-              stroke="black"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M17 4V20"
-              stroke="black"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </symbol>
-
-          <symbol
             id="chevron"
             viewBox="0 0 24 24"
             fill="none"
