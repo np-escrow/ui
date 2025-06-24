@@ -107,7 +107,7 @@ const ShipmentInformation = () => {
                 </ul>
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-full mb-[40px]">
               <p className={styles.shipment__subtitle}>
                 {t("shipment.paymentTitle")}
               </p>

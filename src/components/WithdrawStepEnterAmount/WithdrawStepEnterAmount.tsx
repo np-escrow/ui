@@ -11,8 +11,8 @@ import { t } from "i18next";
 import cn from "classnames";
 import BigNumber from "bignumber.js";
 
-import { Icon } from "../Icon";
 import { formatInputNumericValue } from "../../helpers/formatInputNumericValue";
+import switchArrowsIcon from "../../assets/icons/switch-arrows.png";
 
 import { useBalanceStore } from "../../store/balanceStore";
 import { useWithdrawStore } from "../../store/withdrawStore";
@@ -231,20 +231,14 @@ const WithdrawStepEnterAmount: FC<Props> = ({
           <button
             type="button"
             onClick={handleToggleCalcInUSD}
-            className="flex size-8 shrink-0 cursor-pointer items-center justify-center"
+            className="flex shrink-0 cursor-pointer items-center justify-center active:opacity-85"
           >
-            <Icon
-              name="switchArrowsIcon"
-              width={21}
-              height={20}
-              className="flex size-8 shrink-0 items-center justify-center"
-              aria-label={t("withdraw.switchBetweenUSDAndAsset")}
-            />
+            <img src={switchArrowsIcon} width={34} alt="switch arrows" />
           </button>
         </div>
       </div>
       {errorText && (
-        <span className="blok mt-2 w-full text-[11px] text-red-100 opacity-50">
+        <span className="block font-sf-pro-text mt-2 w-full text-xs text-red-200">
           {errorText}
         </span>
       )}
