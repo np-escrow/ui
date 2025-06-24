@@ -172,17 +172,14 @@ const Withdraw = () => {
 
   return (
     <main className="page-with-button flex flex-col justify-center">
-      <div className="custom-container flex-1">
-        <div className="flex h-full flex-col">
-          <div
-            className={cn("mt-5", {
-              "mb-0": step === EWithdrawStep.CONFIRM,
-              "mb-[30px]": step !== EWithdrawStep.CONFIRM
-            })}
-          >
-            <NavHeader {...handleBack()} />
-          </div>
+      <div
+        className="custom-container mt-5 mb-[30px]"
+      >
+        <NavHeader {...handleBack()} />
+      </div>
 
+      <div className="custom-container flex-1 overflow-y-auto">
+        <div className="flex h-full flex-col">
           {step === EWithdrawStep.SELECT_ASSET && <WithdrawStepSelectAsset />}
 
           {step === EWithdrawStep.ENTER_ADDRESS && (
@@ -204,7 +201,7 @@ const Withdraw = () => {
           {step === EWithdrawStep.CONFIRM && <WithdrawStepConfirm />}
         </div>
 
-        <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
+        <div className="custom-container primary-button-container">
           <Button
             actionHandler={handleButtonAction()}
             disabled={getButtonDisabled()}
