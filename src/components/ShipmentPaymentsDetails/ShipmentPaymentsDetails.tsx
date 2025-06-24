@@ -16,10 +16,10 @@ interface IShipmentPaymentsDetailsProps {
 
 const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
   price,
-  userType
+  userType,
+  fee
 }) => {
-  // const pFee = price * fee.percent + fee.fixed - price;
-  // const amount = (+price + pFee).toFixed(2);
+  const amount = (+price - (+price * fee.percent + fee.fixed)).toFixed(2);
 
   return (
     <div className="flex w-full flex-col gap-[16px]">
@@ -39,7 +39,7 @@ const ShipmentPaymentsDetails: FC<IShipmentPaymentsDetailsProps> = ({
             : t("shipment.total")}
           :
         </p>
-        <p className={styles.details__total}>{`$${price}`}</p>
+        <p className={styles.details__total}>{`$${amount}`}</p>
       </div>
       <div className="h-[1px] w-full bg-[#BCC3D080]" />
       <div className="flex flex-col gap-[8px]">

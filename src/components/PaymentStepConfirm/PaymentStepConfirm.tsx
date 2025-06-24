@@ -10,6 +10,7 @@ import { useCopy } from "../../hooks/useCopy";
 import type { IDeliveries, NetworkCode } from "../../types";
 import styles from "./PaymentStepConfirm.module.css";
 import { usePackageStore } from "../../store/packageStore";
+import { Loader } from "../Loader";
 
 type Props = {
   delivery: IDeliveries;
@@ -17,6 +18,7 @@ type Props = {
 
 const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   const { isCopy, handleCopy } = useCopy();
+  const loading = usePaymentStore((state) => state.loadings.payment);
   const payment = usePaymentStore((state) => state.payment);
   const data = usePaymentStore((state) => state.data.payment);
   const details = usePackageStore((state) => state.data.details);
@@ -24,12 +26,14 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
 
   useEffect(() => {
+    if (!selectedAsset || !selectedNetwork || loading) return;
+
     payment({
-      currency: selectedAsset!.code,
+      currency: selectedAsset.code,
       id: Telegram.WebApp.initDataUnsafe!.start_param!,
-      network: selectedNetwork!.code as NetworkCode
+      network: selectedNetwork.code as NetworkCode
     });
-  }, []);
+  }, [selectedAsset, selectedNetwork]);
 
   const handleCopyClick = async () => {
     const text = data?.address || "";
@@ -38,10 +42,14 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
 
   const calculateFee = (price: string | number) => {
     const fee = selectedNetwork!.fee.payment;
-    const packagePrice = +price * fee.percent + fee.fixed;
+    const packagePrice = +price + +price * fee.percent + fee.fixed;
 
     return packagePrice.toFixed(2);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-h-[calc(100vh-100px)] overflow-y-auto pt-[30px]">

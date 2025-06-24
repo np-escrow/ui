@@ -26,9 +26,9 @@ const Payment = () => {
   const assets = useAssetStore((state) => state.data.assets);
   const getAssets = useAssetStore((state) => state.getAssets);
   const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
   const assetsLoadings = useAssetStore((state) => state.loadings.assets);
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
-  const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
   const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
   const setSelectedNetwork = usePaymentStore(
     (state) => state.setSelectedNetwork
@@ -119,13 +119,13 @@ const Payment = () => {
     return null;
   }
 
-  if (paymentLoadings || assetsLoadings) {
+  if (assetsLoadings) {
     return <Loader />;
   }
 
   return (
     <main className="page-with-button flex flex-col justify-center">
-      <div className="custom-container flex-1 max-h-full">
+      <div className="custom-container max-h-full flex-1">
         <div className="flex h-full flex-col">
           {/* Header */}
           <div
@@ -147,16 +147,18 @@ const Payment = () => {
           )}
         </div>
 
-        <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
-          <Button
-            actionHandler={handleButtonAction()}
-            disabled={getButtonDisabled()}
-          >
-            {step === EPaymentStep.CONFIRM
-              ? t("payment.paymentDone")
-              : t("payment.continue")}
-          </Button>
-        </div>
+        {!paymentLoadings && (
+          <div className="custom-container fixed bottom-7 left-1/2 z-[11] -translate-x-1/2 px-[1rem]">
+            <Button
+              actionHandler={handleButtonAction()}
+              disabled={getButtonDisabled()}
+            >
+              {step === EPaymentStep.CONFIRM
+                ? t("payment.paymentDone")
+                : t("payment.continue")}
+            </Button>
+          </div>
+        )}
       </div>
     </main>
   );
