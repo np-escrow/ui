@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import cn from "classnames";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
@@ -15,8 +15,10 @@ import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
 import { EUserType, type IDeliveries } from "../../types";
 import { Loader } from "../../components/Loader";
 import { useAssetStore } from "../../store/assetStore";
+import { toast } from "react-toastify";
 
 const Payment = () => {
+  const { id: ttn } = useParams<{ id: string }>();
   const { id } = useUserStore();
 
   const { data, get } = usePackageStore();
@@ -29,6 +31,7 @@ const Payment = () => {
   const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
   const assetsLoadings = useAssetStore((state) => state.loadings.assets);
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
+  const error = usePaymentStore((state) => state.errors);
   const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
   const setSelectedNetwork = usePaymentStore(
     (state) => state.setSelectedNetwork
@@ -66,7 +69,15 @@ const Payment = () => {
       get(+Telegram.WebApp.initDataUnsafe?.start_param);
   }, []);
 
-  const ttn = Telegram.WebApp.initDataUnsafe?.start_param;
+  useEffect(() => {
+    if (error.payment) {
+      toast.error(
+        t("payment.error", { error: error.payment?.message ?? error.payment })
+      );
+    }
+  }, [error.payment]);
+
+  // const ttn = Telegram.WebApp.initDataUnsafe?.start_param;
 
   useEffect(() => {
     if (assets.length) {

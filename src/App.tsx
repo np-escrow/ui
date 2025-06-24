@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import { Loader } from "./components/Loader";
+import { ToastContainer } from "react-toastify";
 import classNames from "classnames";
 import useExpand from "./hooks/useExpand";
 import { useLoadingStore } from "./store/loadingStore";
@@ -81,6 +82,15 @@ function App() {
             "pointer-events-auto opacity-100": !isMainLoading
           })}
         >
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            closeOnClick={true}
+            limit={1}
+            theme="light"
+            className="!z-[1000] !mx-[16px] !mt-[90px] !w-[calc(100%-32px)] !max-w-[400px]"
+            // transition={Bounce}
+          />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/withdraw" element={<Withdraw />} />

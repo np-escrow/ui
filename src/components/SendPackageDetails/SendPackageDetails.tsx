@@ -49,7 +49,11 @@ const SendPackageDetails: FC = () => {
             <p className={styles.details__subtitle}>
               {t("sendPackage.detailsWeight")}
             </p>
-            <p className={styles.details__value}>{pkg.FactualWeight}</p>
+            <p className={styles.details__value}>
+              {t("shipment.weightValue", {
+                value: pkg.FactualWeight
+              })}
+            </p>
           </li>
           {/* <li className="flex items-center justify-between">
             <p className={styles.details__subtitle}>

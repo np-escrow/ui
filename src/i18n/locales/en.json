@@ -115,7 +115,9 @@
     "bottomAlertDescription": "Your funds may be lost if you send them to a different network",
     "youSend": "You send",
     "invalidNetworkFormat": "Invalid address format for {{network}}",
-    "walletRequired": "Address is required"
+    "walletRequired": "Address is required",
+    "withdrawError": "Missing required fields for withdrawal",
+    "withdrawErrorDescription": "Failed to withdraw funds: {{error}}"
   },
   "payment": {
     "payment": "Package Payment",
@@ -127,7 +129,8 @@
     "only": "only",
     "kg": "kg",
     "paymentDone": "I paid",
-    "total": "Total to pay"
+    "total": "Total to pay",
+    "error": "Payment create failed: {{error}}"
   },
   "sendPackage": {
     "validateTitle": "Nova Poshta TTN",
@@ -154,6 +157,7 @@
     "sendFee": "Fee",
     "sendTotal": "You will get",
     "sendButton": "Share",
-    "ttnError": "The number was not found in the system or has already been registered."
+    "ttnError": "The number was not found in the system or has already been registered.",
+    "createError": "Failed to create transaction: {{error}}"
   }
 }
