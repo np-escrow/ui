@@ -1,21 +1,32 @@
 import { Button } from "../Button";
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 import { Icon } from "../Icon";
 import { QRCode } from "react-qrcode-logo";
 import styles from "./SendPackagePaymentSend.module.css";
 import { t } from "i18next";
 import { useCopy } from "../../hooks/useCopy";
 import { usePackageStore } from "../../store/packageStore";
+import { toast } from "react-toastify";
 
 const SendPackagePaymentSend: FC = () => {
   const { isCopy, handleCopy } = useCopy();
-  const { data } = usePackageStore();
+  const { data, error } = usePackageStore();
   if (!data.create) return null;
 
   const handleCopyClick = async () => {
     const text = data.create!.link;
     handleCopy(text);
   };
+
+  useEffect(() => {
+    if (error.create) {
+      toast.error(
+        t("sendPackage.createError", {
+          error: error.create?.message ?? error.create
+        })
+      );
+    }
+  }, [error.create]);
 
   const handleShare = () => {
     const url = data.create!.link;
@@ -82,7 +93,9 @@ const SendPackagePaymentSend: FC = () => {
               {t("sendPackage.sendWeight")}
             </p>
             <p className={styles.package__value}>
-              {data.create.metadata.FactualWeight}
+              {t("shipment.weightValue", {
+                value: data.create.metadata.FactualWeight
+              })}
             </p>
           </div>
 
@@ -94,12 +107,18 @@ const SendPackagePaymentSend: FC = () => {
             </p>
             <p className={styles.package__value}>${data.create.amount}</p>
           </div>
-          {/* <div className="flex w-full items-center justify-between">
-          <p className={styles.package__subtitle}>{t("sendPackage.sendFee")}</p>
-          <p className={styles.package__value}>
-            %{data.create.fee.percent} + ${data.create.fee.fixed}
-          </p>
-        </div> */}
+          <div className="flex w-full items-center justify-between">
+            <p className={styles.package__subtitle}>
+              {t("sendPackage.sendFee")}
+            </p>
+            <p className={styles.package__value}>
+              $
+              {(
+                data.create.fee.percent * data.create.amount +
+                data.create.fee.fixed
+              ).toFixed(2)}
+            </p>
+          </div>
 
           <div className="h-[1px] w-full bg-[#BCC3D080]" />
           <div className="flex w-full items-center justify-between">
