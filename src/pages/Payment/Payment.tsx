@@ -100,9 +100,9 @@ const Payment = () => {
 
       default:
         return {
-          isLink: true,
-          link: "/",
-          action: undefined
+          isLink: false,
+          link: undefined,
+          action: () => navigate("/")
         };
     }
   };
