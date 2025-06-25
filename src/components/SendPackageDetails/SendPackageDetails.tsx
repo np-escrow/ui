@@ -1,12 +1,10 @@
-import { Button } from "../Button";
-import { ESendPakageTab } from "../../pages/SendPackage/SendPackage.type";
 import type { FC } from "react";
 import styles from "./SendPackageDetails.module.css";
 import { t } from "i18next";
 import { usePackageStore } from "../../store/packageStore";
 
 const SendPackageDetails: FC = () => {
-  const { error, data, setActiveTab } = usePackageStore();
+  const { error, data } = usePackageStore();
   const pkg = data.create?.metadata;
 
   if (!pkg) {
@@ -62,13 +60,6 @@ const SendPackageDetails: FC = () => {
             <p className={styles.details__value}>{pkg.dimensions}</p>
           </li> */}
         </ul>
-      </div>
-      <div className="custom-container primary-button-container">
-        <Button
-          actionHandler={() => setActiveTab(ESendPakageTab.PaymentCreate)}
-        >
-          {t("sendPackage.detailsButton")}
-        </Button>
       </div>
     </>
   );
