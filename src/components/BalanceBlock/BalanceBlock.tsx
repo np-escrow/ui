@@ -2,9 +2,11 @@ import { Button } from "../Button";
 import { t } from "i18next";
 import { useBalanceStore } from "../../store/balanceStore";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BalanceBlock = () => {
   const { data, getBalance } = useBalanceStore((state) => state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getBalance();
@@ -25,7 +27,7 @@ const BalanceBlock = () => {
         {/* <Button isLink linkto="/deposit" variant="secondary">
           {t("home.deposit")}
         </Button> */}
-        <Button isLink linkto="/withdraw" variant="secondary">
+        <Button actionHandler={() => navigate("/withdraw")} variant="secondary">
           {t("home.withdraw")}
         </Button>
       </div>
