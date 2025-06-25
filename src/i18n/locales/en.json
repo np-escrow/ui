@@ -146,7 +146,7 @@
     "detailsDimensions": "Dimensions",
     "detailsButton": "Continue",
     "createEmptyDescription": "Specify the amount the recipient must pay. The fee will be deducted upon receipt — you will receive the amount minus the fee after the delivery is confirmed.",
-    "createFullfiledDescription": "The recipient will pay this amount. After deducting the fee, you will receive approximately {{fee}}}.",
+    "createFullfiledDescription": "The recipient will pay this amount. After deducting the fee, you will receive approximately ${{fee}}.",
     "createButton": "Create Deal",
     "sendDescription": "Share this link with the buyer",
     "sendSubtitle": "Package Payment",
