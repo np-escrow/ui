@@ -93,7 +93,7 @@ const ShipmentInformation = () => {
                       {t("shipment.detailsFrom")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.SenderAddress}
+                      {data.details.metadata.WarehouseSenderAddress}
                     </p>
                   </li>
                   <li className="flex items-start justify-between">
@@ -101,7 +101,7 @@ const ShipmentInformation = () => {
                       {t("shipment.detailsTo")}
                     </p>
                     <p className={styles.package_detail__value}>
-                      {data.details.metadata.RecipientAddress}
+                      {data.details.metadata.WarehouseRecipientAddress}
                     </p>
                   </li>
                   <li className="flex items-start justify-between">
