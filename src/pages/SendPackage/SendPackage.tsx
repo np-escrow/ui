@@ -4,12 +4,15 @@ import { SendPackageDetails } from "../../components/SendPackageDetails";
 import { SendPackagePaymentCreate } from "../../components/SendPackagePaymentCreate";
 import { SendPackagePaymentSend } from "../../components/SendPackagePaymentSend";
 import { SendPackageValidateTTN } from "../../components/SendPackageValidateTTN";
+import classNames from "classnames";
 import styles from "./SendPackage.module.css";
 import { t } from "i18next";
+import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { usePackageStore } from "../../store/packageStore";
 
 const SendPackage = () => {
   const { data, setActiveTab } = usePackageStore();
+  const { isKeyboardOpen } = useKeyboardStatus();
 
   const tabTitle = {
     [ESendPakageTab.ValidateTTN]: t("sendPackage.validateTitle"),
@@ -57,7 +60,11 @@ const SendPackage = () => {
   };
 
   return (
-    <main className="page-with-button flex flex-col justify-start">
+    <main
+      className={classNames("page-with-button flex flex-col justify-start", {
+        "translate-y-[40px] transform": isKeyboardOpen
+      })}
+    >
       <div className="custom-container max-h-full flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div className="mb-[30px] mt-5 px-[1rem]">
