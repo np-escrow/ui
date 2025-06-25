@@ -1,15 +1,27 @@
 .scroll__container {
   padding: 20px 16px 32px 16px; /* сверху 30px, по бокам 1rem, снизу 0 */
-  height: calc(100vh - 440px); /* Adjust height to fit within the page */
+
+  height: calc(100dvh - 440px); /* Adjust height to fit within the page */
   overflow-y: auto; /* Enable vertical scrolling */
+  overscroll-behavior: contain;
 
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-
-  /* outline: 1px solid tomato; */
 }
 
+.scroll__desktop_container {
+  padding: 20px 16px 32px 16px; /* сверху 30px, по бокам 1rem, снизу 0 */
+
+  height: calc(100dvh - 355px); /* Adjust height to fit within the page */
+  overflow-y: scroll; /* Enable vertical scrolling */
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scroll__desktop_container::-webkit-scrollbar,
 .scroll__container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }

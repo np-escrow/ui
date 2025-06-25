@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <main className="page-with-button flex flex-col justify-start overflow-y-hidden">
+    <main className="page-with-button flex flex-col justify-start overflow-hidden">
       <div className="custom-container flex-1 !px-0">
         {isShown ? (
           <div
@@ -42,9 +42,9 @@ const Home = () => {
             </div>
 
             {/* Deliveries list */}
-            <div className="">
-              <DeliveriesList />
-            </div>
+            {/* <div className="h-full"> */}
+            <DeliveriesList />
+            {/* </div> */}
 
             <div className="custom-container primary-button-container">
               <Button actionHandler={() => navigate("/send-package")}>

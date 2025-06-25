@@ -4,14 +4,23 @@ import { SendPackagePaymentCreate } from "../components/SendPackagePaymentCreate
 import { SendPackagePaymentSend } from "../components/SendPackagePaymentSend";
 import { SendPackageValidateTTN } from "../components/SendPackageValidateTTN";
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 import { usePackageStore } from "../store/packageStore";
 import { useState } from "react";
 
 export const useSendPackage = () => {
   const [ttn, setTtn] = useState("");
   const [amount, setAmount] = useState("");
+  const navigate = useNavigate();
 
   const { data, loadings, create, prepare, setActiveTab } = usePackageStore();
+
+  const handleBackToHomepage = () => {
+    navigate("/");
+    setActiveTab(ESendPakageTab.ValidateTTN);
+    setTtn("");
+    setAmount("");
+  };
 
   const handlePaymentCreate = async () => {
     if (!data.create) return; // Prevent multiple clicks while loading
@@ -124,9 +133,8 @@ export const useSendPackage = () => {
     btnData,
     backData,
     titleTab,
-    data,
-
+    isSharePage: data.activeTab === ESendPakageTab.PaymentSend,
     switchTab,
-    setActiveTab
+    handleBackToHomepage
   };
 };

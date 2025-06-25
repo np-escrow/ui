@@ -122,7 +122,7 @@ const ShipmentInformation = () => {
             </div>
           </div>
 
-          {pStatus !== EDeliveryStatus.COMPLETED && (
+          {pStatus === EDeliveryStatus.PENDING && (
             <div className="custom-container primary-button-container">
               <Button actionHandler={handleClick}>
                 {userType === EUserType.SELLER ? "Share" : "Pay"}
