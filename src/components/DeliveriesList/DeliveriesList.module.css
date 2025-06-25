@@ -1,5 +1,5 @@
 .scroll__container {
-  padding: 20px 1rem 0 1rem; /* сверху 30px, по бокам 1rem, снизу 0 */
+  padding: 20px 16px 32px 16px; /* сверху 30px, по бокам 1rem, снизу 0 */
   height: calc(100vh - 440px); /* Adjust height to fit within the page */
   overflow-y: auto; /* Enable vertical scrolling */
 

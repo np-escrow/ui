@@ -2,16 +2,17 @@ import { t } from "i18next";
 import { useState, type FC } from "react";
 
 import { Icon } from "../Icon";
-import { Button } from "../Button";
 
-import loader from "../../assets/images/loader.webp";
-import { usePackageStore } from "../../store/packageStore";
+interface ISendPackagePaymentCreateProps {
+  amount: string;
+  setAmount: (value: string) => void;
+}
 
-const SendPackagePaymentCreate: FC = () => {
-  const [amount, setAmount] = useState("");
+const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
+  amount,
+  setAmount
+}) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { loadings, data, create } = usePackageStore();
-  const loading = loadings.create;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace("$", "");
 
@@ -31,15 +32,6 @@ const SendPackagePaymentCreate: FC = () => {
   };
 
   const formattedAmount = amount ? `$${amount}` : "";
-
-  const handlePaymentCreate = async () => {
-    if (!data.create) return; // Prevent multiple clicks while loading
-
-    create({
-      ttn: data.create.metadata.Number,
-      amount: +amount
-    });
-  };
 
   return (
     <>
@@ -81,20 +73,6 @@ const SendPackagePaymentCreate: FC = () => {
               })}
         </span>
       </label>
-      <div className="custom-container primary-button-container">
-        <Button actionHandler={handlePaymentCreate} disabled={!amount}>
-          {loading ? (
-            <img
-              className="spinner"
-              src={loader}
-              width={"24px"}
-              height={"24px"}
-            />
-          ) : (
-            t("sendPackage.createButton")
-          )}
-        </Button>
-      </div>
     </>
   );
 };

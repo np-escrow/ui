@@ -1,4 +1,3 @@
-import { Button } from "../Button";
 import { useEffect, type FC } from "react";
 import { Icon } from "../Icon";
 import { QRCode } from "react-qrcode-logo";
@@ -27,22 +26,6 @@ const SendPackagePaymentSend: FC = () => {
       );
     }
   }, [error.create]);
-
-  const handleShare = () => {
-    const url = data.create!.link;
-
-    const text = t("shipment.shareText", {
-      ttn: data.create!.metadata.Number
-    });
-
-    try {
-      window.Telegram.WebApp.openTelegramLink(
-        `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const calculateFee = (
     amount: string | number,
@@ -132,11 +115,6 @@ const SendPackagePaymentSend: FC = () => {
         </div>
       </div>
       {/* <div className="pb-[40px]" /> */}
-      <div className="custom-container primary-button-container">
-        <Button actionHandler={handleShare}>
-          {t("sendPackage.sendButton")}
-        </Button>
-      </div>
     </>
   );
 };

@@ -1,18 +1,21 @@
 import { t } from "i18next";
-import { Trans } from "react-i18next";
-import { useState, type FC } from "react";
+import { useState, type Dispatch, type FC, type SetStateAction } from "react";
 
 import { Icon } from "../Icon";
-import { Button } from "../Button";
-import loader from "../../assets/images/loader.webp";
 import { usePackageStore } from "../../store/packageStore";
 import classNames from "classnames";
 
-const SendPackageValidateTTN: FC = () => {
-  const [ttn, setTtn] = useState("");
-  const { error, loadings, prepare } = usePackageStore();
+interface ISendPackageValidateTTNProps {
+  ttn: string;
+  setTtn: Dispatch<SetStateAction<string>>;
+}
+
+const SendPackageValidateTTN: FC<ISendPackageValidateTTNProps> = ({
+  ttn,
+  setTtn
+}) => {
+  const { error } = usePackageStore();
   const [isFocused, setIsFocused] = useState(false);
-  const loading = loadings.create;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -21,10 +24,6 @@ const SendPackageValidateTTN: FC = () => {
         setTtn(value);
       }
     }
-  };
-
-  const handleValidateTTN = async () => {
-    prepare({ ttn });
   };
 
   return (
@@ -77,23 +76,6 @@ const SendPackageValidateTTN: FC = () => {
           </span>
         )}
       </label>
-      <div className="custom-container primary-button-container">
-        <Button
-          actionHandler={handleValidateTTN}
-          disabled={ttn.length !== 14 || loading}
-        >
-          {loading ? (
-            <img
-              className="spinner"
-              src={loader}
-              width={"24px"}
-              height={"24px"}
-            />
-          ) : (
-            <Trans i18nKey="sendPackage.validateButton"></Trans>
-          )}
-        </Button>
-      </div>
     </>
   );
 };
