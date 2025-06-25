@@ -158,6 +158,7 @@
     "sendTotal": "You will get",
     "sendButton": "Share",
     "ttnError": "The number was not found in the system or has already been registered.",
-    "createError": "Failed to create transaction: {{error}}"
+    "createError": "Failed to create transaction: {{error}}",
+    "backHomePageBtn": "Back to Homepage"
   }
 }

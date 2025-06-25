@@ -8,12 +8,15 @@ import { usePackageStore } from "../../store/packageStore";
 import { DeliveriesListEmptyState } from "../DeliveriesListEmptyState";
 import DeliveriesListItem from "../DeliveriesListItem/DeliveriesListItem";
 
-import { EUserType, type IDeliveries } from "../../types";
+import { EPlatform, EUserType, type IDeliveries } from "../../types";
 import styles from "./DeliveriesList.module.css";
+
+import classNames from "classnames";
 
 const DeliveriesList = () => {
   const { id } = useUserStore();
   const { data, getAll } = usePackageStore();
+  const { platform } = useUserStore();
 
   useEffect(() => {
     getAll();
@@ -48,9 +51,16 @@ const DeliveriesList = () => {
   return (
     <>
       <span className="px-[1rem] text-[15px] font-semibold">
-        {t("home.deliveries")}
+        {t("home.deliveries")} {platform}
       </span>
-      <div className={styles.scroll__container}>
+      <div
+        className={classNames({
+          [styles.scroll__container]:
+            platform === EPlatform.IOS || platform === EPlatform.ANDROID,
+          [styles.scroll__desktop_container]:
+            platform !== EPlatform.IOS && platform !== EPlatform.ANDROID
+        })}
+      >
         {list.length ? (
           <div className="flex flex-col gap-[30px]">
             {list.map((delivery) => (

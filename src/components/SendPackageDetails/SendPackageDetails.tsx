@@ -35,13 +35,17 @@ const SendPackageDetails: FC = () => {
             <p className={styles.details__subtitle}>
               {t("sendPackage.detailsFrom")}
             </p>
-            <p className={styles.details__value}>{pkg.SenderAddress}</p>
+            <p className={styles.details__value}>
+              {pkg.WarehouseSenderAddress}
+            </p>
           </li>
           <li className="flex items-start justify-between">
             <p className={styles.details__subtitle}>
               {t("sendPackage.detailsTo")}
             </p>
-            <p className={styles.details__value}>{pkg.RecipientAddress}</p>
+            <p className={styles.details__value}>
+              {pkg.WarehouseRecipientAddress}
+            </p>
           </li>
           <li className="flex items-start justify-between">
             <p className={styles.details__subtitle}>
