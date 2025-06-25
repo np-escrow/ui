@@ -51,7 +51,7 @@ const DeliveriesList = () => {
   return (
     <>
       <span className="px-[1rem] text-[15px] font-semibold">
-        {t("home.deliveries")} {platform}
+        {t("home.deliveries")}
       </span>
       <div
         className={classNames({
