@@ -16,10 +16,13 @@ import { EUserType, type IDeliveries } from "../../types";
 import { Loader } from "../../components/Loader";
 import { useAssetStore } from "../../store/assetStore";
 import { toast } from "react-toastify";
+import classNames from "classnames";
+import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 
 const Payment = () => {
   const { id: ttn } = useParams<{ id: string }>();
   const { id } = useUserStore();
+  const { isKeyboardOpen } = useKeyboardStatus();
 
   const { data, get } = usePackageStore();
   const navigate = useNavigate();
@@ -135,7 +138,11 @@ const Payment = () => {
   }
 
   return (
-    <main className="page-with-button flex flex-col justify-center">
+    <main
+      className={classNames("page-with-button flex flex-col justify-center", {
+        "translate-y-[40px] transform": isKeyboardOpen
+      })}
+    >
       <div className="custom-container max-h-full flex-1">
         <div className="flex h-full flex-col">
           {/* Header */}

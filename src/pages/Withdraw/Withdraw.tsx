@@ -8,18 +8,21 @@ import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawSt
 import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
 import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
 import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
+import classNames from "classnames";
 import cn from "classnames";
 import loader from "../../assets/images/loader.webp";
 import { t } from "i18next";
 import { toast } from "react-toastify";
 import { useAssetStore } from "../../store/assetStore";
 import { useBalanceStore } from "../../store/balanceStore";
+import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { useNavigate } from "react-router-dom";
 import { useNetworkSchema } from "../../hooks/validation/useNetworkSchema";
 
 const Withdraw = () => {
   const navigate = useNavigate();
   const getSchema = useNetworkSchema();
+  const { isKeyboardOpen } = useKeyboardStatus();
 
   const step = useWithdrawStore((state) => state.step);
   const setStep = useWithdrawStore((state) => state.setStep);
@@ -180,10 +183,12 @@ const Withdraw = () => {
   };
 
   return (
-    <main className="page-with-button flex flex-col justify-center">
-      <div
-        className="custom-container mt-5 mb-[30px]"
-      >
+    <main
+      className={classNames("page-with-button flex flex-col justify-start", {
+        "translate-y-[40px] transform": isKeyboardOpen
+      })}
+    >
+      <div className="custom-container mb-[30px] mt-5">
         <NavHeader {...handleBack()} />
       </div>
 
