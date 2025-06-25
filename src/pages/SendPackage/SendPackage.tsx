@@ -32,13 +32,17 @@ const SendPackage = () => {
             )}
             {switchTab()}
           </div>
-          <div className="custom-container primary-button-container">
+          <div
+            className={classNames("custom-container primary-button-container", {
+              "!translate-y-[80px]": isKeyboardOpen
+            })}
+          >
             <Button
               actionHandler={btnData.action}
               disabled={btnData.disabled}
-              className={classNames({
-                "!translate-y-[80px]": isKeyboardOpen
-              })}
+              // className={classNames({
+              //   "!translate-y-[80px]": isKeyboardOpen
+              // })}
             >
               {btnData.loading ? (
                 <img
