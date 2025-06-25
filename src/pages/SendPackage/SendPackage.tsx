@@ -1,18 +1,15 @@
-import { t } from "i18next";
-
-import { usePackageStore } from "../../store/packageStore";
-
+import { ESendPakageTab } from "./SendPackage.type";
 import { NavHeader } from "../../components/NavHeader";
 import { SendPackageDetails } from "../../components/SendPackageDetails";
 import { SendPackagePaymentCreate } from "../../components/SendPackagePaymentCreate";
 import { SendPackagePaymentSend } from "../../components/SendPackagePaymentSend";
 import { SendPackageValidateTTN } from "../../components/SendPackageValidateTTN";
-
-import { ESendPakageTab } from "./SendPackage.type";
 import styles from "./SendPackage.module.css";
+import { t } from "i18next";
+import { usePackageStore } from "../../store/packageStore";
 
 const SendPackage = () => {
-  const { data } = usePackageStore();
+  const { data, setActiveTab } = usePackageStore();
 
   const tabTitle = {
     [ESendPakageTab.ValidateTTN]: t("sendPackage.validateTitle"),
@@ -36,12 +33,39 @@ const SendPackage = () => {
     }
   };
 
+  const handleBack = {
+    [ESendPakageTab.ValidateTTN]: {
+      isLink: true,
+      link: "/",
+      action: undefined
+    },
+    [ESendPakageTab.PackageDetails]: {
+      isLink: false,
+      link: undefined,
+      action: () => setActiveTab(ESendPakageTab.ValidateTTN)
+    },
+    [ESendPakageTab.PaymentCreate]: {
+      isLink: false,
+      link: undefined,
+      action: () => setActiveTab(ESendPakageTab.PackageDetails)
+    },
+    [ESendPakageTab.PaymentSend]: {
+      isLink: false,
+      link: undefined,
+      action: () => setActiveTab(ESendPakageTab.PaymentCreate)
+    }
+  };
+
   return (
     <main className="page-with-button flex flex-col justify-start">
-      <div className="custom-container flex-1 max-h-full !px-0">
+      <div className="custom-container max-h-full flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div className="mb-[30px] mt-5 px-[1rem]">
-            <NavHeader isLink />
+            <NavHeader
+              isLink={handleBack[data.activeTab].isLink}
+              link={handleBack[data.activeTab].link}
+              action={handleBack[data.activeTab].action}
+            />
           </div>
           <div className={styles.tab__box}>
             {data.activeTab !== ESendPakageTab.PaymentSend && (
