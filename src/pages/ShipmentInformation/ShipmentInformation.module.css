@@ -4,7 +4,9 @@
   align-items: center;
   gap: 30px;
 
-  height: calc(100vh - 160px);
+  /* height: calc(100vh - 160px); */
+  height: 100vh;
+  max-height: calc(100vh - 280px);
 
   padding: 16px;
 
@@ -13,6 +15,8 @@
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+  /* outline: 1px solid tomato; */
 }
 .shipment__container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
