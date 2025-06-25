@@ -1,10 +1,16 @@
-import { EDeliveryStatus, EUserType, ParseOrderStatus } from "../../types";
+import {
+  EDeliveryStatus,
+  EPlatform,
+  EUserType,
+  ParseOrderStatus
+} from "../../types";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
+import classNames from "classnames";
 import styles from "./ShipmentInformation.module.css";
 import { t } from "i18next";
 import { useEffect } from "react";
@@ -13,7 +19,7 @@ import { useUserStore } from "../../store/userStore";
 
 const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
-  const { id: userId } = useUserStore();
+  const { id: userId, platform } = useUserStore();
 
   const { data, get } = usePackageStore();
   const navigate = useNavigate();
@@ -40,7 +46,6 @@ const ShipmentInformation = () => {
       window.Telegram.WebApp.openTelegramLink(
         `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
       );
-      window.open(data.details.link, "_blank");
     }
     if (userType === EUserType.RECIPIENT && data.details?.status === "new") {
       navigate(`/payment/${data.details.metadata.Number}`);
@@ -56,7 +61,12 @@ const ShipmentInformation = () => {
             <NavHeader isLink={true} link="/" />
           </div>
 
-          <div className={styles.shipment__container}>
+          <div
+            className={classNames(styles.shipment__container, {
+              "!max-h-[calc(100dvh-190px)]":
+                platform !== EPlatform.IOS && platform !== EPlatform.ANDROID
+            })}
+          >
             <div className={styles.shipment__box}>
               <ShipmentDealInfo
                 ttn={data.details.metadata.Number}

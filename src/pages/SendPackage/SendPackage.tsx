@@ -1,4 +1,5 @@
 import { Button } from "../../components/Button";
+import { EPlatform } from "../../types";
 import { NavHeader } from "../../components/NavHeader";
 import classNames from "classnames";
 import loader from "../../assets/images/loader.webp";
@@ -6,6 +7,7 @@ import styles from "./SendPackage.module.css";
 import { t } from "i18next";
 import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { useSendPackage } from "../../hooks/useSendPackage";
+import { useUserStore } from "../../store/userStore";
 
 const SendPackage = () => {
   const {
@@ -17,6 +19,7 @@ const SendPackage = () => {
     handleBackToHomepage
   } = useSendPackage();
   const { isKeyboardOpen, minScreenHeight } = useKeyboardStatus();
+  const { platform } = useUserStore();
 
   return (
     <main
@@ -34,7 +37,12 @@ const SendPackage = () => {
               action={backData.action}
             />
           </div>
-          <div className={styles.tab__box}>
+          <div
+            className={classNames(styles.tab__box, {
+              "!max-h-[calc(100dvh-190px)]":
+                platform !== EPlatform.IOS && platform !== EPlatform.ANDROID
+            })}
+          >
             {isSharePage && <p className={styles.tab__title}>{titleTab}</p>}
             {switchTab()}
           </div>
