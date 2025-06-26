@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { BalanceBlock } from "../../components/BalanceBlock";
 import Button from "../../components/Button/Button";
@@ -14,16 +14,18 @@ const Home = () => {
   const [isShown, setIsShown] = useState<boolean>(true);
   const { metadata, userType } = useUserStore();
 
-  const shownOnboarding = metadata?.senderOnboarding;
+  const shownOnboarding = useMemo(() => {
+    if (Telegram.WebApp.initDataUnsafe?.start_param) {
+      if (metadata.senderOnboarding) return true;
+      return metadata.recipientOnboarding;
+    } else {
+      return metadata?.senderOnboarding;
+    }
+  }, [metadata, Telegram.WebApp.initDataUnsafe?.start_param]);
 
   useEffect(() => {
     setIsShown(shownOnboarding);
   }, [shownOnboarding]);
-
-  const handleClose = () => {
-    console.log("todo send request to change user metadata");
-    setIsShown(true);
-  };
 
   return (
     <main className="page-with-button flex flex-col justify-start overflow-hidden">
@@ -53,7 +55,7 @@ const Home = () => {
             </div>
           </div>
         ) : (
-          <Onboarding userType={userType} close={handleClose} />
+          <Onboarding userType={userType} close={() => setIsShown(true)} />
         )}
       </div>
     </main>
