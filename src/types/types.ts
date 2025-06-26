@@ -47,7 +47,7 @@ export interface IDeliveries {
   currency: string;
   info: {
     createdAt: string;
-    deliveryDate: string;
+    deliveryDate: string | null;
     sellerCity: string;
     seller: string;
     recipient: string;

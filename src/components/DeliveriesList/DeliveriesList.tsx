@@ -38,11 +38,17 @@ const DeliveriesList = () => {
         seller: delivery.metadata.SenderFullNameEW,
         sellerCity: delivery.metadata.CitySender,
         recipientCity: delivery.metadata.CityRecipient,
-        deliveryDate: parse(
-          delivery.metadata.ScheduledDeliveryDate,
-          "dd-MM-yyyy HH:mm:ss",
-          new Date()
-        ).toISOString()
+        deliveryDate: delivery.metadata.ActualDeliveryDate
+          ? parse(
+              delivery.metadata.ActualDeliveryDate,
+              "dd-MM-yyyy HH:mm:ss",
+              new Date()
+            ).toISOString()
+          : parse(
+              delivery.metadata.ScheduledDeliveryDate,
+              "dd-MM-yyyy HH:mm:ss",
+              new Date()
+            ).toISOString()
       },
       link: delivery.link
     };

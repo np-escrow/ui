@@ -7,7 +7,7 @@ import styles from "./DeliveriesItemInfo.module.css";
 interface DeliveriesItemInfoProps {
   isDeliveried: boolean;
   createdAt: string;
-  deliveryDate: string;
+  deliveryDate: string | null;
   sellerCity: string;
   recepientCity: string;
 }
@@ -40,7 +40,7 @@ const DeliveriesItemInfo: FC<DeliveriesItemInfoProps> = ({
           </p>
           <p
             className={styles.info__subtitle}
-          >{`${recepientCity}, ${format(deliveryDate, "dd MMM, yyyy")}`}</p>
+          >{`${recepientCity}${deliveryDate ? `, ${format(deliveryDate, "dd MMM, yyyy")}` : ""}`}</p>
         </div>
       </div>
     </div>
