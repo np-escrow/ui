@@ -37,7 +37,12 @@
     "invalidNetworkFormat": "Невірний формат адреси для {{network}}",
     "walletRequired": "Адреса є обов'язковою",
     "withdrawError": "Відсутні обов'язкові поля для виведення коштів",
-    "withdrawErrorDescription": "Не вдалося вивести кошти: {{error}}"
+    "withdrawErrorDescription": "Не вдалося вивести кошти: {{error}}",
+    "errorAmountNotANumber": "Сума повинна бути числом",
+    "errorAmoutGreaterZero": "Введіть суму більшу за 0",
+    "errorAmountLessFee": "Сума виводу не покриває комісію",
+    "errorAmountMinValue": "Сума виводу повинна бути більшою за {{fee}}",
+    "errorAmountExceedsBalance": "Сума виводу не може перевищувати баланс"
   },
   "payment": {
     "payment": "Оплата посилки",

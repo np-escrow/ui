@@ -50,41 +50,36 @@ const WithdrawStepEnterAmount: FC<Props> = ({
   const balance = data?.accessible || 0;
 
   const validateAmount = useCallback(() => {
+    if (!withdrawAmount) return;
     const amount = Number(withdrawAmount);
-
-    if (isNaN(amount)) {
-      setErrorText(`Enter the amount`);
-      setHasAmountError(true);
-      return;
-    }
-
-    if (+amount === 0) {
-      setErrorText(`Enter the amount`);
-      setHasAmountError(true);
-      return;
-    }
 
     const withdrawFee =
       +amount - Math.abs(+amount * fee.withdraw.mult - fee.withdraw.fix);
 
-    if (withdrawFee < 0) {
-      setErrorText(`The withdrawal amount does not cover the commission`);
-      setHasAmountError(true);
-      return;
+    let error = false;
+    let errorText = "";
+
+    if (isNaN(amount)) {
+      error = true;
+      errorText = t("withdraw.errorAmountNotANumber");
+    } else if (+amount <= 0) {
+      errorText = t("withdraw.errorAmoutGreaterZero");
+      error = true;
+    } else if (withdrawFee < 0) {
+      errorText = t("withdraw.errorAmountLessFee");
+      error = true;
+    } else if (amount > balance) {
+      errorText = t("withdraw.errorAmountExceedsBalance");
+      error = true;
+    } else if (!(amount > fee.withdraw.min)) {
+      errorText = t("withdraw.errorAmountMinValue", {
+        fee: fee.withdraw.min
+      });
+      error = true;
     }
 
-    if (amount > balance) {
-      setHasAmountError(true);
-      return;
-    }
-
-    if (!(amount > fee.withdraw.min)) {
-      setErrorText(`The withdrawal amount must be greater ${fee.withdraw.min}`);
-      setHasAmountError(true);
-      return;
-    }
-
-    setHasAmountError(false);
+    setHasAmountError(error);
+    setErrorText(errorText);
   }, [setHasAmountError, withdrawAmount, fee]);
 
   const handleNumberInputChange = (value: string) => {

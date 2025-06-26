@@ -117,7 +117,12 @@
     "invalidNetworkFormat": "Invalid address format for {{network}}",
     "walletRequired": "Address is required",
     "withdrawError": "Missing required fields for withdrawal",
-    "withdrawErrorDescription": "Failed to withdraw funds: {{error}}"
+    "withdrawErrorDescription": "Failed to withdraw funds: {{error}}",
+    "errorAmountNotANumber": "The amount must be a number",
+    "errorAmoutGreaterZero": "Enter the amount greater than 0",
+    "errorAmountLessFee": "The withdrawal amount does not cover the commission\";",
+    "errorAmountMinValue": "The withdrawal amount must be greater {{fee}}",
+    "errorAmountExceedsBalance": "Withdraw amount cannot be greater than balance"
   },
   "payment": {
     "payment": "Package Payment",

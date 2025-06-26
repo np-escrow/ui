@@ -117,7 +117,12 @@
     "invalidNetworkFormat": "Неверный формат адреса для {{network}}",
     "walletRequired": "Адрес обязателен",
     "withdrawError": "Отсутствуют обязательные поля для вывода средств",
-    "withdrawErrorDescription": "Не удалось вывести средства: {{error}}"
+    "withdrawErrorDescription": "Не удалось вывести средства: {{error}}",
+    "errorAmountNotANumber": "Сумма должна быть числом",
+    "errorAmoutGreaterZero": "Введите сумму больше 0",
+    "errorAmountLessFee": "Сумма вывода не покрывает комиссию",
+    "errorAmountMinValue": "Сумма вывода должна быть больше {{fee}}",
+    "errorAmountExceedsBalance": "Сумма вывода не может превышать баланс"
   },
   "payment": {
     "payment": "Оплата посылки",
