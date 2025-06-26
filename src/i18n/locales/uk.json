@@ -103,7 +103,7 @@
   },
   "deliveries": {
     "item": {
-      "status": "Статус доставки",
+      "status": "Статус",
       "sub-to": "до {{recipient}}",
       "sub-from": "від {{seller}}",
       "sub-seller": "Ви є відправником",

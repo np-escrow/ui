@@ -65,16 +65,16 @@
   },
   "deliveries": {
     "item": {
-      "status": "Статус доставки",
+      "status": "Статус",
       "sub-to": "до {{recipient}}",
       "sub-from": "от {{seller}}",
       "sub-seller": "Вы являетесь отправителем",
       "sub-recepient": "Вы являетесь получателем",
       "statuspending-recepient": "Ожидается оплата",
       "statuspending-seller": "Ожидается оплата от получателя",
-      "status-paid": "Оплату получили, ожидается доставка",
+      "status-paid": "Оплата получила, ожидается доставка",
       "status-completed-archive": "Завершено",
-      "status-completed": "Сделку завершили, средства зачислены",
+      "status-completed": "Сделка завершена, средства зачислены",
       "info-sent": "Отправлено",
       "info-receiving": "Получение"
     }

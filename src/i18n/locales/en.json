@@ -65,7 +65,7 @@
   },
   "deliveries": {
     "item": {
-      "status": "Delivery status",
+      "status": "Status",
       "sub-to": "to {{recipient}}",
       "sub-from": "from {{seller}}",
       "sub-seller": "You are the sender",
