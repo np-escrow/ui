@@ -72,7 +72,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
         </div>
         <p className={styles.deliveries__subtitle}>{subtitle}</p>
       </div>
-      {!item.archive && status !== EDeliveryStatus.PENDING && (
+      {!item.archive && pStatus !== EDeliveryStatus.PENDING && (
         <DeliveriesItemInfo
           isDeliveried={
             item.info.deliveryDate

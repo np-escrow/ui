@@ -159,7 +159,7 @@
     "sendRoute": "Маршрут:",
     "sendWeight": "Вес:",
     "sendPrice": "Стоимость посылки:",
-    "sendFee": "Комиссия",
+    "sendFee": "Комиссия:",
     "sendTotal": "Вы получите",
     "sendButton": "Поделиться",
     "createError": "Не удалось создать транзакцию: {{error}}",

@@ -159,7 +159,7 @@
     "sendRoute": "Route:",
     "sendWeight": "Weight:",
     "sendPrice": "Package Price:",
-    "sendFee": "Fee",
+    "sendFee": "Fee:",
     "sendTotal": "You will get",
     "sendButton": "Share",
     "createError": "Failed to create transaction: {{error}}",
