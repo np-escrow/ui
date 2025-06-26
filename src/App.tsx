@@ -3,10 +3,12 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import { Loader } from "./components/Loader";
+import { Onboarding } from "./components/Onboarding";
 import { ToastContainer } from "react-toastify";
 import classNames from "classnames";
 import useExpand from "./hooks/useExpand";
 import { useLoadingStore } from "./store/loadingStore";
+import { useOnboarding } from "./hooks/useOnboarding";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "./store/userStore";
 
@@ -20,6 +22,7 @@ const SendPackage = lazy(() => import("./pages/SendPackage/SendPackage"));
 const Payment = lazy(() => import("./pages/Payment/Payment"));
 
 function App() {
+  const { isShown, userType, onClose } = useOnboarding();
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const { signin } = useUserStore();
@@ -82,26 +85,32 @@ function App() {
             "pointer-events-auto opacity-100": !isMainLoading
           })}
         >
-          <ToastContainer
-            position="top-center"
-            autoClose={3000}
-            closeOnClick={true}
-            limit={1}
-            theme="light"
-            className="!z-[1000] !mx-[16px] !mt-[90px] !w-[calc(100%-32px)] !max-w-[400px]"
-            // transition={Bounce}
-          />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/withdraw" element={<Withdraw />} />
-            <Route path="/payment/:id" element={<Payment />} />
-            <Route path="/scan" element={<Scan />} />
-            <Route
-              path="/shipment-info/:id"
-              element={<ShipmentInformation />}
-            />
-            <Route path="/send-package" element={<SendPackage />} />
-          </Routes>
+          {isShown ? (
+            <>
+              <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                closeOnClick={true}
+                limit={1}
+                theme="light"
+                className="!z-[1000] !mx-[16px] !mt-[90px] !w-[calc(100%-32px)] !max-w-[400px]"
+                // transition={Bounce}
+              />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/withdraw" element={<Withdraw />} />
+                <Route path="/payment/:id" element={<Payment />} />
+                <Route path="/scan" element={<Scan />} />
+                <Route
+                  path="/shipment-info/:id"
+                  element={<ShipmentInformation />}
+                />
+                <Route path="/send-package" element={<SendPackage />} />
+              </Routes>
+            </>
+          ) : (
+            <Onboarding close={onClose} userType={userType} />
+          )}
         </div>
       </Suspense>
 
