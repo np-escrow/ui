@@ -4,7 +4,6 @@ import {
   EUserType,
   ParseOrderStatus
 } from "../../types";
-import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
@@ -13,6 +12,7 @@ import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
 import styles from "./ShipmentInformation.module.css";
 import { t } from "i18next";
+import { useEffect } from "react";
 import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
 
@@ -37,49 +37,7 @@ const ShipmentInformation = () => {
     data.details.status
   ] as unknown as EDeliveryStatus;
 
-  const handleClick = () => {
-    if (userType === EUserType.SELLER && data.details?.link) {
-      const text = t("shipment.shareText", {
-        ttn: data.details.metadata.Number
-      });
-      window.Telegram.WebApp.openTelegramLink(
-        `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
-      );
-    }
-    if (userType === EUserType.RECIPIENT && data.details?.status === "new") {
-      navigate(`/payment/${data.details.metadata.Number}`);
-      // window.Telegram.WebApp.openTelegramLink(data.details.link);
-    }
-  };
-
-  const shipmentDetails = useMemo(() => {
-    return {
-      ttn: {
-        title: t("shipment.detailsTtn"),
-        value: data?.details?.metadata?.Number
-          ? `#${data.details.metadata.Number}`
-          : ""
-      },
-      from: {
-        title: t("shipment.detailsFrom"),
-        value: data?.details?.metadata?.WarehouseSenderAddress ?? ""
-      },
-      to: {
-        title: t("shipment.detailsTo"), // Add a title for the "to" field
-        value: data?.details?.metadata?.WarehouseRecipientAddress ?? ""
-      },
-      weight: {
-        title: t("shipment.detailsWeight"), // You might want to add this if missing
-        value: data?.details?.metadata?.FactualWeight
-          ? t("shipment.weightValue", {
-              value: data.details.metadata.FactualWeight
-            })
-          : ""
-      }
-    };
-  }, [data.details.metadata, t]);
-
-  const styledContainer = useMemo(() => {
+  function getStyledContainer() {
     const isMobile =
       platform === EPlatform.IOS || platform === EPlatform.ANDROID;
     const isPending = pStatus === EDeliveryStatus.PENDING;
@@ -98,7 +56,47 @@ const ShipmentInformation = () => {
         : offsets.desktop.default;
 
     return { "--max-height": `calc(100dvh - ${offset}px)` };
-  }, [platform, pStatus]);
+  }
+
+  const handleClick = () => {
+    if (userType === EUserType.SELLER && data.details?.link) {
+      const text = t("shipment.shareText", {
+        ttn: data.details.metadata.Number
+      });
+      window.Telegram.WebApp.openTelegramLink(
+        `https://t.me/share/url?url=${encodeURIComponent(data.details?.link)}&text=${encodeURIComponent(text)}`
+      );
+    }
+    if (userType === EUserType.RECIPIENT && data.details?.status === "new") {
+      navigate(`/payment/${data.details.metadata.Number}`);
+      // window.Telegram.WebApp.openTelegramLink(data.details.link);
+    }
+  };
+
+  const shipmentDetails = {
+    ttn: {
+      title: t("shipment.detailsTtn"),
+      value: data?.details?.metadata?.Number
+        ? `#${data.details.metadata.Number}`
+        : ""
+    },
+    from: {
+      title: t("shipment.detailsFrom"),
+      value: data?.details?.metadata?.WarehouseSenderAddress ?? ""
+    },
+    to: {
+      title: t("shipment.detailsTo"), // Add a title for the "to" field
+      value: data?.details?.metadata?.WarehouseRecipientAddress ?? ""
+    },
+    weight: {
+      title: t("shipment.detailsWeight"), // You might want to add this if missing
+      value: data?.details?.metadata?.FactualWeight
+        ? t("shipment.weightValue", {
+            value: data.details.metadata.FactualWeight
+          })
+        : ""
+    }
+  };
 
   return (
     <main className="page-with-button flex flex-col justify-start">
@@ -110,7 +108,7 @@ const ShipmentInformation = () => {
 
           <div
             className={styles.shipment__container}
-            style={styledContainer as React.CSSProperties}
+            style={getStyledContainer() as React.CSSProperties}
           >
             <div className={styles.shipment__box}>
               <ShipmentDealInfo
