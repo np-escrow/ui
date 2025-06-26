@@ -1,186 +1,15 @@
-import { EWithdrawStep, useWithdrawStore } from "../../store/withdrawStore";
-import { useEffect, useState } from "react";
-
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
-import type { NetworkCode } from "../../types";
-import WithdrawStepConfirm from "../../components/WithdrawStepConfirm/WithdrawStepConfirm";
-import WithdrawStepEnterAddress from "../../components/WithdrawStepEnterAddress/WithdrawStepEnterAddress";
-import WithdrawStepEnterAmount from "../../components/WithdrawStepEnterAmount/WithdrawStepEnterAmount";
-import WithdrawStepSelectAsset from "../../components/WithdrawStepSelectAsset/WithdrawStepSelectAsset";
 import classNames from "classnames";
 import cn from "classnames";
 import loader from "../../assets/images/loader.webp";
 import { t } from "i18next";
-import { toast } from "react-toastify";
-import { useAssetStore } from "../../store/assetStore";
-import { useBalanceStore } from "../../store/balanceStore";
 import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
-import { useNavigate } from "react-router-dom";
-import { useNetworkSchema } from "../../hooks/validation/useNetworkSchema";
+import { useWithdrawn } from "../../hooks/useWithdrawn";
 
 const Withdraw = () => {
-  const navigate = useNavigate();
-  const getSchema = useNetworkSchema();
   const { isKeyboardOpen } = useKeyboardStatus();
-
-  const step = useWithdrawStore((state) => state.step);
-  const setStep = useWithdrawStore((state) => state.setStep);
-
-  const [networkError, setNetworkError] = useState("");
-  const [hasAmountError, setHasAmountError] = useState<boolean>(false);
-  const { withdraw, error } = useBalanceStore((state) => state);
-
-  const loadings = useAssetStore((state) => state.loadings);
-  const assets = useAssetStore((state) => state.data.assets);
-  const getAssets = useAssetStore((state) => state.getAssets);
-  const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
-  const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
-  const setSelectedAsset = useWithdrawStore((state) => state.setSelectedAsset);
-  const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
-  const setSelectedNetwork = useWithdrawStore(
-    (state) => state.setSelectedNetwork
-  );
-  const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
-
-  useEffect(() => {
-    if (error.withdraw) {
-      toast.error(
-        t("withdraw.withdrawErrorDescription", {
-          error: error.withdraw?.message ?? error.withdraw
-        })
-      );
-    }
-  }, [error.withdraw]);
-
-  const validate = async () => {
-    const schema = getSchema((selectedNetwork?.code as NetworkCode) ?? null);
-    try {
-      await schema.validate({ network: withdrawAddress });
-      setNetworkError("");
-    } catch (err: any) {
-      setNetworkError(err.message);
-    }
-  };
-
-  useEffect(() => {
-    getAssets();
-  }, []);
-
-  useEffect(() => {
-    if (assets.length) {
-      setSelectedAsset(assets[0]);
-      setSelectedNetwork(assets[0]?.networks[0]);
-    }
-  }, [assets]);
-
-  const handleBack = () => {
-    switch (step) {
-      case EWithdrawStep.ENTER_ADDRESS:
-        return {
-          isLink: false,
-          link: undefined,
-          action: () => setStep(EWithdrawStep.SELECT_ASSET)
-        };
-
-      case EWithdrawStep.ENTER_AMOUNT:
-        return {
-          isLink: false,
-          link: undefined,
-          action: () => setStep(EWithdrawStep.ENTER_ADDRESS)
-        };
-
-      case EWithdrawStep.CONFIRM:
-        return {
-          isLink: false,
-          link: undefined,
-          action: () => setStep(EWithdrawStep.ENTER_AMOUNT)
-        };
-
-      default:
-        return {
-          isLink: true,
-          link: "/",
-          action: undefined
-        };
-    }
-  };
-
-  const handleButtonAction = () => {
-    switch (step) {
-      case EWithdrawStep.SELECT_ASSET:
-        return () => {
-          setStep(EWithdrawStep.ENTER_ADDRESS);
-        };
-
-      case EWithdrawStep.ENTER_ADDRESS:
-        return () => {
-          if (networkError) return;
-
-          try {
-            validate();
-          } catch (error) {
-            return;
-          }
-
-          setStep(EWithdrawStep.ENTER_AMOUNT);
-        };
-
-      case EWithdrawStep.ENTER_AMOUNT:
-        return () => {
-          setStep(EWithdrawStep.CONFIRM);
-        };
-
-      default:
-        return async () => {
-          try {
-            if (
-              !selectedAsset ||
-              !selectedNetwork ||
-              !withdrawAddress ||
-              !withdrawAmount ||
-              isNaN(Number(withdrawAmount))
-            ) {
-              toast.error(t("withdraw.withdrawError"));
-              return;
-            }
-
-            await withdraw({
-              currency: selectedAsset.code || "",
-              network: selectedNetwork.code || "",
-              address: withdrawAddress,
-              amount: withdrawAmount
-            });
-
-            // AFTER RESPONSE!!!
-            navigate("/");
-            setStep(EWithdrawStep.SELECT_ASSET);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    }
-  };
-
-  const getButtonDisabled = () => {
-    if (loadings.assets) return true;
-
-    switch (step) {
-      case EWithdrawStep.SELECT_ASSET:
-        return !selectedAsset || !selectedNetwork;
-
-      case EWithdrawStep.ENTER_ADDRESS:
-        return (
-          !selectedAsset ||
-          !selectedNetwork ||
-          !withdrawAddress ||
-          !!networkError
-        );
-
-      case EWithdrawStep.ENTER_AMOUNT:
-        return hasAmountError || !Number(withdrawAmount) || !withdrawAmount;
-    }
-  };
+  const { loading, backBtnConfig, btnConfig, switchTab } = useWithdrawn();
 
   return (
     <main
@@ -189,41 +18,25 @@ const Withdraw = () => {
       })}
     >
       <div className="custom-container mb-[30px] mt-5">
-        <NavHeader {...handleBack()} />
+        <NavHeader {...backBtnConfig} />
       </div>
 
       <div className="custom-container flex-1 overflow-y-auto">
-        <div className="flex h-full flex-col">
-          {step === EWithdrawStep.SELECT_ASSET && <WithdrawStepSelectAsset />}
+        <div className="flex h-full flex-col">{switchTab()}</div>
 
-          {step === EWithdrawStep.ENTER_ADDRESS && (
-            <WithdrawStepEnterAddress
-              error={networkError}
-              setError={setNetworkError}
-              selectedCryptoName={selectedAsset?.name || ""}
-              validate={validate}
-            />
-          )}
-
-          {step === EWithdrawStep.ENTER_AMOUNT && (
-            <WithdrawStepEnterAmount
-              hasAmountError={hasAmountError}
-              setHasAmountError={setHasAmountError}
-            />
-          )}
-
-          {step === EWithdrawStep.CONFIRM && <WithdrawStepConfirm />}
-        </div>
-
-        <div className="custom-container primary-button-container">
+        <div
+          className={classNames("custom-container primary-button-container", {
+            "!bottom-[-80px]": isKeyboardOpen
+          })}
+        >
           <Button
-            actionHandler={handleButtonAction()}
-            disabled={getButtonDisabled()}
+            actionHandler={btnConfig.action}
+            disabled={btnConfig.disabled}
             className={cn({
-              "!bg-red-100": loadings.assets
+              "!bg-red-100": loading
             })}
           >
-            {loadings.assets ? (
+            {loading ? (
               <img
                 className="animate-spin"
                 src={loader}
