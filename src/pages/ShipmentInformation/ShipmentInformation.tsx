@@ -56,7 +56,7 @@ const ShipmentInformation = () => {
     return {
       ttn: {
         title: t("shipment.detailsTtn"),
-        value: data?.details?.metadata.Number
+        value: data?.details?.metadata?.Number
           ? `#${data.details.metadata.Number}`
           : ""
       },
