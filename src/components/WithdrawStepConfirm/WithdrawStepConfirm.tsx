@@ -77,7 +77,7 @@ const WithdrawStepConfirm = () => {
             </span>
 
             <span className="text-text-secondary">
-              {isCalcInUSD ? "$" : ""}
+              {isCalcInUSD ? "" : "$"}
               {calculateAlternateValue(withdrawAmount)}
               {isCalcInUSD ? ` ${selectedAsset?.code}` : ""}
             </span>
