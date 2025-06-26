@@ -32,7 +32,7 @@ const Header = () => {
         </span>
       </div>
       <a
-        href="https://t.me/your_support_bot"
+        href="https://t.me/npescrowsupport"
         target="_blank"
         rel="noopener noreferrer"
       >
