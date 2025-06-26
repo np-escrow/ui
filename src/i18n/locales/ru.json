@@ -72,9 +72,9 @@
       "sub-recepient": "Вы являетесь получателем",
       "statuspending-recepient": "Ожидается оплата",
       "statuspending-seller": "Ожидается оплата от получателя",
-      "status-paid": "Оплачено",
+      "status-paid": "Оплату получили, ожидается доставка",
       "status-completed-archive": "Завершено",
-      "status-completed": "Посылку получили, транзакцию завершили",
+      "status-completed": "Сделку завершили, средства зачислены",
       "info-sent": "Отправлено",
       "info-receiving": "Получение"
     }

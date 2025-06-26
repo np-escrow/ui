@@ -70,11 +70,11 @@
       "sub-from": "from {{seller}}",
       "sub-seller": "You are the sender",
       "sub-recepient": "You are the recipient",
-      "statuspending-recepient": "Pending payment",
-      "statuspending-seller": "Pending payment by the recipient",
-      "status-paid": "Paid",
+      "statuspending-recepient": "Awaiting payment",
+      "statuspending-seller": "Awaiting payment from recipient",
+      "status-paid": "Payment received, awaiting delivery",
       "status-completed-archive": "Completed",
-      "status-completed": "Package received, transaction completed",
+      "status-completed": "Deal completed, funds credited",
       "info-sent": "Sent",
       "info-receiving": "Receiving"
     }

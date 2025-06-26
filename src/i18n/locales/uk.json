@@ -110,9 +110,9 @@
       "sub-recepient": "Ви є отримувачем",
       "statuspending-recepient": "Очікується оплата",
       "statuspending-seller": "Очікується оплата від отримувача",
-      "status-paid": "Оплачено",
+      "status-paid": "Оплату отримано, очікується доставка",
       "status-completed-archive": "Завершено",
-      "status-completed": "Посилку отримано, транзакцію завершено",
+      "status-completed": "Угоду завершено, кошти зараховано",
       "info-sent": "Відправлено",
       "info-receiving": "Отримання"
     }
