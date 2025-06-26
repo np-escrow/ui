@@ -6,6 +6,7 @@ import { t } from "i18next";
 import { useCopy } from "../../hooks/useCopy";
 import { usePackageStore } from "../../store/packageStore";
 import { toast } from "react-toastify";
+import { formatPriceValue } from "../../helpers/formatPriceValue";
 
 const SendPackagePaymentSend: FC = () => {
   const { isCopy, handleCopy } = useCopy();
@@ -95,11 +96,10 @@ const SendPackagePaymentSend: FC = () => {
               {t("sendPackage.sendFee")}
             </p>
             <p className={styles.package__value}>
-              $
-              {(
+              {formatPriceValue(
                 data.create.fee.percent * data.create.amount +
-                data.create.fee.fixed
-              ).toFixed(2)}
+                  data.create.fee.fixed
+              )}
             </p>
           </div>
 

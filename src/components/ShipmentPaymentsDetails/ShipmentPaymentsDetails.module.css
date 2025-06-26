@@ -5,7 +5,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 120%; /* 19.2px */
-  text-transform: capitalize;
 }
 
 .details__value {
@@ -14,7 +13,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 19.2px */
-  text-transform: capitalize;
 }
 
 .details__total {

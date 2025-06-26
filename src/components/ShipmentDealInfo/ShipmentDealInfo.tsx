@@ -47,7 +47,7 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
           </p>
         </div>
       </div>
-      <div className="mt-[16px] flex flex-col gap-[20px]">
+      <div className="flex flex-col gap-[20px]">
         {data.map((item) => (
           <div key={+new Date(item.date)} className={styles.deal_info__item}>
             <Icon name="success" size={34} />

@@ -11,6 +11,7 @@ import type { IDeliveries, NetworkCode } from "../../types";
 import styles from "./PaymentStepConfirm.module.css";
 import { usePackageStore } from "../../store/packageStore";
 import { Loader } from "../Loader";
+import { formatPriceValue } from "../../helpers/formatPriceValue";
 
 type Props = {
   delivery: IDeliveries;
@@ -44,7 +45,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
     const fee = selectedNetwork!.fee.payment;
     const packagePrice = +price + +price * fee.percent + fee.fixed;
 
-    return packagePrice.toFixed(2);
+    return formatPriceValue(packagePrice);
   };
 
   if (loading) {
@@ -100,7 +101,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
         <div className="flex w-full items-center justify-between">
           <p className={styles.package__total}>{t("payment.total")}</p>
           <p className={styles.package__total}>
-            ${calculateFee(delivery.price)}
+            {calculateFee(delivery.price)}
           </p>
         </div>
       </div>

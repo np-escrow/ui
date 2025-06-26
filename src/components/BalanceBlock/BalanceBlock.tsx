@@ -1,4 +1,5 @@
 import { Button } from "../Button";
+import { formatPriceValue } from "../../helpers/formatPriceValue";
 import { t } from "i18next";
 import { useBalanceStore } from "../../store/balanceStore";
 import { useEffect } from "react";
@@ -20,7 +21,9 @@ const BalanceBlock = () => {
         <div className="text-text-secondary mb-1 text-sm">
           {t("home.availableBalance")}
         </div>
-        <div className="text-[20px] font-semibold">${balance}</div>
+        <div className="text-[20px] font-semibold">
+          {formatPriceValue(balance)}
+        </div>
       </div>
 
       <div className="flex w-1/2 items-center justify-center gap-x-3">

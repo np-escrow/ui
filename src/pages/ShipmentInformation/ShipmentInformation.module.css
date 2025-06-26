@@ -4,10 +4,9 @@
   align-items: center;
   gap: 30px;
 
-  /* height: calc(100vh - 160px); */
   height: 100vh;
-  max-height: calc(100dvh - 280px);
 
+  max-height: var(--max-height);
   padding: 16px;
 
   overflow-y: auto;
@@ -20,6 +19,26 @@
 }
 .shipment__container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
+}
+
+.shipment__deal_box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 10px;
+  border: 1px solid #f2f3f7;
+  background: #fff;
+
+  /* Shadow card */
+  box-shadow:
+    0px 4px 16px 0px rgba(0, 0, 0, 0.08),
+    0px 0px 18px 0px rgba(0, 0, 0, 0.08);
 }
 
 .shipment__box {
@@ -61,7 +80,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 120%; /* 19.2px */
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .package_detail__value {
@@ -71,7 +90,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 19.2px */
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 
   max-width: 70%; /* или любое другое значение */
   /* overflow: hidden; */

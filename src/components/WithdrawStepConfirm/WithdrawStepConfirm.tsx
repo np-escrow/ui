@@ -1,7 +1,7 @@
-import { t } from "i18next";
-
-import { useWithdrawStore } from "../../store/withdrawStore";
+import { formatPriceValue } from "../../helpers/formatPriceValue";
 import { getAssetImg } from "../../helpers/iconAssets";
+import { t } from "i18next";
+import { useWithdrawStore } from "../../store/withdrawStore";
 
 const WithdrawStepConfirm = () => {
   const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
@@ -15,20 +15,20 @@ const WithdrawStepConfirm = () => {
     network: selectedNetwork!.code
   });
   const fee = selectedNetwork!.fee;
-  console.log(222, withdrawAmount, fee);
+  // console.log(222, withdrawAmount, fee);
   const withdrawFee = +Math.abs(
     +withdrawAmount * fee.withdraw.mult - fee.withdraw.fix
-  ).toFixed(2);
+  );
 
   const calculateAlternateValue = (amount: string) => {
     if (!selectedAsset || !amount) {
-      return "0.00";
+      return "0";
     }
 
     const numericAmount = Number(amount.replace(/,/g, "").replace(/\s/g, ""));
 
     if (isNaN(numericAmount)) {
-      return "0.00";
+      return "0";
     }
 
     const convertedValue = isCalcInUSD ? numericAmount : numericAmount;
@@ -98,7 +98,8 @@ const WithdrawStepConfirm = () => {
           </span>
           <div>
             <span>
-              {withdrawFee} {isCalcInUSD ? "USD" : selectedAsset?.code}
+              {formatPriceValue(withdrawFee)}{" "}
+              {isCalcInUSD ? "USD" : selectedAsset?.code}
               {" ~ "}
             </span>
             <span className="text-text-secondary">

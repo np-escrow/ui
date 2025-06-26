@@ -4,16 +4,15 @@ import {
   EUserType,
   ParseOrderStatus
 } from "../../types";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
-import classNames from "classnames";
 import styles from "./ShipmentInformation.module.css";
 import { t } from "i18next";
-import { useEffect } from "react";
 import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
 
@@ -53,6 +52,54 @@ const ShipmentInformation = () => {
     }
   };
 
+  const shipmentDetails = useMemo(() => {
+    return {
+      ttn: {
+        title: t("shipment.detailsTtn"),
+        value: data?.details?.metadata.Number
+          ? `#${data.details.metadata.Number}`
+          : ""
+      },
+      from: {
+        title: t("shipment.detailsFrom"),
+        value: data?.details?.metadata?.WarehouseSenderAddress ?? ""
+      },
+      to: {
+        title: t("shipment.detailsTo"), // Add a title for the "to" field
+        value: data?.details?.metadata?.WarehouseRecipientAddress ?? ""
+      },
+      weight: {
+        title: t("shipment.detailsWeight"), // You might want to add this if missing
+        value: data?.details?.metadata?.FactualWeight
+          ? t("shipment.weightValue", {
+              value: data.details.metadata.FactualWeight
+            })
+          : ""
+      }
+    };
+  }, [data.details.metadata, t]);
+
+  const styledContainer = useMemo(() => {
+    const isMobile =
+      platform === EPlatform.IOS || platform === EPlatform.ANDROID;
+    const isPending = pStatus === EDeliveryStatus.PENDING;
+
+    const offsets = {
+      mobile: { pending: 280, default: 185 },
+      desktop: { pending: 190, default: 100 }
+    };
+
+    const offset = isMobile
+      ? isPending
+        ? offsets.mobile.pending
+        : offsets.mobile.default
+      : isPending
+        ? offsets.desktop.pending
+        : offsets.desktop.default;
+
+    return { "--max-height": `calc(100dvh - ${offset}px)` };
+  }, [platform, pStatus]);
+
   return (
     <main className="page-with-button flex flex-col justify-start">
       <div className="custom-container flex-1 !px-0">
@@ -62,10 +109,8 @@ const ShipmentInformation = () => {
           </div>
 
           <div
-            className={classNames(styles.shipment__container, {
-              "!max-h-[calc(100dvh-190px)]":
-                platform !== EPlatform.IOS && platform !== EPlatform.ANDROID
-            })}
+            className={styles.shipment__container}
+            style={styledContainer as React.CSSProperties}
           >
             <div className={styles.shipment__box}>
               <ShipmentDealInfo
@@ -80,40 +125,16 @@ const ShipmentInformation = () => {
               </p>
               <div className={styles.shipment__box}>
                 <ul className="flex w-full flex-col gap-[14px]">
-                  <li className="flex items-start justify-between">
-                    <p className={styles.package_detail__subtitle}>
-                      {t("shipment.detailsTtn")}
-                    </p>
-                    <p className={styles.package_detail__value}>
-                      #{data.details.metadata.Number}
-                    </p>
-                  </li>
-                  <li className="flex items-start justify-between">
-                    <p className={styles.package_detail__subtitle}>
-                      {t("shipment.detailsFrom")}
-                    </p>
-                    <p className={styles.package_detail__value}>
-                      {data.details.metadata.WarehouseSenderAddress}
-                    </p>
-                  </li>
-                  <li className="flex items-start justify-between">
-                    <p className={styles.package_detail__subtitle}>
-                      {t("shipment.detailsTo")}
-                    </p>
-                    <p className={styles.package_detail__value}>
-                      {data.details.metadata.WarehouseRecipientAddress}
-                    </p>
-                  </li>
-                  <li className="flex items-start justify-between">
-                    <p className={styles.package_detail__subtitle}>
-                      {t("shipment.detailsWeight")}
-                    </p>
-                    <p className={styles.package_detail__value}>
-                      {t("shipment.weightValue", {
-                        value: data.details.metadata.FactualWeight
-                      })}
-                    </p>
-                  </li>
+                  {Object.entries(shipmentDetails).map(([key, detail]) => (
+                    <li key={key} className="flex items-start justify-between">
+                      <p className={styles.package_detail__subtitle}>
+                        {detail.title}
+                      </p>
+                      <p className={styles.package_detail__value}>
+                        {detail.value}
+                      </p>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

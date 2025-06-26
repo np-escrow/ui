@@ -12,6 +12,7 @@ import {
   type IDeliveries
 } from "../../types";
 import styles from "./DeliveriesListItem.module.css";
+import { formatPriceValue } from "../../helpers/formatPriceValue";
 
 interface DeliveriesListItemProps {
   item: IDeliveries;
@@ -25,7 +26,7 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
     if (pStatus === EDeliveryStatus.PENDING) {
       return item.userType === EUserType.SELLER
         ? t("deliveries.item.sub-to", {
-            recipient: `${item.info.recipient}, ${item.info.recipientCity}`
+            recipient: `${item.info.recipient ? item.info.recipient + "," : ""} ${item.info.recipientCity}`
           }) //
         : t("deliveries.item.sub-from", {
             seller: `${item.info.seller}, ${item.info.sellerCity}`
@@ -65,7 +66,9 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
       <div className="w-full">
         <div className="flex items-center justify-between">
           <p className={styles.deliveries__header}>#{item.ttn}</p>
-          <p className={styles.deliveries__header}>{`$${item.price}`}</p>
+          <p className={styles.deliveries__header}>
+            {formatPriceValue(+item.price)}
+          </p>
         </div>
         <p className={styles.deliveries__subtitle}>{subtitle}</p>
       </div>
