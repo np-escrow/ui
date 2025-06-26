@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: 120%; /* 19.2px */
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .deliveries__subtitle {
@@ -40,7 +40,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .deliveries__status {
@@ -50,5 +50,5 @@
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 15.6px */
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
