@@ -28,21 +28,19 @@ const WithdrawStepEnterAmount: FC<Props> = ({
 }) => {
   const [spanValue, setSpanValue] = useState("0");
   const [errorText, setErrorText] = useState("");
+  const { withdrawAmount, isCalcInUSD, setIsCalcInUSD, setWithdrawAmount } =
+    useWithdrawStore();
 
-  const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
-  const setWithdrawAmount = useWithdrawStore(
-    (state) => state.setWithdrawAmount
-  );
   const selectedAsset = useWithdrawStore((state) => state.selectedAsset)!;
   const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork)!;
-  const isCalcInUSD = useWithdrawStore((state) => state.isCalcInUSD);
-  const setIsCalcInUSD = useWithdrawStore((state) => state.setIsCalcInUSD);
   const { data, getBalance } = useBalanceStore((state) => state);
 
   const fee = selectedNetwork.fee;
 
   useEffect(() => {
-    getBalance();
+    if (!data) {
+      getBalance();
+    }
   }, []);
 
   const inputNumberRef = useRef<HTMLInputElement>(null);
@@ -220,7 +218,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
                     (isCalcInUSD && 1 > 0 ? 1 / 1 : 1)
                   )
                     .toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
+                      minimumFractionDigits: 0,
                       maximumFractionDigits: isCalcInUSD ? 5 : 2
                     })
                     .replace(/,/g, "")
@@ -238,7 +236,7 @@ const WithdrawStepEnterAmount: FC<Props> = ({
         </div>
       </div>
       {errorText && (
-        <span className="block font-sf-pro-text mt-2 w-full text-xs text-red-200">
+        <span className="font-sf-pro-text mt-2 block w-full text-xs text-red-200">
           {errorText}
         </span>
       )}

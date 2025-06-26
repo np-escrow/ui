@@ -4,18 +4,20 @@ import { t } from "i18next";
 import { useWithdrawStore } from "../../store/withdrawStore";
 
 const WithdrawStepConfirm = () => {
-  const withdrawAddress = useWithdrawStore((state) => state.withdrawAddress);
-  const selectedNetwork = useWithdrawStore((state) => state.selectedNetwork);
-  const withdrawAmount = useWithdrawStore((state) => state.withdrawAmount);
-  const selectedAsset = useWithdrawStore((state) => state.selectedAsset);
-  const isCalcInUSD = useWithdrawStore((state) => state.isCalcInUSD);
+  const {
+    withdrawAddress,
+    selectedNetwork,
+    withdrawAmount,
+    selectedAsset,
+    isCalcInUSD
+  } = useWithdrawStore();
 
   const imgs = getAssetImg({
     token: selectedAsset!.code,
     network: selectedNetwork!.code
   });
   const fee = selectedNetwork!.fee;
-  // console.log(222, withdrawAmount, fee);
+
   const withdrawFee = +Math.abs(
     +withdrawAmount * fee.withdraw.mult - fee.withdraw.fix
   );
@@ -35,7 +37,7 @@ const WithdrawStepConfirm = () => {
 
     return convertedValue
       .toLocaleString("en-US", {
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 0,
         maximumFractionDigits: isCalcInUSD ? 5 : 2
       })
       .replace(/,/g, "");
@@ -98,7 +100,7 @@ const WithdrawStepConfirm = () => {
           </span>
           <div>
             <span>
-              {formatPriceValue(withdrawFee)}{" "}
+              {formatPriceValue(withdrawFee).replace("$", "")}{" "}
               {isCalcInUSD ? "USD" : selectedAsset?.code}
               {" ~ "}
             </span>
