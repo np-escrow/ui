@@ -1,70 +1,47 @@
-import { t } from "i18next";
-import cn from "classnames";
-import { useEffect } from "react";
+import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
+import { Loader } from "../../components/Loader";
 import { NavHeader } from "../../components/NavHeader";
 import { PaymentStepConfirm } from "../../components/PaymentStepConfirm";
 import PaymentStepSelectAsset from "../../components/PaymentStepSelectAsset/PaymentStepSelectAsset";
-
-import { useUserStore } from "../../store/userStore";
-import { usePackageStore } from "../../store/packageStore";
-import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
-
-import { EUserType, type IDeliveries } from "../../types";
-import { Loader } from "../../components/Loader";
-import { useAssetStore } from "../../store/assetStore";
-import { toast } from "react-toastify";
 import classNames from "classnames";
+import { formatterDeliveries } from "../../helpers/formatterDeliveries";
+import { t } from "i18next";
+import { toast } from "react-toastify";
+import { useAssetStore } from "../../store/assetStore";
+import { useEffect } from "react";
 import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
+import { usePackageStore } from "../../store/packageStore";
+import { useUserStore } from "../../store/userStore";
 
 const Payment = () => {
   const { id: ttn } = useParams<{ id: string }>();
   const { id } = useUserStore();
   const { isKeyboardOpen } = useKeyboardStatus();
-
-  const { data, get } = usePackageStore();
   const navigate = useNavigate();
-  const step = usePaymentStore((state) => state.step);
-  const setStep = usePaymentStore((state) => state.setStep);
+
   const assets = useAssetStore((state) => state.data.assets);
   const getAssets = useAssetStore((state) => state.getAssets);
-  const selectedAsset = usePaymentStore((state) => state.selectedAsset);
+  const { data, get } = usePackageStore();
+  const {
+    step,
+    selectedAsset,
+    selectedNetwork,
+    errors,
+    setStep,
+    setSelectedAsset,
+    setSelectedNetwork
+  } = usePaymentStore();
+
   const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
   const assetsLoadings = useAssetStore((state) => state.loadings.assets);
-  const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
-  const error = usePaymentStore((state) => state.errors);
-  const setSelectedAsset = usePaymentStore((state) => state.setSelectedAsset);
-  const setSelectedNetwork = usePaymentStore(
-    (state) => state.setSelectedNetwork
-  );
 
-  const delivery: IDeliveries | null = data.details
-    ? {
-        id: data.details.id,
-        currency: data.details.currency,
-        price: `${data.details.amount}`,
-        ttn: data.details.id,
-        userType:
-          +id === +data.details.sellerId
-            ? EUserType.SELLER
-            : EUserType.RECIPIENT,
-        status: data.details.status,
-        archive: false,
-        info: {
-          createdAt: data.details.createDt,
-          recipient: data.details.metadata.RecipientFullName,
-          seller: data.details.metadata.SenderFullNameEW,
-          sellerCity: data.details.metadata.CitySender,
-          recipientCity: data.details.metadata.CityRecipient,
-          deliveryDate: data.details.metadata.ScheduledDeliveryDate
-        }
-      }
-    : null;
+  const delivery = data.details ? formatterDeliveries(data.details, id) : null;
 
   useEffect(() => {
-    getAssets();
+    if (!assets.length) getAssets();
   }, []);
 
   useEffect(() => {
@@ -73,14 +50,12 @@ const Payment = () => {
   }, []);
 
   useEffect(() => {
-    if (error.payment) {
+    if (errors.payment) {
       toast.error(
-        t("payment.error", { error: error.payment?.message ?? error.payment })
+        t("payment.error", { error: errors.payment?.message ?? errors.payment })
       );
     }
-  }, [error.payment]);
-
-  // const ttn = Telegram.WebApp.initDataUnsafe?.start_param;
+  }, [errors.payment]);
 
   useEffect(() => {
     if (assets.length) {
@@ -89,43 +64,27 @@ const Payment = () => {
     }
   }, [assets]);
 
-  const handleBack = () => {
-    switch (step) {
-      case EPaymentStep.CONFIRM:
-        return {
-          isLink: false,
-          link: undefined,
-          action: () => setStep(EPaymentStep.SELECT_ASSET)
-        };
-
-      default:
-        return {
-          isLink: false,
-          link: undefined,
-          action: () => navigate("/")
-        };
-    }
-  };
-
-  const handleButtonAction = () => {
-    switch (step) {
-      case EPaymentStep.SELECT_ASSET:
-        return () => {
-          setStep(EPaymentStep.CONFIRM);
-        };
-
-      default:
-        return () => {
-          navigate(`/shipment-info/${ttn}`);
-          setStep(EPaymentStep.SELECT_ASSET);
-        };
-    }
-  };
-
-  const getButtonDisabled = () => {
-    switch (step) {
-      case EPaymentStep.SELECT_ASSET:
-        return !selectedAsset || !selectedNetwork;
+  const paymentStepData = {
+    [EPaymentStep.SELECT_ASSET]: {
+      backButton: {
+        isLink: false,
+        link: undefined,
+        action: () => navigate("/")
+      },
+      buttonAction: () => setStep(EPaymentStep.CONFIRM),
+      buttonDisabled: !selectedAsset || !selectedNetwork
+    },
+    [EPaymentStep.CONFIRM]: {
+      backButton: {
+        isLink: false,
+        link: undefined,
+        action: () => navigate("/")
+      },
+      buttonAction: () => {
+        navigate(`/shipment-info/${ttn}`);
+        setStep(EPaymentStep.SELECT_ASSET);
+      },
+      buttonDisabled: false
     }
   };
 
@@ -137,6 +96,8 @@ const Payment = () => {
     return <Loader />;
   }
 
+  const stepPaymentData = paymentStepData[step];
+
   return (
     <main
       className={classNames("page-with-button flex flex-col justify-center", {
@@ -145,31 +106,31 @@ const Payment = () => {
     >
       <div className="custom-container max-h-full flex-1">
         <div className="flex h-full flex-col">
-          {/* Header */}
           <div
-            className={cn("mt-5", {
+            className={classNames("mt-5", {
               "mb-[30px]": step !== EPaymentStep.CONFIRM,
               "mb-0": step === EPaymentStep.CONFIRM
             })}
           >
-            <NavHeader {...handleBack()} />
+            <NavHeader {...stepPaymentData.backButton} />
           </div>
 
-          {/* Select asset */}
-          {step === EPaymentStep.SELECT_ASSET && (
-            <PaymentStepSelectAsset delivery={delivery} />
-          )}
+          <>
+            {step === EPaymentStep.SELECT_ASSET && (
+              <PaymentStepSelectAsset delivery={delivery} />
+            )}
 
-          {step === EPaymentStep.CONFIRM && (
-            <PaymentStepConfirm delivery={delivery} />
-          )}
+            {step === EPaymentStep.CONFIRM && (
+              <PaymentStepConfirm delivery={delivery} />
+            )}
+          </>
         </div>
 
         {!paymentLoadings && (
           <div className="custom-container primary-button-container">
             <Button
-              actionHandler={handleButtonAction()}
-              disabled={getButtonDisabled()}
+              actionHandler={stepPaymentData.buttonAction}
+              disabled={stepPaymentData.buttonDisabled}
             >
               {step === EPaymentStep.CONFIRM
                 ? t("payment.paymentDone")
