@@ -75,12 +75,14 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
       {!item.archive && pStatus !== EDeliveryStatus.PENDING && (
         <DeliveriesItemInfo
           isDeliveried={
-            item.info.deliveryDate
-              ? new Date(item.info.deliveryDate).getTime() < Date.now()
+            item.info.actualDeliveryDate
+              ? new Date(item.info.actualDeliveryDate).getTime() < Date.now()
               : false
           }
           createdAt={item.info.createdAt}
-          deliveryDate={item.info.deliveryDate}
+          deliveryDate={
+            item.info.actualDeliveryDate ?? item.info.sheduledDeliveryDate
+          }
           sellerCity={item.info.sellerCity}
           recepientCity={item.info.recipientCity}
         />

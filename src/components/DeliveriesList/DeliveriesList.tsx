@@ -1,17 +1,13 @@
-import { t } from "i18next";
-import { parse } from "date-fns";
-import { useEffect } from "react";
-
-import { useUserStore } from "../../store/userStore";
-import { usePackageStore } from "../../store/packageStore";
-
 import { DeliveriesListEmptyState } from "../DeliveriesListEmptyState";
 import DeliveriesListItem from "../DeliveriesListItem/DeliveriesListItem";
-
-import { EPlatform, EUserType, type IDeliveries } from "../../types";
-import styles from "./DeliveriesList.module.css";
-
+import { EPlatform } from "../../types";
 import classNames from "classnames";
+import { formatterDeliveries } from "../../helpers/formatterDeliveries";
+import styles from "./DeliveriesList.module.css";
+import { t } from "i18next";
+import { useEffect } from "react";
+import { usePackageStore } from "../../store/packageStore";
+import { useUserStore } from "../../store/userStore";
 
 const DeliveriesList = () => {
   const { id } = useUserStore();
@@ -22,37 +18,7 @@ const DeliveriesList = () => {
     getAll();
   }, []);
 
-  const list = data.all.map<IDeliveries>((delivery) => {
-    return {
-      id: delivery.id,
-      currency: delivery.currency,
-      price: `${delivery.amount}`,
-      ttn: delivery.id,
-      userType:
-        +id === +delivery.sellerId ? EUserType.SELLER : EUserType.RECIPIENT,
-      status: delivery.status,
-      archive: false,
-      info: {
-        createdAt: delivery.createDt,
-        recipient: delivery.metadata.RecipientFullName,
-        seller: delivery.metadata.SenderFullNameEW,
-        sellerCity: delivery.metadata.CitySender,
-        recipientCity: delivery.metadata.CityRecipient,
-        deliveryDate: delivery.metadata.ActualDeliveryDate
-          ? parse(
-              delivery.metadata.ActualDeliveryDate,
-              "dd-MM-yyyy HH:mm:ss",
-              new Date()
-            ).toISOString()
-          : parse(
-              delivery.metadata.ScheduledDeliveryDate,
-              "dd-MM-yyyy HH:mm:ss",
-              new Date()
-            ).toISOString()
-      },
-      link: delivery.link
-    };
-  });
+  const list = data.all.map((delivery) => formatterDeliveries(delivery, id));
 
   return (
     <>
