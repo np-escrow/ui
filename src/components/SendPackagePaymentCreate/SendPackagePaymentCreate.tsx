@@ -24,7 +24,7 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
   const calculateFee = () => {
     const fee = {
       fixed: 1,
-      percent: 0.05
+      percent: 0.01
     };
 
     const res = +amount - (+amount * fee.percent + fee.fixed);
