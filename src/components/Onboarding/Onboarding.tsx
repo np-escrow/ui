@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import SwiperCore from "swiper";
-import { useRef, useState, type FC } from "react";
+import { useRef, useState, useMemo, type FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -9,6 +9,7 @@ import Button from "../Button/Button";
 
 import { EUserType } from "../../types";
 import { useUserStore } from "../../store/userStore";
+import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 
 import "swiper/swiper-bundle.css";
 
@@ -20,9 +21,16 @@ type Props = {
 const Onboarding: FC<Props> = ({ close, userType }) => {
   const setMetadata = useUserStore((state) => state.setMetadata);
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const isRequestFullscreenAllowed = useUserStore(
+    (state) => state.isRequestFullscreenAllowed
+  );
+
+  const { currentTgHeight } = useKeyboardStatus();
 
   const swiperRef = useRef<SwiperCore>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const content1Ref = useRef<HTMLDivElement>(null);
+  const content2Ref = useRef<HTMLDivElement>(null);
+  const content3Ref = useRef<HTMLDivElement>(null);
 
   const updateData =
     userType === EUserType.SELLER
@@ -41,6 +49,18 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
       close();
     }
   };
+
+  const maxContentHeight = useMemo(() => {
+    return Math.max(
+      content1Ref.current?.clientHeight ?? 0,
+      content2Ref.current?.clientHeight ?? 0,
+      content3Ref.current?.clientHeight ?? 0
+    );
+  }, [
+    content1Ref.current?.clientHeight,
+    content2Ref.current?.clientHeight,
+    content3Ref.current?.clientHeight
+  ]);
 
   return (
     <div className="flex h-full flex-col justify-end">
@@ -61,7 +81,10 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
       >
         {/* Slide #1 */}
         <SwiperSlide className="pt-[8vh]">
-          <div ref={contentRef} className="flex flex-col items-center">
+          <div
+            ref={content1Ref}
+            className="flex flex-col items-center"
+          >
             <Icon
               name="onboardingIcon1"
               width={240}
@@ -81,7 +104,10 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
 
         {/* Slide #2 */}
         <SwiperSlide className="pt-[calc(8vh+8px)]">
-          <div className="flex flex-col items-center">
+          <div
+            ref={content2Ref}
+            className="flex flex-col items-center"
+          >
             <Icon
               name="onboardingIcon2"
               width={240}
@@ -121,7 +147,7 @@ const Onboarding: FC<Props> = ({ close, userType }) => {
 
         <div
           style={{
-            bottom: `calc((100% - 8vh - ${contentRef.current?.clientHeight ?? 0}px)/2)`
+            bottom: `calc((${currentTgHeight}px - 8vh - 86px - ${isRequestFullscreenAllowed ? 100 : 0}px - ${maxContentHeight}px)/2 + 86px - 4px)`
           }}
           className="swiper-pagination"
         ></div>

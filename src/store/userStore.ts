@@ -16,12 +16,14 @@ interface UserState {
   platform: EPlatform;
   username?: string;
   metadata: UserMetadata;
+  isRequestFullscreenAllowed: boolean;
   setUserType: (type: EUserType) => void;
   setLanguage: (lang: EUserLanguage) => void;
   setPlatform: (platform: EPlatform) => void;
   getAvatar: () => Promise<void>;
   signin: (navigate: NavigateFunction, ttn?: number) => Promise<void>;
   setMetadata: (data: Partial<UserMetadata>) => Promise<void>;
+  setIsRequestFullscreenAllowed: (isAllowed: boolean) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -31,10 +33,12 @@ export const useUserStore = create<UserState>((set) => ({
   platform: EPlatform.WEB,
   avatar: "",
   username: Telegram.WebApp.initDataUnsafe?.user?.username,
+  isRequestFullscreenAllowed: false,
   metadata: {
     senderOnboarding: false,
     recipientOnboarding: false
   },
+  setIsRequestFullscreenAllowed: (isAllowed) => set({ isRequestFullscreenAllowed: isAllowed }),
   setUserType: (type) => set({ userType: type }),
   setLanguage: (lang) => set({ language: lang }),
   setPlatform: (platform) => set({ platform }),

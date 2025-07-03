@@ -31,6 +31,7 @@ function App() {
   const setUserType = useUserStore((state) => state.setUserType);
   const setLanguage = useUserStore((state) => state.setLanguage);
   const setPlatform = useUserStore((state) => state.setPlatform);
+  const setIsRequestFullscreenAllowed = useUserStore((state) => state.setIsRequestFullscreenAllowed);
   const { isMainLoading } = useLoadingStore();
 
   useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
         typeof (Telegram.WebApp as any).requestFullscreen === "function"
       ) {
         (Telegram.WebApp as any).requestFullscreen();
+        setIsRequestFullscreenAllowed(true);
       }
 
       // Language
