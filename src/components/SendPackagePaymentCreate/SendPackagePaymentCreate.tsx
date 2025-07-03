@@ -27,8 +27,10 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
       percent: 0.01
     };
 
+    const floorToTwo = (value: number) => Math.floor(value * 100) / 100;
+
     const res = +amount - (+amount * fee.percent + fee.fixed);
-    return res < 0 ? 0 : res;
+    return res < 0 ? 0 : floorToTwo(res);
   };
 
   const formattedAmount = amount ? `$${amount}` : "";
