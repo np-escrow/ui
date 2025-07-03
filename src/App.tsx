@@ -79,7 +79,7 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<Loader />}>
+      <Suspense>
         <div
           className={classNames("h-screen", {
             "mobile-padding": isMobile,
