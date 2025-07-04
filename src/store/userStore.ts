@@ -43,6 +43,7 @@ export const useUserStore = create<UserState>((set) => ({
   setLanguage: (lang) => set({ language: lang }),
   setPlatform: (platform) => set({ platform }),
   setMetadata: async (data: Partial<UserMetadata>) => {
+    const { addPromise } = useLoadingStore.getState();
     set((state) => ({
       metadata: {
         ...state.metadata,
@@ -50,7 +51,10 @@ export const useUserStore = create<UserState>((set) => ({
       }
     }));
 
-    await api.patchUserMetadata(data);
+    const metadataPromise = api.patchUserMetadata(data);
+    addPromise(metadataPromise);
+
+    await metadataPromise;
   },
   getAvatar: async () => {
     const { addPromise } = useLoadingStore.getState();
@@ -81,7 +85,7 @@ export const useUserStore = create<UserState>((set) => ({
     }
 
     const signinPromise = api.signin({ message: webApp.initData });
-    addPromise(signinPromise);
+    addPromise(signinPromise, "signin");
 
     const res = await signinPromise;
     setToken(res.accessToken);
