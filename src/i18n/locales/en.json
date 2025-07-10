@@ -97,7 +97,9 @@
     "roleSeller": "Seller",
     "roleRecepient": "Recipient",
     "weightValue": "{{ value }}kg",
-    "shareText": "Your package is ready for delivery. TTN: {{ ttn }}"
+    "shareText": "Your package is ready for delivery. TTN: {{ ttn }}",
+    "shareButtonTitle": "Share",
+    "payButtonTitle": "Pay"
   },
   "withdraw": {
     "selectCrypto": "Select cryptocurrency",
@@ -135,7 +137,14 @@
     "kg": "kg",
     "paymentDone": "I paid",
     "error": "Payment create failed: {{error}}",
-    "total": "Total to pay"
+    "total": "Total to pay",
+    "dealStatus": {
+      "new": "Deal Created",
+      "paid": "Payment Locked",
+      "transit": "In transit",
+      "closed": "Delivered",
+      "revert": "Revert"
+    }
   },
   "sendPackage": {
     "validateTitle": "Nova Poshta TTN",

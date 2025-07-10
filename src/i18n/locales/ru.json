@@ -97,7 +97,9 @@
     "roleSeller": "Продавец",
     "roleRecepient": "Получатель",
     "weightValue": "{{ value }}кг",
-    "shareText": "Ваша посылка готова к доставке. ТТН: {{ ttn }}"
+    "shareText": "Ваша посылка готова к доставке. ТТН: {{ ttn }}",
+    "shareButtonTitle": "Поделиться",
+    "payButtonTitle": "Оплатить"
   },
   "withdraw": {
     "selectCrypto": "Выберите криптовалюту",
@@ -135,7 +137,14 @@
     "kg": "кг",
     "paymentDone": "Я оплатил",
     "error": "Не удалось создать платеж: {{error}}",
-    "total": "Итого к оплате"
+    "total": "Итого к оплате",
+    "dealStatus": {
+      "new": "Сделка создана",
+      "paid": "Платёж получен",
+      "transit": "Доставляется",
+      "closed": "Доставлено",
+      "revert": "Возвращено"
+    }
   },
   "sendPackage": {
     "validateTitle": "Новая Почта ТТН",

@@ -4,7 +4,7 @@ import {
   EUserType,
   ParseOrderStatus
 } from "../../types";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useNavigationType } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
@@ -22,6 +22,7 @@ const ShipmentInformation = () => {
 
   const { data, get } = usePackageStore();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   useEffect(() => {
     if (id) get(+id);
@@ -98,12 +99,20 @@ const ShipmentInformation = () => {
     }
   };
 
+  const handleBack = () => {
+    if (window.history.length > 1 && navigationType !== "POP") {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <main className="page-with-button flex flex-col justify-start">
       <div className="custom-container flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div className="mb-[30px] mt-5 px-[1rem]">
-            <NavHeader isLink={true} link="/" />
+            <NavHeader isLink={false} action={handleBack} />
           </div>
 
           <div
@@ -154,7 +163,9 @@ const ShipmentInformation = () => {
           {pStatus === EDeliveryStatus.PENDING && (
             <div className="custom-container primary-button-container">
               <Button actionHandler={handleClick}>
-                {userType === EUserType.SELLER ? "Share" : "Pay"}
+                {userType === EUserType.SELLER
+                  ? t("shipment.shareButtonTitle")
+                  : t("shipment.payButtonTitle")}
               </Button>
             </div>
           )}
