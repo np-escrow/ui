@@ -5,16 +5,28 @@ import { Icon } from "../Icon";
 
 interface ISendPackagePaymentCreateProps {
   amount: string;
+  limit: number;
+  error: boolean;
+  setError: (s: boolean) => void;
   setAmount: (value: string) => void;
 }
 
 const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
   amount,
+  limit,
+  error,
+  setError,
   setAmount
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace("$", "");
+
+    if (+value < limit) {
+      setError(true);
+    } else {
+      setError(false);
+    }
 
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setAmount(value);
@@ -67,6 +79,12 @@ const SendPackagePaymentCreate: FC<ISendPackagePaymentCreateProps> = ({
             </div>
           )}
         </div>
+        {error && (
+          <span className="text-secondary text-[12px] text-sm font-normal text-red-300">
+            {t("sendPackage.paymentError", { amount: limit })}
+          </span>
+        )}
+
         <span className="text-text-secondary text-[12px] text-sm font-normal">
           {!amount
             ? t("sendPackage.createEmptyDescription")

@@ -8,8 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { usePackageStore } from "../store/packageStore";
 import { useState } from "react";
 
+const LIMIT = 10;
+
 export const useSendPackage = () => {
   const [ttn, setTtn] = useState("");
+  const [error, setError] = useState(false);
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
 
@@ -39,7 +42,13 @@ export const useSendPackage = () => {
         return <SendPackageDetails />;
       case ESendPakageTab.PaymentCreate:
         return (
-          <SendPackagePaymentCreate amount={amount} setAmount={setAmount} />
+          <SendPackagePaymentCreate
+            error={error}
+            limit={LIMIT}
+            amount={amount}
+            setError={setError}
+            setAmount={setAmount}
+          />
         );
       case ESendPakageTab.PaymentSend:
         return <SendPackagePaymentSend />;
@@ -80,7 +89,7 @@ export const useSendPackage = () => {
     [ESendPakageTab.PaymentCreate]: {
       title: t("sendPackage.createButton"),
       action: handlePaymentCreate,
-      disabled: !amount,
+      disabled: !amount || error,
       loading: loadings.create
     },
     [ESendPakageTab.PaymentSend]: {
