@@ -6,10 +6,12 @@ import {
 
 import type { FC } from "react";
 import { Icon } from "../Icon";
-import { OrderStatus } from "../../types";
+import { EUserLanguage, OrderStatus } from "../../types";
 import { format } from "date-fns";
+import { enUS, ru, uk } from "date-fns/locale";
 import styles from "./ShipmentDealInfo.module.css";
 import { t } from "i18next";
+import { useUserStore } from "../../store/userStore";
 
 interface IShipmentDealInfoProps {
   ttn: string;
@@ -19,6 +21,20 @@ interface IShipmentDealInfoProps {
     date: string;
   }>;
 }
+
+const getDateFnsLocale = (lng: EUserLanguage) => {
+  switch (lng) {
+    case EUserLanguage.UK:
+      return uk;
+    case EUserLanguage.RU:
+      return ru;
+    case EUserLanguage.EN:
+      return enUS;
+
+    default:
+      return enUS;
+  }
+};
 
 const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
   ttn,
@@ -30,6 +46,9 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
     "--color": COLOR[status],
     "--border": BORDER_COLOR[status]
   };
+
+  const language = useUserStore((state) => state.language);
+
   return (
     <>
       <div className="flex w-full items-start justify-between">
@@ -52,9 +71,13 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
           <div key={+new Date(item.date)} className={styles.deal_info__item}>
             <Icon name="success" size={34} />
             <div>
-              <p className={styles.deal_info__title}>{item.name}</p>
+              <p className={styles.deal_info__title}>
+                {t(`payment.dealStatus.${status}`)}
+              </p>
               <p className={styles.deal_info__subtitle}>
-                {format(item.date, "dd MMM, yyyy")}
+                {format(item.date, "dd MMM, yyyy", {
+                  locale: getDateFnsLocale(language)
+                })}
               </p>
             </div>
           </div>

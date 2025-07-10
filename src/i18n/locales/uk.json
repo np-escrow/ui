@@ -55,7 +55,14 @@
     "kg": "кг",
     "paymentDone": "Я оплатив",
     "error": "Не вдалося створити платіж: {{error}}",
-    "total": "Разом до оплати"
+    "total": "Разом до оплати",
+    "dealStatus": {
+      "new": "Угода створена",
+      "paid": "Платіж отримано",
+      "transit": "Доставляється",
+      "closed": "Доставлено",
+      "revert": "Повернено"
+    }
   },
   "onboarding": {
     "slide1": {
@@ -135,7 +142,9 @@
     "roleSeller": "Продавець",
     "roleRecepient": "Отримувач",
     "weightValue": "{{ value }}кг",
-    "shareText": "Ваша посилка готова до доставки. ТТН: {{ ttn }}"
+    "shareText": "Ваша посилка готова до доставки. ТТН: {{ ttn }}",
+    "shareButtonTitle": "Поділитися",
+    "payButtonTitle": "Оплатити"
   },
   "sendPackage": {
     "validateTitle": "Нова Пошта ТТН",

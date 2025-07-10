@@ -29,7 +29,6 @@
   overflow: hidden;
   color: #1d2023;
   text-overflow: ellipsis;
-  /* font-family: "SF Pro Display"; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -70,7 +69,6 @@
 
 .package__subtitle {
   color: #626c77;
-  /* font-family: "SF Pro Display"; */
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -81,20 +79,16 @@
 .package__value {
   color: #1d2023;
   text-align: right;
-  /* font-family: "SF Pro Display"; */
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 19.2px */
-  /* text-transform: capitalize; */
 }
 
 .package__total {
   color: #1d2023;
-  /* font-family: "SF Pro Display"; */
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 21.6px */
-  text-transform: capitalize;
 }

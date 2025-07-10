@@ -1,5 +1,5 @@
 import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useNavigationType } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { Loader } from "../../components/Loader";
@@ -21,6 +21,7 @@ const Payment = () => {
   const { id } = useUserStore();
   const { isKeyboardOpen } = useKeyboardStatus();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   const assets = useAssetStore((state) => state.data.assets);
   const getAssets = useAssetStore((state) => state.getAssets);
@@ -64,12 +65,20 @@ const Payment = () => {
     }
   }, [assets]);
 
+  const handleBack = () => {
+    if (window.history.length > 1 && navigationType !== "POP") {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   const paymentStepData = {
     [EPaymentStep.SELECT_ASSET]: {
       backButton: {
         isLink: false,
         link: undefined,
-        action: () => navigate("/")
+        action: handleBack
       },
       buttonAction: () => setStep(EPaymentStep.CONFIRM),
       buttonDisabled: !selectedAsset || !selectedNetwork
@@ -78,7 +87,7 @@ const Payment = () => {
       backButton: {
         isLink: false,
         link: undefined,
-        action: () => navigate("/")
+        action: () => setStep(EPaymentStep.SELECT_ASSET)
       },
       buttonAction: () => {
         navigate(`/shipment-info/${ttn}`);

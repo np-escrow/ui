@@ -27,6 +27,7 @@ export enum EDeliveryStatus {
 export enum ParseOrderStatus {
   new = EDeliveryStatus.PENDING,
   paid = EDeliveryStatus.PAID,
+  transit = EDeliveryStatus.PENDING,
   closed = EDeliveryStatus.COMPLETED,
   revert = EDeliveryStatus.COMPLETED
 }
@@ -34,6 +35,7 @@ export enum ParseOrderStatus {
 export enum OrderStatus {
   new = "new",
   paid = "paid",
+  transit = "transit",
   closed = "closed",
   revert = "revert"
 }
