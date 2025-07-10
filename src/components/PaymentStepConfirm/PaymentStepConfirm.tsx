@@ -53,7 +53,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   }
 
   return (
-    <div className="max-h-[calc(100vh-100px)] overflow-y-auto pt-[30px]">
+    <div className="no-scrollbar max-h-[calc(100vh-100px)] overflow-y-auto pt-[30px]">
       <span className="mx-auto mb-2 block text-center text-[20px] font-semibold">
         {`${selectedNetwork?.name}`}
       </span>
