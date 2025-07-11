@@ -15,18 +15,14 @@ export const formatterDeliveries = (
     status: data.status,
     archive: false,
     info: {
-      createdAt: data.createDt,
+      createdAt: new Date(data.createDt).toISOString(),
       recipient: data.metadata.RecipientFullName,
       seller: data.metadata.SenderFullNameEW,
       sellerCity: data.metadata.CitySender,
       recipientCity: data.metadata.CityRecipient,
-      actualDeliveryDate: data.metadata.ActualDeliveryDate
-        ? parse(
-            data.metadata.ActualDeliveryDate,
-            "dd-MM-yyyy HH:mm:ss",
-            new Date()
-          ).toISOString()
-        : null,
+      actualDeliveryDate:
+        data.metadata.ActualDeliveryDate &&
+        new Date(data.metadata.ActualDeliveryDate).toISOString(),
       sheduledDeliveryDate: data.metadata.ScheduledDeliveryDate
         ? parse(
             data.metadata.ScheduledDeliveryDate,
