@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
+import { OrderStatus } from "../../types";
 
 const Payment = () => {
   const { id: ttn } = useParams<{ id: string }>();
@@ -99,6 +100,45 @@ const Payment = () => {
 
   if (!delivery) {
     return null;
+  }
+
+  if (delivery.status !== OrderStatus.new) {
+    return (
+      <main
+        className={classNames("page-with-button flex flex-col justify-center", {
+          "translate-y-[40px] transform": isKeyboardOpen
+        })}
+      >
+        <div className="custom-container flex max-h-full flex-1 flex-col items-center justify-center px-4">
+          <div className="w-full max-w-md space-y-6 text-center">
+            <div className="mb-8">
+              <h1 className="md:text-4lm text-3xl font-bold text-gray-900">
+                {t("payment.paid_or_completed.title")}
+              </h1>
+            </div>
+
+            <div className="mx-auto max-w-lg">
+              <p className="text-lg leading-relaxed text-gray-600 md:text-xl dark:text-gray-300">
+                {t("payment.paid_or_completed.message")}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="shadow-up-lg fixed bottom-0 left-0 right-0 bg-white px-4 py-4">
+          <div className="custom-container">
+            <Button
+              actionHandler={() => {
+                navigate(`/`);
+              }}
+              className="w-full py-3 text-lg font-medium"
+            >
+              {t("payment.continue")}
+            </Button>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   if (assetsLoadings) {

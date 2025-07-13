@@ -144,6 +144,10 @@
       "transit": "In transit",
       "closed": "Delivered",
       "revert": "Revert"
+    },
+    "paid_or_completed": {
+      "title": "Order Already Paid or Completed",
+      "message": "Thank you for your order! The payment has been received, or your order has been successfully completed. If you have any questions, please contact our support team."
     }
   },
   "sendPackage": {
