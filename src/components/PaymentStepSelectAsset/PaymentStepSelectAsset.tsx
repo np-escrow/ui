@@ -64,14 +64,14 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
   return (
     <>
       {/* Description */}
-      <p className="text-text-secondary mb-5 text-sm">
+      <p className="text-text-secondary mx-[1rem] mb-5 text-sm">
         {t("payment.paymentDescription")}
       </p>
 
       {/* Parcel info */}
       <Link
         to={`/shipment-info/${delivery.id}`}
-        className="shadow-200 mb-5 flex items-center rounded-sm p-[10px]"
+        className="shadow-200 mx-[1rem] mb-5 flex items-center rounded-sm p-[10px]"
       >
         <div className="flex w-full items-center gap-x-3">
           <div className="flex size-11 items-center justify-center rounded-[6px] bg-gray-200">
@@ -90,7 +90,7 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
       </Link>
 
       {/* Select crypto */}
-      <div className="mb-[26px] flex flex-col">
+      <div className="mb-[26px] flex flex-col px-[1rem]">
         <div className="mb-[14px] text-sm font-semibold">
           {t("payment.selectCrypto")}
         </div>
@@ -119,7 +119,7 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
       </div>
 
       {/* Select network */}
-      <div className="relative flex flex-col">
+      <div className="relative flex flex-col px-[1rem]">
         <div className="mb-[14px] text-sm font-semibold">
           {t("payment.selectNetwork")}
         </div>
@@ -137,7 +137,7 @@ const PaymentStepSelectAsset: FC<Props> = ({ delivery }) => {
         {isDropdownOpen && (
           <ul
             ref={dropdownRef}
-            className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px] z-20"
+            className="bg-white-100 font-sf-pro-text shadow-100 absolute left-0 top-[calc(100%+5px)] z-20 flex max-h-[158px] w-full flex-col overflow-y-auto overscroll-contain rounded-lg text-[17px]"
           >
             {selectedAsset?.networks
               .filter((network) => network.code !== selectedNetwork?.code)

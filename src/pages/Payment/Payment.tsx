@@ -1,9 +1,10 @@
 import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
-import { useNavigate, useParams, useNavigationType } from "react-router-dom";
+import { useNavigate, useNavigationType, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { Loader } from "../../components/Loader";
 import { NavHeader } from "../../components/NavHeader";
+import { OrderStatus } from "../../types";
 import { PaymentStepConfirm } from "../../components/PaymentStepConfirm";
 import PaymentStepSelectAsset from "../../components/PaymentStepSelectAsset/PaymentStepSelectAsset";
 import classNames from "classnames";
@@ -15,7 +16,6 @@ import { useEffect } from "react";
 import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
-import { OrderStatus } from "../../types";
 
 const Payment = () => {
   const { id: ttn } = useParams<{ id: string }>();
@@ -153,10 +153,10 @@ const Payment = () => {
         "translate-y-[40px] transform": isKeyboardOpen
       })}
     >
-      <div className="custom-container max-h-full flex-1">
+      <div className="custom-container max-h-full flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div
-            className={classNames("mt-5", {
+            className={classNames("mt-5 px-[1rem]", {
               "mb-[30px]": step !== EPaymentStep.CONFIRM,
               "mb-0": step === EPaymentStep.CONFIRM
             })}
