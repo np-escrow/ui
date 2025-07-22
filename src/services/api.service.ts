@@ -99,6 +99,11 @@ class Api {
     return res.data;
   }
 
+  async updateOrder(ttn: number) {
+    const res = await this.httpService.patch<ResOrder>(`/shipments/${ttn}`);
+    return res.data;
+  }
+
   async withdraw(data: WithdrawDto) {
     const res = await this.httpService.post<void>("/pay/withdrawal", data);
     return res.data;

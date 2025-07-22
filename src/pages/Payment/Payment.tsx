@@ -1,5 +1,5 @@
 import { EPaymentStep, usePaymentStore } from "../../store/paymentStore";
-import { useNavigate, useNavigationType, useParams } from "react-router-dom";
+import { useNavigate, useNavigationType } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { Loader } from "../../components/Loader";
@@ -13,20 +13,18 @@ import { t } from "i18next";
 import { toast } from "react-toastify";
 import { useAssetStore } from "../../store/assetStore";
 import { useEffect } from "react";
-import { useKeyboardStatus } from "../../hooks/useKeyboardStatus";
 import { usePackageStore } from "../../store/packageStore";
 import { useUserStore } from "../../store/userStore";
 
 const Payment = () => {
-  const { id: ttn } = useParams<{ id: string }>();
   const { id } = useUserStore();
-  const { isKeyboardOpen } = useKeyboardStatus();
+
   const navigate = useNavigate();
   const navigationType = useNavigationType();
 
   const assets = useAssetStore((state) => state.data.assets);
   const getAssets = useAssetStore((state) => state.getAssets);
-  const { data, get } = usePackageStore();
+  const { data, loadings, get, update } = usePackageStore();
   const {
     step,
     selectedAsset,
@@ -90,11 +88,19 @@ const Payment = () => {
         link: undefined,
         action: () => setStep(EPaymentStep.SELECT_ASSET)
       },
-      buttonAction: () => {
-        navigate(`/shipment-info/${ttn}`);
+      buttonAction: async () => {
+        if (!delivery?.id || isNaN(+delivery.id)) {
+          toast.error(t(`${delivery?.id}`));
+          return;
+        }
+
+        await update(+delivery.id);
+
+        navigate("/");
+
         setStep(EPaymentStep.SELECT_ASSET);
       },
-      buttonDisabled: false
+      buttonDisabled: loadings.update
     }
   };
 
@@ -105,9 +111,7 @@ const Payment = () => {
   if (delivery.status !== OrderStatus.new) {
     return (
       <main
-        className={classNames("page-with-button flex flex-col justify-center", {
-          "translate-y-[40px] transform": isKeyboardOpen
-        })}
+        className={classNames("page-with-button flex flex-col justify-center")}
       >
         <div className="custom-container flex max-h-full flex-1 flex-col items-center justify-center px-4">
           <div className="w-full max-w-md space-y-6 text-center">
@@ -149,11 +153,9 @@ const Payment = () => {
 
   return (
     <main
-      className={classNames("page-with-button flex flex-col justify-center", {
-        "translate-y-[40px] transform": isKeyboardOpen
-      })}
+      className={classNames("page-with-button flex flex-col justify-center")}
     >
-      <div className="custom-container max-h-full flex-1 !px-0">
+      <div className="custom-container flex-1 !px-0">
         <div className="flex h-full flex-col">
           <div
             className={classNames("mt-5 px-[1rem]", {

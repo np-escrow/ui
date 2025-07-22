@@ -7,6 +7,7 @@ import type {
 import { ESendPakageTab } from "../pages/SendPackage/SendPackage.type";
 import { api } from "../services/api.service";
 import { create } from "zustand";
+import { toast } from "react-toastify";
 import { useLoadingStore } from "./loadingStore";
 
 interface PackageStore {
@@ -15,6 +16,7 @@ interface PackageStore {
   };
   loadings: {
     create: boolean;
+    update: boolean;
   };
   data: {
     all: ResOrder[];
@@ -25,6 +27,7 @@ interface PackageStore {
   setActiveTab: (tab: ESendPakageTab) => void;
   prepare: (data: PrepareOrder) => Promise<void>;
   create: (data: CreateOrder) => Promise<void>;
+  update: (ttn: number) => Promise<void>;
   get: (id: number) => Promise<void>;
   getAll: () => Promise<void>;
 }
@@ -34,7 +37,8 @@ export const usePackageStore = create<PackageStore>((set) => ({
     create: null
   },
   loadings: {
-    create: false
+    create: false,
+    update: false
   },
   data: {
     all: [],
@@ -123,5 +127,24 @@ export const usePackageStore = create<PackageStore>((set) => ({
         }
       }));
     }
+  },
+  update: async (ttn: number) => {
+    set((s) => ({
+      loadings: { ...s.loadings, update: true }
+    }));
+
+    try {
+      const res = await api.updateOrder(ttn);
+      set((s) => ({
+        data: { ...s.data, details: res }
+      }));
+    } catch (err: any) {
+      toast.error(err.details ?? "Failed to update order");
+      console.error("Update order error:", err);
+    }
+
+    set((s) => ({
+      loadings: { ...s.loadings, update: false }
+    }));
   }
 }));

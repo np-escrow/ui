@@ -22,6 +22,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   const loading = usePaymentStore((state) => state.loadings.payment);
   const payment = usePaymentStore((state) => state.payment);
   const data = usePaymentStore((state) => state.data.payment);
+
   const details = usePackageStore((state) => state.data.details);
   const selectedAsset = usePaymentStore((state) => state.selectedAsset);
   const selectedNetwork = usePaymentStore((state) => state.selectedNetwork);
@@ -53,7 +54,7 @@ const PaymentStepConfirm: FC<Props> = ({ delivery }) => {
   }
 
   return (
-    <div className="no-scrollbar max-h-[calc(100vh-100px)] overflow-y-auto px-[1rem] pt-[30px]">
+    <div className="no-scrollbar max-h-[calc(100vh-165px)] overflow-y-auto px-[1rem] pb-[60px] pt-[30px]">
       <span className="mx-auto mb-2 block text-center text-[20px] font-semibold">
         {`${selectedNetwork?.name}`}
       </span>
