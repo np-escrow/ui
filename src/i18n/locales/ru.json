@@ -17,7 +17,11 @@
     "deposit": "Пополнить",
     "deliveries": "Доставки",
     "sendPackage": "Добавить посылку",
-    "deliveriesListEmptyStateText": "Доставок пока нет ;("
+    "deliveriesListEmptyStateText": "Доставок пока нет ;(",
+    "modal": {
+      "title": "Платёж обрабатывается.",
+      "subtitle": "Обычно это занимает до 15 минут. Статус обновится автоматически."
+    }
   },
   "onboarding": {
     "slide1": {
@@ -102,7 +106,14 @@
     "shareText": "Ваша посылка готова к доставке. ТТН: {{ ttn }}",
     "shareButtonTitle": "Поделиться",
     "payButtonTitle": "Оплатить",
-    "dealReverted": "Возврат"
+    "dealReverted": "Возврат",
+    "duration": {
+      "title": "Ожидаем подтверждение оплаты",
+      "notPayment": "Платёж всё ещё не подтверждён. Пожалуйста, свяжитесь с поддержкой.",
+      "subtitle": "Обычно занимает до 15 минут.",
+      "timeCounter": "Осталось времени:",
+      "supportBtn": "Связаться с поддержкой"
+    }
   },
   "withdraw": {
     "selectCrypto": "Выберите криптовалюту",

@@ -1,0 +1,57 @@
+.modalBox {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  width: 100%;
+  padding: 60px 16px 40px 16px;
+
+  background-color: var(--color-white);
+
+  border-radius: 16px 16px 0 0;
+
+  transition: all 0.3s ease-in-out;
+
+  transform: translateY(100%);
+}
+
+.modalBox.open {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.modalBox.closed {
+  transform: translateY(100%);
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}

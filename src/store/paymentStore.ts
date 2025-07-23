@@ -1,6 +1,7 @@
-import { create } from "zustand";
-import { api } from "../services/api.service";
 import type { Payment, ResAssets, ResPayment } from "../services/api.types";
+
+import { api } from "../services/api.service";
+import { create } from "zustand";
 
 export enum EPaymentStep {
   SELECT_ASSET = "selectAsset",
@@ -10,7 +11,6 @@ export enum EPaymentStep {
 interface PaymentState {
   step: EPaymentStep;
   setStep: (step: EPaymentStep) => void;
-
   selectedAsset: ResAssets[0] | null;
   setSelectedAsset: (asset: ResAssets[0] | null) => void;
   selectedNetwork: ResAssets[0]["networks"][0] | null;
@@ -24,7 +24,11 @@ interface PaymentState {
   data: {
     payment: ResPayment | null;
   };
+  modal: {
+    paymentModalOpen: boolean;
+  };
   payment: (data: Payment) => Promise<void>;
+  setPaymentModalOpen: (open: boolean) => void;
 }
 
 export const usePaymentStore = create<PaymentState>((set) => ({
@@ -35,6 +39,11 @@ export const usePaymentStore = create<PaymentState>((set) => ({
   selectedNetwork: null,
   setSelectedAsset: (asset) => set({ selectedAsset: asset }),
   setSelectedNetwork: (network) => set({ selectedNetwork: network }),
+  setPaymentModalOpen: (open) => {
+    set((s) => ({
+      modal: { ...s.modal, paymentModalOpen: open }
+    }));
+  },
   errors: {
     payment: null
   },
@@ -43,6 +52,9 @@ export const usePaymentStore = create<PaymentState>((set) => ({
   },
   data: {
     payment: null
+  },
+  modal: {
+    paymentModalOpen: false
   },
   payment: async (data: Payment) => {
     set((s) => ({
