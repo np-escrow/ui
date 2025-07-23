@@ -76,7 +76,9 @@
       "status-completed-archive": "Завершено",
       "status-completed": "Сделка завершена, средства зачислены",
       "info-sent": "Отправлено",
-      "info-receiving": "Получение"
+      "info-receiving": "Получение",
+      "status-returned-archive": "Возврат",
+      "status-returned": "Сделка отменена, деньги возвращены"
     }
   },
   "shipment": {
@@ -99,7 +101,8 @@
     "weightValue": "{{ value }}кг",
     "shareText": "Ваша посылка готова к доставке. ТТН: {{ ttn }}",
     "shareButtonTitle": "Поделиться",
-    "payButtonTitle": "Оплатить"
+    "payButtonTitle": "Оплатить",
+    "dealReverted": "Возврат"
   },
   "withdraw": {
     "selectCrypto": "Выберите криптовалюту",

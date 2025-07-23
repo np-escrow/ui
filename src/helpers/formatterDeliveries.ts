@@ -35,7 +35,7 @@ export const formatterDeliveries = (
     ttn: data.id,
     userType: +id === +data.sellerId ? EUserType.SELLER : EUserType.RECIPIENT,
     status: data.status,
-    archive: false,
+    archive: data.archive,
     info: {
       createdAt: new Date(data.createDt).toISOString(),
       recipient: data.metadata.RecipientFullName,

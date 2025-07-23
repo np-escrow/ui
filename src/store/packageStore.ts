@@ -27,7 +27,7 @@ interface PackageStore {
   setActiveTab: (tab: ESendPakageTab) => void;
   prepare: (data: PrepareOrder) => Promise<void>;
   create: (data: CreateOrder) => Promise<void>;
-  update: (ttn: number) => Promise<void>;
+  update: (ttn: number | string, archive?: boolean) => Promise<void>;
   get: (id: number) => Promise<void>;
   getAll: () => Promise<void>;
 }
@@ -128,13 +128,13 @@ export const usePackageStore = create<PackageStore>((set) => ({
       }));
     }
   },
-  update: async (ttn: number) => {
+  update: async (ttn: number | string, archive?: boolean) => {
     set((s) => ({
       loadings: { ...s.loadings, update: true }
     }));
 
     try {
-      const res = await api.updateOrder(ttn);
+      const res = await api.updateOrder(ttn, archive);
       set((s) => ({
         data: { ...s.data, details: res }
       }));

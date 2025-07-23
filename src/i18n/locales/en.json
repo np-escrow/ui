@@ -76,7 +76,9 @@
       "status-completed-archive": "Completed",
       "status-completed": "Deal completed, funds credited",
       "info-sent": "Sent",
-      "info-receiving": "Receiving"
+      "info-receiving": "Receiving",
+      "status-returned-archive": "Returned",
+      "status-returned": "Deal completed, funds credited"
     }
   },
   "shipment": {
@@ -99,7 +101,8 @@
     "weightValue": "{{ value }}kg",
     "shareText": "Your package is ready for delivery. TTN: {{ ttn }}",
     "shareButtonTitle": "Share",
-    "payButtonTitle": "Pay"
+    "payButtonTitle": "Pay",
+    "dealReverted": "Returned"
   },
   "withdraw": {
     "selectCrypto": "Select cryptocurrency",

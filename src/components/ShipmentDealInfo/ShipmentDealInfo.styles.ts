@@ -19,5 +19,5 @@ export const COLOR = {
   paid: "#067647",
   transit: "#067647",
   closed: "#067647",
-  revert: "red"
+  revert: "white"
 } as const;
