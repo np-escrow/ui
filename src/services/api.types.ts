@@ -43,6 +43,7 @@ export type ResOrder = {
   };
   amount: number;
   status: OrderStatus;
+  archive: boolean;
   metadata: {
     Number: string;
     StatusCode: string;

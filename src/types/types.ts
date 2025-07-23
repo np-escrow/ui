@@ -21,7 +21,8 @@ export enum EPlatform {
 export enum EDeliveryStatus {
   PENDING = "pending",
   PAID = "paid",
-  COMPLETED = "completed"
+  COMPLETED = "completed",
+  REVERTED = "reverted"
 }
 
 export enum ParseOrderStatus {
@@ -29,7 +30,7 @@ export enum ParseOrderStatus {
   paid = EDeliveryStatus.PAID,
   transit = EDeliveryStatus.PENDING,
   closed = EDeliveryStatus.COMPLETED,
-  revert = EDeliveryStatus.COMPLETED
+  revert = EDeliveryStatus.REVERTED
 }
 
 export enum OrderStatus {

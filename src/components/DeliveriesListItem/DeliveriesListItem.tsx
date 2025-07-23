@@ -13,6 +13,7 @@ import {
 } from "../../types";
 import styles from "./DeliveriesListItem.module.css";
 import { formatPriceValue } from "../../helpers/formatPriceValue";
+import { usePackageStore } from "../../store/packageStore";
 
 interface DeliveriesListItemProps {
   item: IDeliveries;
@@ -20,6 +21,7 @@ interface DeliveriesListItemProps {
 
 const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
   const navigate = useNavigate();
+  const { update } = usePackageStore();
   const pStatus = ParseOrderStatus[item.status] as unknown as EDeliveryStatus;
 
   const subtitle = useMemo(() => {
@@ -53,15 +55,33 @@ const DeliveriesListItem: FC<DeliveriesListItemProps> = ({ item }) => {
         ? t("deliveries.item.status-completed-archive")
         : t("deliveries.item.status-completed");
     }
+    if (pStatus === EDeliveryStatus.REVERTED) {
+      if (item.archive) {
+        return t("deliveries.item.status-returned-archive");
+      }
+      return t("deliveries.item.status-returned");
+    }
     return item.status;
   }, [item.status, item.userType, item.archive]);
+
+  const handleDeliveryClick = () => {
+    if (!item.archive) {
+      if (
+        pStatus === EDeliveryStatus.COMPLETED ||
+        pStatus === EDeliveryStatus.REVERTED
+      ) {
+        update(item.id, true);
+      }
+    }
+    navigate(`/shipment-info/${item.id}`);
+  };
 
   return (
     <div
       className={classNames(styles.deliveries__box, {
-        [styles.completed]: status === EDeliveryStatus.COMPLETED && item.archive
+        [styles.completed]: item.archive
       })}
-      onClick={() => navigate(`/shipment-info/${item.id}`)}
+      onClick={handleDeliveryClick}
     >
       <div className="w-full">
         <div className="flex items-center justify-between">

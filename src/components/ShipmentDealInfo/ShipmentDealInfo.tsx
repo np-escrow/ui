@@ -3,12 +3,12 @@ import {
   BORDER_COLOR,
   COLOR
 } from "./ShipmentDealInfo.styles";
+import { EUserLanguage, OrderStatus } from "../../types";
+import { enUS, ru, uk } from "date-fns/locale";
 
 import type { FC } from "react";
 import { Icon } from "../Icon";
-import { EUserLanguage, OrderStatus } from "../../types";
 import { format } from "date-fns";
-import { enUS, ru, uk } from "date-fns/locale";
 import styles from "./ShipmentDealInfo.module.css";
 import { t } from "i18next";
 import { useUserStore } from "../../store/userStore";
@@ -62,7 +62,9 @@ const ShipmentDealInfo: FC<IShipmentDealInfoProps> = ({
           <p className="text-nowrap">
             {status === OrderStatus.new
               ? t("shipment.dealPending")
-              : t("shipment.dealDone")}
+              : status === OrderStatus.revert
+                ? t("shipment.dealReverted")
+                : t("shipment.dealDone")}
           </p>
         </div>
       </div>

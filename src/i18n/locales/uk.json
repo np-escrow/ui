@@ -125,7 +125,9 @@
       "status-completed-archive": "Завершено",
       "status-completed": "Угоду завершено, кошти зараховано",
       "info-sent": "Відправлено",
-      "info-receiving": "Отримання"
+      "info-receiving": "Отримання",
+      "status-returned-archive": "Повернення",
+      "status-returned": "Угоду скасовано, кошти повернуто"
     }
   },
   "shipment": {
@@ -148,7 +150,8 @@
     "weightValue": "{{ value }}кг",
     "shareText": "Ваша посилка готова до доставки. ТТН: {{ ttn }}",
     "shareButtonTitle": "Поділитися",
-    "payButtonTitle": "Оплатити"
+    "payButtonTitle": "Оплатити",
+    "dealReverted": "Повернення"
   },
   "sendPackage": {
     "validateTitle": "Нова Пошта ТТН",

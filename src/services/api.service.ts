@@ -99,8 +99,10 @@ class Api {
     return res.data;
   }
 
-  async updateOrder(ttn: number) {
-    const res = await this.httpService.patch<ResOrder>(`/shipments/${ttn}`);
+  async updateOrder(ttn: number | string, archive?: boolean) {
+    const res = await this.httpService.patch<ResOrder>(`/shipments/${ttn}`, {
+      archive
+    });
     return res.data;
   }
 
