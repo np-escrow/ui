@@ -24,7 +24,9 @@ interface PackageStore {
     create: ResOrder | null;
     activeTab: ESendPakageTab;
   };
+  payments: Map<string, Date>;
   setActiveTab: (tab: ESendPakageTab) => void;
+  setPayments: (ttn: string) => void;
   prepare: (data: PrepareOrder) => Promise<void>;
   create: (data: CreateOrder) => Promise<void>;
   update: (ttn: number | string, archive?: boolean) => Promise<void>;
@@ -46,11 +48,18 @@ export const usePackageStore = create<PackageStore>((set) => ({
     details: null,
     activeTab: ESendPakageTab.ValidateTTN
   },
+  payments: new Map(),
   setActiveTab: (tab: ESendPakageTab) => {
     set((s) => ({
       data: { ...s.data, activeTab: tab }
     }));
   },
+  setPayments: (ttn: string) => {
+    set((s) => ({
+      payments: new Map(s.payments).set(ttn.toString(), new Date())
+    }));
+  },
+
   get: async (id: number) => {
     const { addPromise } = useLoadingStore.getState();
 

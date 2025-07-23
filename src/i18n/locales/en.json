@@ -17,7 +17,11 @@
     "deposit": "Deposit",
     "deliveries": "Deliveries",
     "sendPackage": "Add Parcel",
-    "deliveriesListEmptyStateText": "No deliveries yet ;("
+    "deliveriesListEmptyStateText": "No deliveries yet ;(",
+    "modal": {
+      "title": "Payment is being processed.",
+      "subtitle": "It usually takes up to 15 minutes. The status will update automatically."
+    }
   },
   "onboarding": {
     "slide1": {
@@ -102,7 +106,14 @@
     "shareText": "Your package is ready for delivery. TTN: {{ ttn }}",
     "shareButtonTitle": "Share",
     "payButtonTitle": "Pay",
-    "dealReverted": "Returned"
+    "dealReverted": "Returned",
+    "duration": {
+      "title": "Awaiting payment confirmation",
+      "notPayment": "Payment has not yet been confirmed. Please contact support.",
+      "subtitle": "Usually takes up to 15 minutes.",
+      "timeCounter": "Time remaining:",
+      "supportBtn": "Contact support"
+    }
   },
   "withdraw": {
     "selectCrypto": "Select cryptocurrency",

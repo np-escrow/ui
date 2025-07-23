@@ -17,7 +17,11 @@
     "deposit": "Поповнити",
     "deliveries": "Доставки",
     "sendPackage": "Додати посилку",
-    "deliveriesListEmptyStateText": "Доставок поки немає ;("
+    "deliveriesListEmptyStateText": "Доставок поки немає ;(",
+    "modal": {
+      "title": "Платіж обробляється.",
+      "subtitle": "Зазвичай це займає до 15 хвилин. Статус оновиться автоматично."
+    }
   },
   "withdraw": {
     "selectCrypto": "Виберіть криптовалюту",
@@ -151,7 +155,14 @@
     "shareText": "Ваша посилка готова до доставки. ТТН: {{ ttn }}",
     "shareButtonTitle": "Поділитися",
     "payButtonTitle": "Оплатити",
-    "dealReverted": "Повернення"
+    "dealReverted": "Повернення",
+    "duration": {
+      "title": "Очікуємо підтвердження оплати",
+      "notPayment": "Платіж ще не підтверджено. Будь ласка, зв’яжіться зі службою підтримки.",
+      "subtitle": "Зазвичай займає до 15 хвилин.",
+      "timeCounter": "Залишилось часу:",
+      "supportBtn": "Зв’язатися з підтримкою"
+    }
   },
   "sendPackage": {
     "validateTitle": "Нова Пошта ТТН",

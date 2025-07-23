@@ -4,11 +4,12 @@ import {
   EUserType,
   ParseOrderStatus
 } from "../../types";
-import { useNavigate, useParams, useNavigationType } from "react-router-dom";
+import { useNavigate, useNavigationType, useParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 import { NavHeader } from "../../components/NavHeader";
 import ShipmentDealInfo from "../../components/ShipmentDealInfo/ShipmentDealInfo";
+import { ShipmentPaymentDuration } from "../../components/ShipmentPaymentDuration";
 import ShipmentPaymentsDetails from "../../components/ShipmentPaymentsDetails/ShipmentPaymentsDetails";
 import styles from "./ShipmentInformation.module.css";
 import { t } from "i18next";
@@ -20,7 +21,7 @@ const ShipmentInformation = () => {
   const { id } = useParams<{ id: string }>();
   const { id: userId, platform } = useUserStore();
 
-  const { data, get } = usePackageStore();
+  const { data, get, payments } = usePackageStore();
   const navigate = useNavigate();
   const navigationType = useNavigationType();
 
@@ -107,6 +108,8 @@ const ShipmentInformation = () => {
     }
   };
 
+  const paymentDate = payments.get(data.details.metadata.Number);
+
   return (
     <main className="page-with-button flex flex-col justify-start">
       <div className="custom-container flex-1 !px-0">
@@ -126,6 +129,13 @@ const ShipmentInformation = () => {
                 data={data.details.paimentData}
               />
             </div>
+
+            {paymentDate && (
+              <div className={styles.shipment__box}>
+                <ShipmentPaymentDuration date={paymentDate} />
+              </div>
+            )}
+
             <div className="w-full">
               <p className={styles.shipment__subtitle}>
                 {t("shipment.detailsTitle")}

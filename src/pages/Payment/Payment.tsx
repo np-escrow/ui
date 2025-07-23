@@ -24,7 +24,7 @@ const Payment = () => {
 
   const assets = useAssetStore((state) => state.data.assets);
   const getAssets = useAssetStore((state) => state.getAssets);
-  const { data, loadings, get, update } = usePackageStore();
+  const { data, loadings, get, update, setPayments } = usePackageStore();
   const {
     step,
     selectedAsset,
@@ -32,7 +32,8 @@ const Payment = () => {
     errors,
     setStep,
     setSelectedAsset,
-    setSelectedNetwork
+    setSelectedNetwork,
+    setPaymentModalOpen
   } = usePaymentStore();
 
   const paymentLoadings = usePaymentStore((state) => state.loadings.payment);
@@ -99,6 +100,9 @@ const Payment = () => {
         navigate("/");
 
         setStep(EPaymentStep.SELECT_ASSET);
+        setPaymentModalOpen(true);
+        console.log("delivery.id", delivery.id);
+        setPayments(delivery.id); // Save payment time for the package
       },
       buttonDisabled: loadings.update
     }
